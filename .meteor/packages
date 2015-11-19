@@ -16,3 +16,22 @@ standard-minifiers      # JS/CSS minifiers run for production mode
 es5-shim                # ECMAScript 5 compatibility for older browsers.
 ecmascript              # Enable ECMAScript2015+ syntax in app code
 
+aldeed:collection2
+fezvrasta:bootstrap-material-design     #FezVrasta's Bootstrap theme implementing Google's Material (Paper) Design
+twbs:bootstrap
+less
+meteorhacks:npm
+reactive-var
+accounts-base     # A user account system.
+kadira:flow-router
+fortawesome:fontawesome
+check
+react
+lawshe:full-page
+sacha:spin
+kadira:blaze-layout
+momentjs:moment
+accounts-password
+reywood:publish-composite
+aldeed:autoform
+underscore
