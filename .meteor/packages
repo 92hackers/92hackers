@@ -26,7 +26,6 @@ accounts-base     # A user account system.
 kadira:flow-router
 fortawesome:fontawesome
 check
-react
 lawshe:full-page
 sacha:spin
 momentjs:moment

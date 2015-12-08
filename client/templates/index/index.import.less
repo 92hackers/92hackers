@@ -1,3 +1,82 @@
-body {
-  color: @site-color;
+#fp-nav {     //set full-page.js navigation bullets background-color, from black to white
+  a {
+    span {
+      background-color: #ffffff !important;
+    }
+  }
+}
+
+.index-wrap {
+  @section-idea-bg: #009587;
+  @section-hackers-bg: #0074d9;
+  @section-remote-work-bg: #ff851b;
+  @section-ready-bg: #001f3f;
+
+  i {
+    text-shadow: none !important;
+  }
+
+  .white-border-button {
+    border: 1px solid #ffffff;
+    color: #ffffff !important;
+    font-weight: bold;
+    text-shadow: none;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    &:hover {
+      background-color: #ffffff !important;
+      color: #009587 !important;
+    }
+  }
+  .section {
+    text-align: center;
+    color: #ffffff;
+    font-size: 30px;
+    font-weight: bold;
+    text-shadow: 0 0 1px rgba(0,0,0,0.6);
+  }
+  .section-idea {
+    background-color: @section-idea-bg;
+    .login-buttons {
+      margin-top: 200px;
+      li {
+        & + li {
+          margin-left: 40px;
+        }
+      }
+    }
+    .idea-image {
+      img {
+        width: 100%;
+      }
+    }
+  }
+  .section-hackers {
+    background-color: @section-hackers-bg;
+    section {
+      header {
+        margin-bottom: 128px;
+        .fa {
+          font-size: 256px;
+        }
+      }
+    }
+  }
+  .section-remote-work {
+    background: @section-remote-work-bg;
+    section {
+      header {
+        margin-bottom: 128px;
+        i {
+          font-size: 256px;
+        }
+      }
+    }
+  }
+  .section-ready {
+    background-image: url("/images/dawn.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
 }
