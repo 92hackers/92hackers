@@ -16,6 +16,5 @@ Template.index.onRendered(function () {
 
     // material design plugin initialisation.
 
-    console.log($("fieldset"));
     $.material.init();
 });

@@ -11,13 +11,19 @@ Package.describe({
 });
 
 Package.onUse(function(api) {
-  api.versionsFrom('1.2.1');
-  api.use(['jquery', 'bootstrap'], 'client');
-  api.addFiles(['bootstrap-material-design.css', 'ripples.css', 'material.js', 'ripples.js'], 'client');
+  api.versionsFrom('METEOR@1.2.1');
+  api.use('twbs:bootstrap@3.3.1');
+  api.use('jquery');
+  api.addFiles([
+	  'bootstrap-material-design.css', 
+	  'ripples.css', 
+	  'material.js', 
+	  'ripples.js', 
+	  'init.js'
+	  ], 'client');
 });
 
 Package.onTest(function(api) {
-  api.use(['jquery', 'bootstrap'], 'client');
   api.use('tinytest');
   api.use('chenyuan:bootstrap-material-design');
   api.addFiles('bootstrap-material-design-tests.js');
