@@ -150,10 +150,13 @@
           $(this).closest(".form-group").removeClass("is-empty");
         }
       })
-      .on("keyup change", ".form-control", function() {
+      .on("keyup change", ".form-control:not(#rePassword)", function(e) {
         var $input = $(this);
         var $formGroup = $input.closest(".form-group");
         var isValid = (typeof $input[0].checkValidity === "undefined" || $input[0].checkValidity());
+
+        // Added by Chen Yuan at 2015-12-12, to disable Tab key trigger keyup event.
+        if (e.which === 9) { return ;}
 
         if ($input.val() === "" && isValid) {
           $formGroup.addClass("is-empty");
@@ -168,11 +171,16 @@
         //
         // NOTE: I'm not sure we should be intervening regarding validation, this seems better as a README and snippet of code.
         //        BUT, I've left it here for backwards compatibility.
+
+        // below two has-success are added by chenyuan, to achieve success display.
+
         if(validate) {
           if (isValid) {
             $formGroup.removeClass("has-error");
+            $formGroup.addClass("has-success");
           }
           else {
+            $formGroup.removeClass("has-success");
             $formGroup.addClass("has-error");
           }
         }

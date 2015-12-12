@@ -56,7 +56,7 @@ Meteor.startup(function () {
                 }
             },
             {
-                username: "92hackers",
+                username: "hackers92",
                 services: {
                     common: {md5Password: CryptoJS.MD5("wocy2008ok").toString()}
                 },

@@ -19,6 +19,7 @@ check@1.1.0
 chenyuan:bootstrap-material-design@0.5.4
 coffeescript@1.0.11
 cosmos:browserify@0.8.4
+cy476571:loaders.css@0.0.1
 dburles:mongo-collection-instances@0.3.4
 ddp@1.2.2
 ddp-client@1.2.1
