@@ -6,8 +6,13 @@
 "use strict";
 
 var signIn = new ReactiveVar(null);
+var reloadAble = new ReactiveVar(null);
 
 Template.index.onCreated(function () {
+
+    // since when a new user created, this var set to 1, here to reset it.
+    reloadAble.set(0);
+
 });
 
 Template.index.onRendered(function () {
@@ -24,6 +29,8 @@ Template.index.onRendered(function () {
     // material design plugin initialisation.
 
     $.material.init();
+
+    console.log(Meteor.user());
 });
 
 
@@ -47,6 +54,11 @@ Template.index.events({
             signIn.set(false);
             modalTitle.text("注册");
         }
+    },
+    "hidden.bs.modal #signModal": function () {
+        if (reloadAble.get()) {
+            FlowRouter.reload();
+        }
     }
 });
 
@@ -55,11 +67,62 @@ Template.signIn.events({
     "submit": function (event, template) {
         event.preventDefault();
 
-        if (Meteor.user()) Meteor.logout();
+        var username = template.$("#user-name").val();
+        var password = template.$("#password").val();
 
+        var clientErrorCode = /^4\d+$/;
 
+        Meteor.loginWithPassword(username, password, function (err, result) {
+            if (!err) {
+                reloadAble.set(1);
+                $("#signModal").modal("hide");
+            } else {
+                if ( clientErrorCode.test(err.error) ) {
+                    $(".login-error").fadeIn();
+                    var timeId = Meteor.setTimeout(function () {
+                        $(".login-error").fadeOut();
+                        Meteor.clearTimeout(timeId);
+                    }, 2000);
+                }
+            }
+        });
     }
 });
+
+var usernameHandler = _.debounce(function () {
+    var $loadingImg = $(".form-loading-img");
+    var $existed = $(".usernameExisted");
+    var $username = $("#username");
+    var $formGroup = $username.closest(".form-group");
+
+    var username = $username.val();
+
+    // username should be tested pass firstly.
+    if ( !$formGroup.hasClass("has-success") ) {
+        return ;
+    }
+
+    $loadingImg.show();
+    Meteor.call("usernameExistDetect", username, function (err, result) {
+        if (!err) {
+            $loadingImg.hide();
+            if (result) {
+                $formGroup.removeClass("has-success");
+                $formGroup.addClass("has-warning");
+                $existed.fadeIn();
+                var timeId = Meteor.setTimeout(function () {
+                    $existed.fadeOut();
+                    Meteor.clearTimeout(timeId);
+                }, 2000);
+            } else {
+                console.log("a new username created !");
+            }
+        } else {
+            console.log("call usernameExistDetect error");
+        }
+    });
+
+}, 1000);
 
 Template.signUp.events({
     "keyup #rePassword": function (event, template) {
@@ -75,6 +138,7 @@ Template.signUp.events({
             $formGroup.addClass("has-error");
         }
     },
+    "keyup #username": usernameHandler,
     "submit": function (event, template) {
         event.preventDefault();
 
@@ -102,9 +166,20 @@ Template.signUp.events({
 
         Accounts.createUser(userObject, function (err) {
             if (!err) {
+                reloadAble.set(1);
+                $("#signModal").modal("hide");
                 console.log("new user created.");
             } else {
-                console.log(err);
+                if (err.error === 403) {
+                    var $existed = $(".usernameExisted");
+
+                    $("#username").focus();
+                    $existed.fadeIn();
+                    var timeId = Meteor.setTimeout(function () {
+                        $existed.fadeOut();
+                        Meteor.clearTimeout(timeId);
+                    }, 2000);
+                }
             }
         });
     }

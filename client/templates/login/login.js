@@ -3,3 +3,6 @@
  * Created by cy on 07/12/15.
  */
 
+Template.login.onCreated(function () {
+    console.log(Meteor.user());
+});

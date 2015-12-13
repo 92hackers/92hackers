@@ -12,6 +12,8 @@
   @section-remote-work-bg: #ff851b;
   @section-ready-bg: #001f3f;
 
+  @warning-color: #ff5722;
+
   i {
     text-shadow: none !important;
   }
@@ -87,6 +89,21 @@
         position: absolute;
         top: 7px;
         right: 15px;
+
+        display: none;
+      }
+      .usernameExisted {
+        .form-loading-img();
+        top: 11px;
+        font-size: 12px;
+        color: @warning-color;
+      }
+      .login-error {
+        margin-left: 20px;
+        color: #f44336;
+        font-size: 12px;
+
+        display: none;
       }
     }
   }
