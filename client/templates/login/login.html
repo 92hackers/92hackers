@@ -1,4 +1,8 @@
 <template name="login">
-
-    {{> footer}}
+    {{#if Template.subscriptionsReady}}
+        <h1>sajdfj</h1>
+        {{> footer}}
+    {{else}}
+        {{> loading}}
+    {{/if}}
 </template>
