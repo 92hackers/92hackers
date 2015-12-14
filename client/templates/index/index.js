@@ -8,6 +8,8 @@
 var signIn = new ReactiveVar(null);
 var reloadAble = new ReactiveVar(null);
 
+var rePasswordCorrect = new ReactiveVar(null);
+
 Template.index.onCreated(function () {
 
     // since when a new user created, this var set to 1, here to reset it.
@@ -30,7 +32,6 @@ Template.index.onRendered(function () {
 
     $.material.init();
 
-    console.log(Meteor.user());
 });
 
 
@@ -60,6 +61,14 @@ Template.index.events({
             FlowRouter.reload();
         }
     }
+});
+
+Template.index.onDestroyed(function () {
+    $.fn.fullpage.destroy("all");
+
+    // below two lines are used to clean up the effect of fullpage.js
+    $("html").removeClass("fp-enabled");
+    $("body").removeClass("fp-viewing-0");
 });
 
 
@@ -115,7 +124,7 @@ var usernameHandler = _.debounce(function () {
                     Meteor.clearTimeout(timeId);
                 }, 2000);
             } else {
-                console.log("a new username created !");
+                console.log("this new username can be use !");
             }
         } else {
             console.log("call usernameExistDetect error");
@@ -131,9 +140,11 @@ Template.signUp.events({
         var $formGroup = template.$(event.currentTarget).closest(".form-group");
 
         if (password === rePassword) {
+            rePasswordCorrect.set(1);
             $formGroup.removeClass("has-error");
             $formGroup.addClass("has-success");
         } else {
+            rePasswordCorrect.set(0);
             $formGroup.removeClass("has-success");
             $formGroup.addClass("has-error");
         }
@@ -141,6 +152,13 @@ Template.signUp.events({
     "keyup #username": usernameHandler,
     "submit": function (event, template) {
         event.preventDefault();
+
+        // repeat typed password must be correct.
+
+        if ( !rePasswordCorrect.get() ) {
+            $("#rePassword").focus();
+            return ;
+        }
 
         if (Meteor.user()) Meteor.logout();
 

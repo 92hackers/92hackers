@@ -173,8 +173,10 @@
         //        BUT, I've left it here for backwards compatibility.
 
         // below two has-success are added by chenyuan, to achieve success display.
+        // add && $formGroup.hasClass("is-empty") condition detect. because in chinese,
+        // there need type Shift to transfer input method
 
-        if(validate) {
+        if(validate && $input.val() !== "") {
           if (isValid) {
             $formGroup.removeClass("has-error");
             $formGroup.addClass("has-success");
