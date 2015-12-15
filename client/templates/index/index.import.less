@@ -7,7 +7,7 @@
 }
 
 .index-wrap {
-  @section-idea-bg: #009587;
+  @section-idea-bg: @site-bg-color;
   @section-hackers-bg: #0074d9;
   @section-remote-work-bg: #ff851b;
   @section-ready-bg: #001f3f;
@@ -28,7 +28,7 @@
     border-radius: 3px;
     &:hover {
       background-color: #ffffff !important;
-      color: #009587 !important;
+      color: @site-bg-color !important;
     }
   }
   .section {
@@ -36,7 +36,13 @@
     color: #ffffff;
     p {
       font-weight: bold;
+      font-size: 24px;
+      @media (min-width: @custom-md-width) {
+        font-size: 26px;
+      }
+      @media (min-width: @custom-large-width) {
       font-size: 30px;
+    }
       text-shadow: 0 0 rgba(0,0,0,0.6);
     }
   }
