@@ -55,7 +55,7 @@ Template.projectCreateServices.events({
     getFormValues();
     _.extend(GlobalObject.projectCreate, valuesCollection);
     var newProject = {};
-    if (Meteor.user()) {
+    if ( !!Meteor.user() ) {
       newProject.owner = Meteor.userId();
       _.extend(newProject, GlobalObject.projectCreate);
       Project.insert(newProject, function ( error ) {
@@ -63,7 +63,7 @@ Template.projectCreateServices.events({
           GlobalObject.projectCreate = {};
         } else {
           alert("信息填写不完整，重新填写");
-          FlowRouter.go("/project/create/basic");
+          FlowRouter.go("projectCreateBasic");
         }
       });
     } else {

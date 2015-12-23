@@ -97,7 +97,7 @@ Template.projectCreateHr.events({
     getFormValues();
     _.extend(GlobalObject.projectCreate, valuesCollection);
     console.log(valuesCollection);
-    FlowRouter.go("/project/create/services");
+    FlowRouter.go("projectCreateServices");
   }
 });
 

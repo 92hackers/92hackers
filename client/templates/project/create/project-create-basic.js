@@ -30,7 +30,7 @@ Template.projectCreateBasic.events({
   "submit": function ( event, template ) {
     event.preventDefault();
     getBasicValues();
-    FlowRouter.go("/project/create/fullDesc");
+    FlowRouter.go("projectCreateFullDesc");
   },
   "keydown form": function ( event, template ) {    // prevent Enter to trigger submit event.
     if (event.which === 13 && $("#tags").closest(".form-group").hasClass("is-focused")) {

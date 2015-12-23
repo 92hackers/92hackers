@@ -36,6 +36,6 @@ Template.projectCreateFullDesc.events({
     getFormValues();
 
     _.extend(GlobalObject.projectCreate, valuesCollection);
-    FlowRouter.go("/project/create/hr");
+    FlowRouter.go("projectCreateHr");
   }
 });
