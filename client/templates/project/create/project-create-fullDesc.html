@@ -1,0 +1,62 @@
+<template name="projectCreateFullDesc">
+  <div class="project-create-fullDesc-wrap">
+    <!-- to add left to 15px to align label with input box.-->
+    <style>
+      .control-label {
+        left: 15px !important;
+      }
+    </style>
+    <div class="container">
+      {{> projectCreateHeader}}
+      <div class="row">
+        <div class="col-md-12">
+          <div class="well">
+            <form class="form-horizontal">
+              <fieldset>
+                <legend>创意介绍</legend>
+                <div class="form-group label-floating">
+                  <div class="col-md-12">
+                    <label for="initial-mind" class="control-label">想要做这个项目的初衷</label>
+                    <textarea id="initial-mind" cols="30" rows="5" class="form-control" pattern="^\S+$" required></textarea>
+                  </div>
+                </div>
+                <div class="form-group label-floating">
+                  <div class="col-md-12">
+                    <label for="problems-to-solve" class="control-label">解决了哪些用户的哪些痛点？</label>
+                    <textarea id="problems-to-solve" cols="30" rows="5" class="form-control" pattern="^\S+$" required></textarea>
+                  </div>
+                </div>
+                <div class="form-group label-floating">
+                  <div class="col-md-12">
+                    <label for="how-to-solve" class="control-label">具体怎么解决？想到了哪些方案？有哪些功能？</label>
+                    <textarea id="how-to-solve" cols="30" rows="5" class="form-control" pattern="^\S+$" required></textarea>
+                  </div>
+                </div>
+                <div class="form-group label-floating">
+                  <div class="col-md-12">
+                    <label for="usage-scene" class="control-label">例举一个或多个该产品应用场景</label>
+                    <textarea id="usage-scene" cols="30" rows="5" class="form-control" pattern="^\S+$" required></textarea>
+                  </div>
+                </div>
+                <div class="form-group label-floating">
+                  <div class="col-md-12">
+                    <label for="future-vision" class="control-label">对于这个创意，项目的最终愿景 (成立公司进行开发? 两个月的，半年的，一年的)</label>
+                    <textarea id="future-vision" cols="30" rows="5" class="form-control" pattern="^\S+$" required></textarea>
+                  </div>
+                </div>
+                <div class="form-group label-floating">
+                  <div class="col-md-12">
+                    <label for="about-myself" class="control-label">一个有独特个人魅力的人更能吸引到优秀的人才，介绍一下自己吧！</label>
+                    <textarea id="about-myself" cols="30" rows="5" class="form-control" pattern="^\S+$" required></textarea>
+                  </div>
+                </div>
+                {{> projectCreateNextButton tooltip="下面，选择小伙伴来帮你完成这个创意"}}
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{> footer}}
+</template>

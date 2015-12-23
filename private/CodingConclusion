@@ -1,0 +1,10 @@
+if one html file only contains less styles,
+ just put it into <style> tag in template. much often this style needs add !important postfix.
+ no need to add another less file,
+
+ if one style used much times, just put it into Global.import.less,
+
+ file-name, js variable, template name, all must be named carefully.
+
+ {{> templateName foo="bar" }}  : 这样直接就将foo作为template的data context当中的一个了，在那个template当中，直接用{{foo}} 就可以引用到bar这个值，
+ 如果是字符串，需要用双引号括起来。

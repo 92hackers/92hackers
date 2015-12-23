@@ -9,6 +9,9 @@
 GlobalObject = {};
 
 GlobalObject.website = {
-    version: "0.0.1",
-    founder: "ChenYuan"
+  version: "0.0.1",
+  founder: "ChenYuan"
 };
+
+// used to collect project-create values
+GlobalObject.projectCreate = {};

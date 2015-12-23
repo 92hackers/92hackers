@@ -3,16 +3,20 @@
  * Created by cy on 13/12/15.
  */
 
-Template.header.events({
-    "click .logout": function (event, template) {
-        event.preventDefault();
+Template.header.onRendered(function () {
+  $.material.init();
+});
 
-        Meteor.logout(function (err) {
-            if (!err) {
-                FlowRouter.reload();
-            } else {
-                console.log(err);
-            }
-        });
-    }
+Template.header.events({
+  "click .logout": function (event, template) {
+    event.preventDefault();
+
+    Meteor.logout(function (err) {
+      if (!err) {
+        FlowRouter.reload();
+      } else {
+        console.log(err);
+      }
+    });
+  }
 });

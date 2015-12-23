@@ -1,0 +1,131 @@
+<template name="projectCreateBasic">
+  <div class="project-create-basic-wrap">
+    <style>
+      .radio {
+        display: inline-block !important;
+      }
+      #tags-collection {
+        position: absolute;
+        top: 7px;
+        left: 25%;
+      }
+      #tags-collection span {
+        margin-right: 10px;
+      }
+      .label:hover {
+        cursor: pointer;
+      }
+      #tags-warning {
+        font-size: 12px;
+        color: #ff5722;
+        display: none;
+      }
+    </style>
+    <div class="container">
+      {{> projectCreateHeader}}
+      <div class="row">
+        <div class="col-md-12">
+          <div class="well">
+            <form class="form-horizontal">
+              <fieldset>
+                <legend>基本信息</legend>
+                <div class="form-group">
+                  <label for="name" class="col-md-1 control-label">项目名称</label>
+                  <div class="col-md-10">
+                    <input type="text" id="name" class="form-control" maxlength="60" required>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-1 control-label">项目类型</label>
+                  <div class="col-md-10">
+                    <div class="radio radio-primary">
+                      <label><input name="category" value="电子商务" type="radio">电子商务</label>
+                    </div>
+                    <div class="radio radio-primary">
+                      <label><input name="category" value="社交/新型社交" type="radio">社交/新型社交</label>
+                    </div>
+                    <div class="radio radio-primary">
+                      <label><input name="category" value="旅游户外" type="radio">旅游户外</label>
+                    </div>
+                    <div class="radio radio-primary">
+                      <label><input name="category" value="移动互联网" type="radio">移动互联网</label>
+                    </div>
+                    <div class="radio radio-primary">
+                      <label><input name="category" value="PC互联网" type="radio">PC互联网</label>
+                    </div>
+                    <div class="radio radio-primary">
+                      <label><input name="category" value="文化艺术体育" type="radio">文化艺术体育</label>
+                    </div>
+                    <div class="radio radio-primary">
+                      <label><input name="category" value="智能硬件/机器人" type="radio">智能硬件/机器人</label>
+                    </div>
+                    <div class="radio radio-primary">
+                      <label><input name="category" value="O2O" type="radio">O2O</label>
+                    </div>
+                    <div class="radio radio-primary">
+                      <label><input name="category" value="游戏动漫娱乐" type="radio">游戏动漫娱乐</label>
+                    </div>
+                    <div class="radio radio-primary">
+                      <label><input name="category" value="工具软件" type="radio">工具软件</label>
+                    </div>
+                    <div class="radio radio-primary">
+                      <label><input name="category" value="金融服务/虚拟金融" type="radio">金融服务/虚拟金融</label>
+                    </div>
+                    <div class="radio radio-primary">
+                      <label><input name="category" value="消费生活" type="radio">消费生活</label>
+                    </div>
+                    <div class="radio radio-primary">
+                      <label><input name="category" value="教育培训" type="radio">教育培训</label>
+                    </div>
+                    <div class="radio radio-primary">
+                      <label><input name="category" value="医疗健康" type="radio">医疗健康</label>
+                    </div>
+                    <div class="radio radio-primary">
+                      <label><input name="category" value="生物基因" type="radio">生物基因</label>
+                    </div>
+                    <div class="radio radio-primary">
+                      <label><input name="category" value="3D打印" type="radio">3D打印</label>
+                    </div>
+                    <div class="radio radio-primary">
+                      <label><input name="category" value="其他" type="radio">其他</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="tags" class="col-md-1 control-label">标签</label>
+                  <div class="col-md-10">
+                    <input type="text" id="tags" class="form-control" placeholder="按回车分隔标签" maxlength="10">
+                    <div id="tags-warning">请不要生成空标签</div>
+                    <span id="tags-collection"></span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="introduction" class="col-md-1 control-label">内容简介</label>
+                  <div class="col-md-10">
+                    <input class="form-control" id="introduction" type="text" maxlength="100" required>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="demo-url" class="col-md-1 control-label">Demo地址</label>
+                  <div class="col-md-10">
+                    <input id="demo-url" class="form-control" type="text" placeholder="如果有项目地址，可以填写，以便更好的吸引小伙伴" pattern="^\s*(http:\/\/|https:\/\/)www\.\S+\.\S+$" maxlength="100">
+                    <p class="help-block">记得加上协议，例如： https://www.github.com</p>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="resource" class="col-md-1 control-label">你能做什么</label>
+                  <div class="col-md-10">
+                    <input id="resource" class="form-control" type="text" placeholder="你具体能够为这个项目本身做些什么(开发,策划,,,)" maxlength="50" required>
+                  </div>
+                </div>
+                {{> projectCreateNextButton tooltip="接下来，完整的向世界阐述你的创意吧！"}}
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{> footer}}
+</template>
+

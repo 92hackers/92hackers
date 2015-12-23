@@ -1,0 +1,132 @@
+<template name="projectCreateServices">
+  <div class="project-create-services-wrap">
+    <style>
+      .zero-margin-top {
+        margin-top: 0;
+      }
+      #services-help {
+        font-size: 16px;
+        margin-left: 10px;
+        color: #BDBDBD;
+      }
+      #services-help:hover {
+        color: #009688;
+        text-decoration: none;
+      }
+      [type=submit] {
+        display: block;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+    </style>
+    <div class="container">
+      {{> projectCreateHeader}}
+      <div class="row">
+        <div class="col-md-12">
+          <div class="well">
+            <form class="form-horizontal">
+              <fieldset>
+                <legend>选择服务<a href="#" id="services-help" data-toggle="modal" data-target="#help" title="有问题 ？"><i class="glyphicon glyphicon-question-sign"></i></a></legend>
+                <div class="row">
+                  <h6 class="col-md-2">协作工具</h6>
+                </div>
+                <div class="form-group zero-margin-top">
+                  <div class="col-md-10 col-md-offset-1">
+                    <div class="checkbox">
+                      <label class="first-label" id="trello"><input name="coop-tool" value="Trello" type="checkbox">Trello</label>
+                      <div class="mdl-tooltip" for="trello">简单，易上手，非常合适用来进行敏捷开发</div>
+                      <label id="asana"><input name="coop-tool" value="Asana" type="checkbox">Asana</label>
+                      <div class="mdl-tooltip" for="asana">简单易用，功能强大，涵盖开发的方方面面，国内访问速度较慢</div>
+                      <label id="tower"><input name="coop-tool" value="tower.im" type="checkbox">tower.im</label>
+                      <div class="mdl-tooltip" for="tower">国内团队作品，非常容易上手，功能强大</div>
+                      <label id="teambition"><input name="coop-tool" value="teambition" type="checkbox">teambition</label>
+                      <div class="mdl-tooltip" for="teambition">功能齐全，界面干净</div>
+                      <label id="worktile"><input name="coop-tool" value="worktile" type="checkbox">worktile</label>
+                      <div class="mdl-tooltip" for="worktile">干净，简单，流畅，帅气</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <h6 class="col-md-2">代码</h6>
+                </div>
+                <div class="form-group zero-margin-top">
+                  <div class="col-md-10 col-md-offset-1">
+                    <div class="checkbox">
+                      <label class="first-label" id="github"><input name="code-tool" type="checkbox" checked disabled>github</label>
+                      <div class="mdl-tooltip" for="github">github是通用的代码管理平台，功能强大易用</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <h6 class="col-md-2">即时沟通</h6>
+                </div>
+                <div class="form-group zero-margin-top">
+                  <div class="col-md-10 col-md-offset-1">
+                    <div class="checkbox">
+                      <label class="first-label" id="weixin"><input name="com-tool" value="weixin" type="checkbox">微信</label>
+                      <div class="mdl-tooltip" for="weixin">最普遍使用的即时沟通工具</div>
+                      <label id="skype"><input name="com-tool" value="Skype" type="checkbox">Skype</label>
+                      <div class="mdl-tooltip" for="skype">网络电话，两个skype用户之间通话完全免费</div>
+                      <label id="phone"><input name="com-tool" value="telephone" type="checkbox">电话</label>
+                      <div class="mdl-tooltip" for="phone">在事情特别紧急的情况下，电话是最方便快捷的沟通方式</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <h6 class="col-md-2">文档</h6>
+                </div>
+                <div class="form-group zero-margin-top">
+                  <div class="col-md-10 col-md-offset-1">
+                    <div class="checkbox">
+                      <label class="first-label" id="baidu"><input name="archive-tool" value="baiduyunpan" type="checkbox">百度云盘</label>
+                      <div class="mdl-tooltip" for="baidu">容量大，速度快，适配多平台</div>
+                      <label id="dropbox"><input name="archive-tool" value="Dropbox" type="checkbox">Dropbox</label>
+                      <div class="mdl-tooltip" for="dropbox">安全稳定，界面干净，需要翻墙！</div>
+                      <label id="google-drive"><input name="archive-tool" value="Google Drive" type="checkbox">Google Drive</label>
+                      <div class="mdl-tooltip" for="google-drive">容量大，界面干净，需要翻墙！</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group zero-margin-top">
+                  <button class="btn btn-primary btn-lg" type="submit">提交项目</button>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="help" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header"><button class="close" type="button" data-dismiss="modal"><span>&times;</span></button><h4 class="modal-title">帮助</h4></div>
+          <div class="modal-body">
+            <p>下列工具对于初创团队，小型项目组来说都是免费使用的，同一类型的服务都有其各自的特点，选择合适自己的才是最好的</p>
+            <h6>协作工具</h6>
+            <p>Trello是一个专业的敏捷开发工具，高度自定制各种board一个card。</p>
+            <p>官方网站： <a href="https://www.trello.com" target="_blank">www.trello.com</a></p>
+            <p>Asana功能非常强大，很多大公司都在使用，当然，功能多也就意味着一定的学习成本</p>
+            <p>官方网站： <a href="https://www.asana.com" target="_blank">www.asana.com</a></p>
+            <p>tower.im是一个国内团队的产品，功能强大，界面干净，易于使用</p>
+            <p>官方网站： <a href="https://www.tower.im" target="_blank">www.tower.im</a></p>
+            <p>teambition功能齐全，界面干净</p>
+            <p>官方网站： <a href="https://www.teambition.com" target="_blank">www.teambition.com</a></p>
+            <p>worktile界面非常干净漂亮，非常易于上手，没有学习成本</p>
+            <p>官方网站： <a href="https://worktile.com" target="_blank">www.worktile.com</a></p>
+            <br>
+            <p>我们默认使用github进行代码的管理，相信程序猿们都已经熟知了使用方法</p>
+            <p>视屏聊天,可以选择微信或者QQ,需要进行电话沟通的可以选择Skype,在两个skype用户之间拨打是免费的</p>
+            <p>如果所选择的协作工具中没有提供文件共享的功能，则可以选择使用网盘来进行团队间文件的共享，值得注意的是，google drive和dropbox都是需要翻墙的</p>
+            <p>另外，网盘也可以作为团队存储大量历史文档的地方</p>
+            <br>
+            <p>去掉那该死的邮件吧，让我们拥抱未来！</p>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary pull-right" data-dismiss="modal">知道了</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{> footer}}
+</template>

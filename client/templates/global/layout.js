@@ -4,9 +4,3 @@
  */
 
 
-Template.layout.onRendered(function () {
-
-    // initialize the material js,
-
-    $.material.init();
-});

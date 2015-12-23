@@ -1,0 +1,163 @@
+<template name="projectCreateHr">
+  <div class="project-create-hr-wrap">
+    <style>
+      .radio {
+        display: inline-block;
+      }
+      .zero-margin-top {
+        margin-top: 0;
+      }
+      label {
+        position: relative;
+      }
+      .salary {
+        font-size: 12px;
+        position: absolute;
+        left: 0;
+        top: -20px;
+        line-height: 20px;
+        display: none;
+      }
+      .salary input {
+        width: 50px;
+        height: 20px;
+        background-color: #f8f8f8;
+        border-radius: 4px;
+        border: 1px solid #ececec;
+        color: #606060;
+        padding: 1px 8px 1px;
+      }
+    </style>
+    <div class="container">
+      {{> projectCreateHeader}}
+      <div class="row">
+        <div class="col-md-12">
+          <div class="well">
+            <form class="form-horizontal">
+              <fieldset>
+                <legend>选择合作伙伴</legend>
+                <div class="form-group">
+                  <label class="control-label col-md-1">适当的报酬</label>
+                  <div class="col-md-10">
+                    <div class="radio radio-primary">
+                      <label><input type="radio" name="pay-or-not" value="pay">适当的报酬可以提高参与的积极性</label>
+                    </div>
+                    <div class="radio radio-primary">
+                      <label><input type="radio" name="pay-or-not" value="no-pay">暂时没有剩余的资金</label>
+                    </div>
+                    <span class="help-block show">具体数额可以参考：<a href="http://www.lagou.com" target="_blank">拉勾网</a>,大概为其中的 1/10左右 </span>
+                  </div>
+                </div>
+                <div class="row">
+                  <h6 class="col-md-1">产品</h6>
+                </div>
+                <div class="form-group zero-margin-top">
+                  <div class="col-md-10 col-md-offset-1">
+                    <div class="checkbox">
+                      <label class="first-label" id="pm">
+                        <input name="product" value="产品经理" type="checkbox">
+                        <span class="salary">月薪: <input type="text"></span>
+                        产品经理
+                      </label>
+                      <div class="mdl-tooltip" for="pm">完成产品的策划、原型、产品流程和交互设计，包括定义、设计、推进等工作，完成需求文档的撰写</div>
+                      <label id="pd">
+                        <input name="product" value="产品设计师" type="checkbox">
+                        <span class="salary">月薪: <input type="text"></span>
+                        产品设计师</label>
+                      <div class="mdl-tooltip" for="pd">负责产品的交互界面设计，从用户体验的角度出发，提出交互设计和界面设计方案</div>
+                      <label id="m-pm">
+                        <input name="product" value="移动产品经理" type="checkbox">
+                        <span class="salary">月薪: <input type="text"></span>
+                        移动产品经理</label>
+                      <div class="mdl-tooltip" for="m-pm">负责移动互联网产品的市场调研、需求分析，并制定产品规范、产品功能设计和交互设计</div>
+                      <label id="p-pm">
+                        <input name="product" value="网页产品经理" type="checkbox">
+                        <span class="salary">月薪: <input type="text"></span>
+                        网页产品经理</label>
+                      <div class="mdl-tooltip" for="p-pm">负责PC互联网产品的市场调研、需求分析，并制定产品规范、产品功能设计和交互设计</div>
+                      <label id="e-pm">
+                        <input name="product" value="电商产品经理" type="checkbox">
+                        <span class="salary">月薪: <input type="text"></span>
+                        电商产品经理</label>
+                      <div class="mdl-tooltip" for="e-pm">使用原型、流程图、PRD等方法将需求转化成可供需求方、设计和开发使用的文档，并与各方沟通确认</div>
+                      <label id="g-pm">
+                        <input name="product" value="游戏策划" type="checkbox">
+                        <span class="salary">月薪: <input type="text"></span>
+                        游戏策划</label>
+                      <div class="mdl-tooltip" for="g-pm">负责游戏系统设计，原型设计，核心玩法的设计，模式及其玩法研究</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <h6 class="col-md-1">技术</h6>
+                </div>
+                <div class="form-group zero-margin-top">
+                  <div class="col-md-10 col-md-offset-1">
+                    <div class="checkbox">
+                      <label class="first-label" id="tech-partner">
+                        <input name="tech" value="全栈开发" type="checkbox">
+                        <span class="salary">月薪: <input type="text"></span>
+                        全栈开发</label>
+                      <div class="mdl-tooltip" for="tech-partner">设计产品原型，前后端通吃，对移动端能够指点一二，提出产品技术架构</div>
+                      <label id="back-end">
+                        <input name="tech" value="后台开发" type="checkbox">
+                        <span class="salary">月薪: <input type="text"></span>
+                        后台开发</label>
+                      <div class="mdl-tooltip" for="back-end">运用java, c++, python, php, nodejs等语言编写后台逻辑，操作数据库</div>
+                      <label id="ios-end">
+                        <input name="tech" value="ios端开发" type="checkbox">
+                        <span class="salary">月薪: <input type="text"></span>
+                        ios端开发</label>
+                      <div class="mdl-tooltip" for="ios-end">制作ios平台的应用</div>
+                      <label id="android-end">
+                        <input name="tech" value="android开发" type="checkbox">
+                        <span class="salary">月薪: <input type="text"></span>
+                        android开发</label>
+                      <div class="mdl-tooltip" for="android-end">制作android平台的应用</div>
+                      <label id="front-end">
+                        <input name="tech" value="前端开发" type="checkbox">
+                        <span class="salary">月薪: <input type="text"></span>
+                        前端开发</label>
+                      <div class="mdl-tooltip" for="front-end">根据界面原型图，运用html,css,javascript开发web界面</div>
+                      <label id="auto-test">
+                        <input name="tech" value="测试" type="checkbox">
+                        <span class="salary">月薪: <input type="text"></span>
+                        自动化测试</label>
+                      <div class="mdl-tooltip" for="auto-test">编写自动化测试脚本，测试代码逻辑，功能等等</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <h6 class="col-md-1">设计</h6>
+                </div>
+                <div class="form-group zero-margin-top">
+                  <div class="col-md-10 col-md-offset-1">
+                    <div class="checkbox">
+                      <label class="first-label" id="web-ui">
+                        <input name="design" value="网页设计师" type="checkbox">
+                        <span class="salary">月薪: <input type="text"></span>
+                        网页设计师</label>
+                      <div class="mdl-tooltip" for="web-ui">负责网站整体风格，配色，板块布局，配合工程师进行开发</div>
+                      <label id="app-ui">
+                        <input name="design" value="APP设计师" type="checkbox">
+                        <span class="salary">月薪: <input type="text"></span>
+                        APP设计师</label>
+                      <div class="mdl-tooltip" for="app-ui">移动端界面的设计，布局，对产品原型进行具体的效果图设计，视觉设计</div>
+                      <label id="ui-ui">
+                        <input name="design" value="UI设计师" type="checkbox">
+                        <span class="salary">月薪: <input type="text"></span>
+                        UI设计师</label>
+                      <div class="mdl-tooltip" for="ui-ui">使用photoshop,illustrator,sketch等软件设计产品界面，广告图片，专题页面等</div>
+                    </div>
+                  </div>
+                </div>
+                {{> projectCreateNextButton tooltip="选择将用来进行远程沟通的服务"}}
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{> footer}}
+</template>
