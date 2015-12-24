@@ -52,17 +52,28 @@ function getFormValues() {
 Template.projectCreateServices.events({
   "submit": function ( event, template ) {
     event.preventDefault();
+
+    //  ui displays loading button
+    $("[type=submit]").hide();
+    $(".loader").fadeIn();
+
     getFormValues();
     _.extend(GlobalObject.projectCreate, valuesCollection);
+
     var newProject = {};
+
     if ( !!Meteor.user() ) {
       newProject.owner = Meteor.userId();
       _.extend(newProject, GlobalObject.projectCreate);
-      Project.insert(newProject, function ( error ) {
-        if (!error) {
-          GlobalObject.projectCreate = {};
+      Project.insert(newProject, function ( error, result ) {
+        if (!error && result) {
+          // go to project homepage.
+          FlowRouter.go("projectHomepage", {pid: result});
         } else {
-          alert("信息填写不完整，重新填写");
+          $(".loader").fadeOut();
+          $("[type=submit]").show();
+          console.log(error);
+          alert("信息填写不完整，请重新填写");
           FlowRouter.go("projectCreateBasic");
         }
       });
@@ -71,4 +82,10 @@ Template.projectCreateServices.events({
     }
     console.log(GlobalObject.projectCreate);
   }
+});
+
+Template.projectCreateServices.onDestroyed(function () {
+
+  GlobalObject.projectCreate = {};
+
 });

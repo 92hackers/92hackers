@@ -15,3 +15,7 @@ GlobalObject.website = {
 
 // used to collect project-create values
 GlobalObject.projectCreate = {};
+
+// global Subscription Manager.
+
+GlobalObject.subscribeCache = new SubsManager();
