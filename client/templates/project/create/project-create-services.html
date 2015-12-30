@@ -33,7 +33,7 @@
           <div class="well">
             <form class="form-horizontal">
               <fieldset>
-                <legend>选择服务<a href="#" id="services-help" data-toggle="modal" data-target="#help" title="有问题 ？"><i class="glyphicon glyphicon-question-sign"></i></a></legend>
+                <legend>选择服务<a href="#" id="services-help" data-toggle="modal" data-target="#help" title="有问题 ？"><i class="fa fa-question"></i></a></legend>
                 <div class="row">
                   <h6 class="col-md-2">协作工具</h6>
                 </div>
@@ -112,37 +112,41 @@
         </div>
       </div>
     </div>
-    <div class="modal fade" id="help" role="dialog">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header"><button class="close" type="button" data-dismiss="modal"><span>&times;</span></button><h4 class="modal-title">帮助</h4></div>
-          <div class="modal-body">
-            <p>下列工具对于初创团队，小型项目组来说都是免费使用的，同一类型的服务都有其各自的特点，选择合适自己的才是最好的</p>
-            <h6>协作工具</h6>
-            <p>Trello是一个专业的敏捷开发工具，高度自定制各种board一个card。</p>
-            <p>官方网站： <a href="https://www.trello.com" target="_blank">www.trello.com</a></p>
-            <p>Asana功能非常强大，很多大公司都在使用，当然，功能多也就意味着一定的学习成本</p>
-            <p>官方网站： <a href="https://www.asana.com" target="_blank">www.asana.com</a></p>
-            <p>tower.im是一个国内团队的产品，功能强大，界面干净，易于使用</p>
-            <p>官方网站： <a href="https://www.tower.im" target="_blank">www.tower.im</a></p>
-            <p>teambition功能齐全，界面干净</p>
-            <p>官方网站： <a href="https://www.teambition.com" target="_blank">www.teambition.com</a></p>
-            <p>worktile界面非常干净漂亮，非常易于上手，没有学习成本</p>
-            <p>官方网站： <a href="https://worktile.com" target="_blank">www.worktile.com</a></p>
-            <br>
-            <p>我们默认使用github进行代码的管理，相信程序猿们都已经熟知了使用方法</p>
-            <p>视屏聊天,可以选择微信或者QQ,需要进行电话沟通的可以选择Skype,在两个skype用户之间拨打是免费的</p>
-            <p>如果所选择的协作工具中没有提供文件共享的功能，则可以选择使用网盘来进行团队间文件的共享，值得注意的是，google drive和dropbox都是需要翻墙的</p>
-            <p>另外，网盘也可以作为团队存储大量历史文档的地方</p>
-            <br>
-            <p>去掉那该死的邮件吧，让我们拥抱未来！</p>
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn-primary pull-right" data-dismiss="modal">知道了</button>
-          </div>
+    {{> servicesHelpModal}}
+  </div>
+  {{> footer}}
+</template>
+
+<template name="servicesHelpModal">
+  <div class="modal fade" id="help" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header"><button class="close" type="button" data-dismiss="modal"><span>&times;</span></button><h4 class="modal-title">帮助</h4></div>
+        <div class="modal-body">
+          <p>下列工具对于初创团队，小型项目组来说都是免费使用的，同一类型的服务都有其各自的特点，选择合适自己的才是最好的</p>
+          <h6>协作工具</h6>
+          <p>Trello是一个专业的敏捷开发工具，高度自定制各种board一个card。</p>
+          <p>官方网站： <a href="https://www.trello.com" target="_blank">www.trello.com</a></p>
+          <p>Asana功能非常强大，很多大公司都在使用，当然，功能多也就意味着一定的学习成本</p>
+          <p>官方网站： <a href="https://www.asana.com" target="_blank">www.asana.com</a></p>
+          <p>tower.im是一个国内团队的产品，功能强大，界面干净，易于使用</p>
+          <p>官方网站： <a href="https://www.tower.im" target="_blank">www.tower.im</a></p>
+          <p>teambition功能齐全，界面干净</p>
+          <p>官方网站： <a href="https://www.teambition.com" target="_blank">www.teambition.com</a></p>
+          <p>worktile界面非常干净漂亮，非常易于上手，没有学习成本</p>
+          <p>官方网站： <a href="https://worktile.com" target="_blank">www.worktile.com</a></p>
+          <br>
+          <p>我们默认使用github进行代码的管理，相信程序猿们都已经熟知了使用方法</p>
+          <p>视屏聊天,可以选择微信或者QQ,需要进行电话沟通的可以选择Skype,在两个skype用户之间拨打是免费的</p>
+          <p>如果所选择的协作工具中没有提供文件共享的功能，则可以选择使用网盘来进行团队间文件的共享，值得注意的是，google drive和dropbox都是需要翻墙的</p>
+          <p>另外，网盘也可以作为团队存储大量历史文档的地方</p>
+          <br>
+          <p>去掉那该死的邮件吧，让我们拥抱未来！</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary pull-right" data-dismiss="modal">知道了</button>
         </div>
       </div>
     </div>
   </div>
-  {{> footer}}
 </template>

@@ -1,0 +1,135 @@
+<template name="signInUpModal">
+  <!-- 登陆 注册  modal -->
+  <div id="signModal" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h1 class="modal-title">登陆/注册</h1>
+        </div>
+        <div class="modal-body">
+          {{#if signWhich}}
+            {{> signIn}}
+          {{else}}
+            {{> signUp}}
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="signIn">
+  <form class="form-horizontal">
+    <fieldset>
+      <div class="form-group">
+        <label for="user-name" class="col-sm-2 control-label">用户名</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="user-name" placeholder="用户名" maxlength="20" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password" class="col-sm-2 control-label">密码</label>
+        <div class="col-sm-10">
+          <input type="password" class="form-control" id="password" placeholder="密码" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-10 col-sm-offset-2">
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <button type="submit" class="btn btn-primary">登陆</button>
+          <span class="login-error">用户名或密码错误</span>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</template>
+
+<template name="signUp">
+  <form class="form-horizontal">
+    <fieldset>
+      <div class="form-group">
+        <label for="username" class="control-label col-sm-2">用户名</label>
+        <div class="col-sm-10">
+          <input type="text" id="username" class="form-control" placeholder="用户名" maxlength="30" pattern="^[^\d][\u4E00-\u9FA5\uF900-\uFA2Da-zA-Z0-9]{2,29}$" required>
+          <img class="form-loading-img" data-src="/images/loading.svg" alt="loading response">
+          <span class="usernameExisted">用户名已存在</span>
+          <p class="help-block">以字母或中文字符开头的 3 ~ 30 个字符</p>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password" class="control-label col-sm-2">密码</label>
+        <div class="col-sm-10">
+          <input type="password" id="password" class="form-control" placeholder="密码" maxlength="100" pattern="^[-a-zA-Z0-9@_,.]{6,100}$" required>
+          <p class="help-block">请填写一个不少于 6 个字母，数字混合的密码</p>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="rePassword" class="control-label col-sm-2">重复密码</label>
+        <div class="col-sm-10">
+          <input type="password" id="rePassword" class="form-control" placeholder="重复密码" required>
+          <p class="help-block">重新输入一遍上面的密码</p>
+        </div>
+      </div>
+      <!--            <div class="form-group">
+                      <label for="name" class="control-label col-sm-2">姓名</label>
+                      <div class="col-sm-10">
+                          <input type="text" id="name" class="form-control" placeholder="姓名">
+                          <p class="help-block">提供真实姓名更加利于远程工作中的沟通</p>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label for="avatar" class="control-label col-sm-2">我的头像</label>
+                      <div class="col-sm-10">
+                          <input type="text" id="avatar" class="form-control" placeholder="我的头像">
+                          <p class="help-block">个人头像：　这里需要重做</p>
+                      </div>
+                  </div>-->
+      <div class="form-group">
+        <label for="email" class="control-label col-sm-2">邮箱</label>
+        <div class="col-sm-10">
+          <input type="email" id="email" class="form-control" placeholder="邮箱" required>
+          <p class="help-block">请填写一个自己常用的邮箱</p>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="introduction" class="control-label col-sm-2">自我介绍</label>
+        <div class="col-sm-10">
+          <input type="text" id="introduction" class="form-control" placeholder="自我介绍" maxlength="100" required>
+          <p class="help-block">一句话介绍一下自己吧!</p>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-10 col-sm-offset-2">
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <button type="submit" class="btn btn-primary">注册</button>
+        </div>
+      </div>
+      <!--            <div class="form-group">
+                      <label class="control-label col-sm-2">性别</label>
+                      <div class="col-sm-10">
+                          <div class="radio radio-primary">
+                              <label><input type="radio" name="gender" id="male" value="男">男</label>
+                          </div>
+                          <div class="radio radio-primary">
+                              <label><input type="radio" name="gender" id="female" value="女">女</label>
+                          </div>
+                      </div>
+                  </div>-->
+      <!--            <div class="form-group">
+                      <label id="city" class="control-label col-sm-2">所在城市</label>
+                      <div class="col-sm-10">
+                          <input type="text" id="city" class="form-control" placeholder="所在城市">
+                          <p class="help-block">如果我们在你所在的城市有线下活动的话，一定会通知你的。</p>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label for="goodAt" class="control-label col-sm-2">擅长</label>
+                      <div class="col-sm-10">
+                          <input type="text" id="goodAt" class="form-control" placeholder="我擅长的事">
+                          <p class="help-block">比如： Web开发，天使投资， 改变世界的idea ...</p>
+                      </div>
+                  </div>-->
+    </fieldset>
+  </form>
+</template>

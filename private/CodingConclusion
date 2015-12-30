@@ -15,3 +15,5 @@ if one html file only contains less styles,
 
 part loading use:
 .loader>.loader-inner.line-scale-pulse-out-rapid>div*5
+
+every template needs set SEO in the onCreated function.

@@ -6,6 +6,10 @@
 
 var valuesCollection;
 
+Template.projectCreateServices.onCreated(function () {
+  SEO.set({ title: "92Hackers - 创建新项目"});
+});
+
 Template.projectCreateServices.onRendered(function () {
   componentHandler.upgradeAllRegistered();
   $.material.init();

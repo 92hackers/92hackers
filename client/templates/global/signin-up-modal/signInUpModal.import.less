@@ -1,0 +1,30 @@
+/**
+ * Created by cy on 29/12/15.
+ */
+
+// login modal styles.
+
+#signModal {
+  .form-group {
+    .form-loading-img {
+      position: absolute;
+      top: 7px;
+      right: 15px;
+
+      display: none;
+    }
+    .usernameExisted {
+      .form-loading-img();
+      top: 11px;
+      font-size: 12px;
+      color: @warning-color;
+    }
+    .login-error {
+      margin-left: 20px;
+      color: @error-color;
+      font-size: 12px;
+
+      display: none;
+    }
+  }
+}

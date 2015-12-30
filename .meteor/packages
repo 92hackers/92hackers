@@ -47,3 +47,6 @@ mdg:geolocation
 cy476571:material-design-lite-newest-version
 meteorhacks:subs-manager
 arillo:flow-router-helpers
+kadira:debug
+spiderable                  #make app can be crawled by spiders such as google, yahoo, bing
+tomwasd:flow-router-seo  #A simple way to set the title and meta tags for sites using flow router

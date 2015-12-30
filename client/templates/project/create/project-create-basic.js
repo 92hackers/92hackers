@@ -7,6 +7,12 @@
 
  var tags = [];
 
+Template.projectCreateBasic.onCreated(function () {
+  SEO.set({
+    title: "92Hackers - 创建新项目"
+  });
+});
+
 Template.projectCreateBasic.onRendered(function () {
 
   componentHandler.upgradeAllRegistered();

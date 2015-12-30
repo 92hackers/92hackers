@@ -3,5 +3,61 @@
  */
 
 .project-homepage-wrap {
-
+  h3.caption {
+    margin-bottom: 0;
+  }
+  article {
+    h5 {
+      margin-top: 50px;
+    }
+    .hire-list {
+      padding-left: 40px;
+      li {
+        &:not(:first-child) {
+          margin-left: 20px;
+        }
+        span {
+          &:last-child {
+            font-weight: bold;
+            font-size: 18px;
+          }
+        }
+      }
+    }
+    .services-list {
+      padding-left: 40px;
+    }
+    #services-help {
+      color: @site-gray-color;
+    }
+    #services-help:hover {
+      color: @site-color;
+      text-decoration: none;
+    }
+  }
+  aside {
+    .media {
+      margin-bottom: 20px;
+      .media-left {
+        img {
+          width: 64px;
+          height: 64px;
+        }
+      }
+    }
+    dl {
+      dt {
+        font-size: 20px;
+        width: 20px;
+        text-align: center;
+      }
+      dd {
+        margin-left: 40px;
+        line-height: 28px;
+      }
+    }
+    button {
+      font-size: 20px;
+    }
+  }
 }

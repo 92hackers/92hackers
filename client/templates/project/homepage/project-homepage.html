@@ -1,5 +1,130 @@
 <template name="projectHomepage">
-  <div class="project-homepage-wrap">
-
-  </div>
+  {{#if projectReady}}
+    <div class="project-homepage-wrap">
+      <div class="container">
+        <div class="row">
+          {{#with singleProject}}
+            <div class="col-md-8">
+              <div class="well">
+                <article>
+                  <h3 class="caption">{{name}}</h3>
+                  <ul class="list-inline">
+                    <i class="fa fa-tags"></i>
+                    {{#each tag in tags}}
+                      <li><span class="label label-default">{{tag}}</span></li>
+                    {{/each}}
+                  </ul>
+                  <small>{{introduction}}</small>
+                  <hr>
+                  {{#with fullDescription}}
+                    <h5>我的初衷</h5>
+                    <p>{{initialMind}}</p>
+                    <h5>要解决的问题</h5>
+                    <p>{{problemsToSolve}}</p>
+                    <h5>具体的解决方案</h5>
+                    <p>{{howToSolve}}</p>
+                    <h5>产品的应用场景</h5>
+                    <p>{{usageScene}}</p>
+                    <h5>我对于这款产品将来的计划</h5>
+                    <p>{{futureVision}}</p>
+                    <h5>最后，关于我自己</h5>
+                    <p>{{aboutMyself}}</p>
+                  {{/with}}
+                  <hr>
+                  <h4>我正在招募以下团队成员</h4>
+                  <h6>产品</h6>
+                  <ul class="list-inline hire-list">
+                    {{#each hire in productHire}}
+                      <li>
+                        <span>{{hire.category}}</span>
+                        <span title="一个月酬劳">￥{{hire.salary}}</span>
+                      </li>
+                    {{/each}}
+                  </ul>
+                  <h6>技术</h6>
+                  <ul class="list-inline hire-list">
+                    {{#each hire in techHire}}
+                      <li>
+                        <span>{{hire.category}}</span>
+                        <span title="一个月酬劳">￥{{hire.salary}}</span>
+                      </li>
+                    {{/each}}
+                  </ul>
+                  <h6>设计</h6>
+                  <ul class="list-inline hire-list">
+                    {{#each hire in designHire}}
+                      <li>
+                        <span>{{hire.category}}</span>
+                        <span title="一个月酬劳">￥{{hire.salary}}</span>
+                      </li>
+                    {{/each}}
+                  </ul>
+                  <hr>
+                  <h4>我们使用下列服务进行远程协作开发 <a href="#" id="services-help" data-toggle="modal" data-target="#help" title="有问题 ？"><i class="fa fa-question"></i></a></h4>
+                  <h6>远程协作开发工具</h6>
+                  <ul class="list-inline services-list">
+                    {{#each service in cooperationTools}}
+                      <li>{{service}}</li>
+                    {{/each}}
+                  </ul>
+                  <h6>代码仓库</h6>
+                  <ul class="list-inline services-list">
+                    {{#each service in codeTools}}
+                      <li>{{service}}</li>
+                    {{/each}}
+                  </ul>
+                  <h6>即时沟通工具</h6>
+                  <ul class="list-inline services-list">
+                    {{#each service in communicationTools}}
+                      <li>{{service}}</li>
+                    {{/each}}
+                  </ul>
+                  <h6>文件存储</h6>
+                  <ul class="list-inline services-list">
+                    {{#each service in fileTools}}
+                      <li>{{service}}</li>
+                    {{/each}}
+                  </ul>
+                </article>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="well">
+                <aside>
+                  {{#with projectOwnerProfile}}
+                    <h3 class="caption">项目创建者</h3>
+                    <div class="media">
+                      <div class="media-left">
+                        <a href="{{pathFor "userHomepage" uid=_id}}"><img src="{{avatarOrDefault}}" alt="avatar"></a>
+                      </div>
+                      <div class="media-body">
+                        <h4 class="media-heading">{{username}}</h4>
+                        {{profile.introduction}}
+                      </div>
+                    </div>
+                  {{/with}}
+                  <dl class="dl-horizontal">
+                    <dt><i class="fa fa-code-fork"></i></dt>
+                    <dd title="项目分类">{{category}}</dd>
+                    <dt><i class="fa fa-link"></i></dt>
+                    <dd title="Demo地址">{{#with demoUrl}}{{else}}暂时没有demo地址{{/with}}</dd>
+                    <dt><i class="fa fa-calendar"></i></dt>
+                    <dd title="发布时间">{{publishDate.fullYear}}-{{publishDate.month}}-{{publishDate.date}}</dd>
+                  </dl>
+                  <h5>我能做什么</h5>
+                  <p>{{ownResource}}</p>
+                  <hr>
+                  <button id="primary-button" class="btn btn-raised btn-primary btn-block">{{editOrJoin}}</button>
+                </aside>
+              </div>
+            </div>
+          {{/with}}
+        </div>
+      </div>
+      {{> servicesHelpModal}}
+    </div>
+    {{> footer}}
+  {{else}}
+    {{> loading}}
+  {{/if}}
 </template>

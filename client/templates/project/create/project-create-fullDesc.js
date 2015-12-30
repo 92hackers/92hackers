@@ -10,6 +10,10 @@ valuesCollection = {
   fullDescription: {}
 };
 
+Template.projectCreateFullDesc.onCreated(function () {
+  SEO.set({ title: "92Hackers - 创建新项目"});
+});
+
 Template.projectCreateFullDesc.onRendered(function () {
   componentHandler.upgradeAllRegistered();
   $.material.init();
