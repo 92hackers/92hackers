@@ -6,13 +6,14 @@
 
 var signIn = new ReactiveVar(null);
 
-var reloadAble = new ReactiveVar(null);
-
 var rePasswordCorrect = new ReactiveVar(null);
+
+// if user log into system successfully.
+var logIn = new ReactiveVar(false);
 
 Template.signInUpModal.onCreated(function () {
   // since when a new user created, this var set to 1, here to reset it.
-  reloadAble.set(0);
+  Session.set("reloadAble", false);
 });
 
 Template.signInUpModal.onRendered(function () {
@@ -37,13 +38,13 @@ Template.signInUpModal.events({
 
     if (which === "signIn") {
       signIn.set(true);
-      modalTitle.text("登陆");
+      modalTitle.text("登录");
     } else {
       signIn.set(false);
       modalTitle.text("注册");
     }
   },
-  "shown.bs.modal #signModal": function ( event, template ) {
+  "shown.bs.modal #signModal": function () {
     if ($("#username").size()) {
       $("#username").focus();
     } else if ($("#user-name").size()) {
@@ -51,9 +52,7 @@ Template.signInUpModal.events({
     }
   },
   "hidden.bs.modal #signModal": function () {
-    if (reloadAble.get()) {
-      FlowRouter.reload();
-    }
+    Session.set("loggedIn", logIn);
   }
 });
 
@@ -68,7 +67,8 @@ Template.signIn.events({
 
     Meteor.loginWithPassword(username, password, function (err, result) {
       if (!err) {
-        reloadAble.set(1);
+        Session.set("reloadAble", true);
+        logIn.set(true);
         $("#signModal").modal("hide");
       } else {
         if ( clientErrorCode.test(err.error) ) {
@@ -169,7 +169,8 @@ Template.signUp.events({
 
     Accounts.createUser(userObject, function (err) {
       if (!err) {
-        reloadAble.set(1);
+        logIn.set(true);
+        Session.set("reloadAble", true);
         $("#signModal").modal("hide");
         console.log("new user created.");
       } else {

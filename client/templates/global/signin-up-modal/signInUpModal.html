@@ -1,22 +1,24 @@
+<!-- you should use unless currentUser in every template which uses this template,if a user logged in, there is no need to include this template.-->
+
 <template name="signInUpModal">
   <!-- 登陆 注册  modal -->
-  <div id="signModal" class="modal fade">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h1 class="modal-title">登陆/注册</h1>
-        </div>
-        <div class="modal-body">
-          {{#if signWhich}}
-            {{> signIn}}
-          {{else}}
-            {{> signUp}}
-          {{/if}}
+    <div id="signModal" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h1 class="modal-title">登录/注册</h1>
+          </div>
+          <div class="modal-body">
+            {{#if signWhich}}
+              {{> signIn}}
+            {{else}}
+              {{> signUp}}
+            {{/if}}
+          </div>
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <template name="signIn">

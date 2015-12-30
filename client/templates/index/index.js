@@ -18,8 +18,18 @@ Template.index.onRendered(function () {
 
   // material design plugin initialisation.
 
+  console.log("from index render function");
+
   $.material.init();
 
+});
+
+Template.index.events({
+  "hidden.bs.modal #signModal": function () {
+    if (Session.get("reloadAble")) {
+      FlowRouter.reload();
+    }
+  }
 });
 
 Template.index.onDestroyed(function () {

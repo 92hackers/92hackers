@@ -13,6 +13,7 @@ Template.header.events({
 
     Meteor.logout(function (err) {
       if (!err) {
+        Session.set("loggedIn", false);
         FlowRouter.reload();
       } else {
         console.log(err);

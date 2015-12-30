@@ -1,5 +1,5 @@
 /**
- *  this file defines the website level variable GlobalObject.
+ *  this file defines the website level variable GlobalObject and Sessions.
  * Created by cy on 14/12/15.
  */
 
@@ -20,3 +20,8 @@ GlobalObject.projectCreate = {};
 
 GlobalObject.subscribeCache = new SubsManager();
 
+// when log in and out, reload current page.
+Session.setDefault("reloadAble", false);
+
+// log in default, there is no need signinup modal.
+Session.setDefault("loggedIn", true);
