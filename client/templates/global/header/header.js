@@ -8,6 +8,32 @@ Template.header.onRendered(function () {
 });
 
 Template.header.events({
+  "shown.bs.modal #header-feed-back-modal": function (event, template) {
+    "use strict";
+    template.$("#advisor-email").focus();
+  },
+  "submit": function ( event, template ) {
+    "use strict";
+    event.preventDefault();
+    var feedBack = {
+      email: template.$("#advisor-email").val(),
+      feedBackText: template.$("#feed-back-textarea").val()
+    };
+    var submitButton = $("#submit-feed-back");
+    if (feedBack) {
+      FeedBacks.insert(feedBack, function ( err, result ) {
+        if (!err && result) {
+          submitButton.text("反馈成功!");
+          var timeId = Meteor.setTimeout(function () {
+            $("#header-feed-back-modal").modal("hide");
+            Meteor.clearTimeout(timeId);
+          }, 2000);
+        } else {
+          console.log(err);
+        }
+      });
+    }
+  },
   "click .logout": function (event, template) {
     event.preventDefault();
 
