@@ -52,12 +52,12 @@ Template.signInUpModal.events({
     }
   },
   "hidden.bs.modal #signModal": function () {
-    Session.set("loggedIn", logIn);
+    Session.set("loggedIn", logIn.get());
   }
 });
 
 Template.signIn.events({
-  "submit": function (event, template) {
+  "submit .signIn-form": function (event, template) {
     event.preventDefault();
 
     var username = template.$("#user-name").val();
@@ -135,7 +135,7 @@ Template.signUp.events({
     }
   },
   "keyup #username": usernameHandler,
-  "submit": function (event, template) {
+  "submit .signUp-form": function (event, template) {
     event.preventDefault();
 
     // repeat typed password must be correct.
@@ -167,6 +167,7 @@ Template.signUp.events({
       createdAt: new Date()
     };
 
+
     Accounts.createUser(userObject, function (err) {
       if (!err) {
         logIn.set(true);
@@ -174,6 +175,7 @@ Template.signUp.events({
         $("#signModal").modal("hide");
         console.log("new user created.");
       } else {
+        console.log(err);
         if (err.error === 403) {
           var $existed = $(".usernameExisted");
 

@@ -24,7 +24,7 @@ Template.projectHomepage.onCreated(function () {
 Template.projectHomepage.onRendered(function () {
 
   var timeId = Meteor.setInterval(function () {
-    if ( $("#primary-button").size() ) {
+    if ( $("#edit-button").size() && $("#save-button").size() || $("#join-button").size() ) {
       $.material.init();
       Meteor.clearInterval(timeId);
     }
@@ -51,12 +51,8 @@ Template.projectHomepage.helpers({
     };
     return publishDate || {};
   },
-  editOrJoin: function () {
+  isProjectOwner: function () {
     var projectOwner = this.owner;
-    if (Meteor.userId() === projectOwner) {
-      return "编辑";
-    } else {
-      return "我要加入";
-    }
+    return Meteor.userId() === projectOwner;
   }
 });

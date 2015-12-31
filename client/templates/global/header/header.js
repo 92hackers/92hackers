@@ -5,6 +5,9 @@
 
 Template.header.onRendered(function () {
   $.material.init();
+  if ( !Meteor.user()) {
+    Session.set("loggedIn", false);
+  }
 });
 
 Template.header.events({
@@ -12,7 +15,7 @@ Template.header.events({
     "use strict";
     template.$("#advisor-email").focus();
   },
-  "submit": function ( event, template ) {
+  "submit #header-feed-back-modal form": function ( event, template ) {
     "use strict";
     event.preventDefault();
     var feedBack = {
@@ -23,9 +26,10 @@ Template.header.events({
     if (feedBack) {
       FeedBacks.insert(feedBack, function ( err, result ) {
         if (!err && result) {
-          submitButton.text("反馈成功!");
+          submitButton.text("反馈成功 ！");
           var timeId = Meteor.setTimeout(function () {
             $("#header-feed-back-modal").modal("hide");
+            submitButton.attr("disabled", "disabled");      // prevent submit feedback repeat.
             Meteor.clearTimeout(timeId);
           }, 2000);
         } else {

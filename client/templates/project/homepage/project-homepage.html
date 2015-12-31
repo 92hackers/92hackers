@@ -87,6 +87,16 @@
                   </ul>
                 </article>
               </div>
+              {{#if isProjectOwner}}
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title text-danger">危险操作</h3>
+                  </div>
+                  <div class="panel-body">
+                    <button id="delete-project" class="btn btn-raised btn-danger btn-block">删除这个项目</button>
+                  </div>
+                </div>
+              {{/if}}
             </div>
             <div class="col-md-4">
               <div class="well">
@@ -114,7 +124,12 @@
                   <h5>我能做什么</h5>
                   <p>{{ownResource}}</p>
                   <hr>
-                  <button id="primary-button" class="btn btn-raised btn-primary btn-block">{{editOrJoin}}</button>
+                  {{#if isProjectOwner}}
+                    <button id="edit-button" class="btn btn-raised btn-primary btn-block" type="button">编辑</button>
+                    <button id="save-button" class="btn btn-success btn-block hide" type="button">保存</button>
+                  {{else}}
+                    <button id="join-button" class="btn btn-raised btn-primary btn-block" type="button">我要加入</button>
+                  {{/if}}
                 </aside>
               </div>
             </div>
