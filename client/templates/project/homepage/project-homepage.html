@@ -16,44 +16,66 @@
                   </ul>
                   <small>{{introduction}}</small>
                   <hr>
-                  {{#with fullDescription}}
-                    <h5>我的初衷</h5>
-                    <p>{{initialMind}}</p>
-                    <h5>要解决的问题</h5>
-                    <p>{{problemsToSolve}}</p>
-                    <h5>具体的解决方案</h5>
-                    <p>{{howToSolve}}</p>
-                    <h5>产品的应用场景</h5>
-                    <p>{{usageScene}}</p>
-                    <h5>我对于这款产品将来的计划</h5>
-                    <p>{{futureVision}}</p>
-                    <h5>最后，关于我自己</h5>
-                    <p>{{aboutMyself}}</p>
-                  {{/with}}
+                  <h5>我的初衷</h5>
+                  <p id="initial-mind" class="editable">{{fullDescription.initialMind}}</p>
+                  {{#if isProjectOwner}}
+                    <p id="initial-mind-clone" class="hide">{{fullDescription.initialMind}}</p>
+                  {{/if}}
+                  <h5>要解决的问题</h5>
+                  <p id="problems-to-solve" class="editable">{{fullDescription.problemsToSolve}}</p>
+                  {{#if isProjectOwner}}
+                    <p id="problems-to-solve-clone" class="hide">{{fullDescription.problemsToSolve}}</p>
+                  {{/if}}
+                  <h5>具体的解决方案</h5>
+                  <p id="how-to-solve" class="editable">{{fullDescription.howToSolve}}</p>
+                  {{#if isProjectOwner}}
+                    <p id="how-to-solve-clone" class="hide">{{fullDescription.howToSolve}}</p>
+                  {{/if}}
+                  <h5>产品的应用场景</h5>
+                  <p id="usage-scene" class="editable">{{fullDescription.usageScene}}</p>
+                  {{#if isProjectOwner}}
+                    <p id="usage-scene-clone" class="hide">{{fullDescription.usageScene}}</p>
+                  {{/if}}
+                  <h5>我对于这款产品将来的计划</h5>
+                  <p id="future-vision" class="editable">{{fullDescription.futureVision}}</p>
+                  {{#if isProjectOwner}}
+                    <p id="future-vision-clone" class="hide">{{fullDescription.futureVision}}</p>
+                  {{/if}}
+                  <h5>最后，关于我自己</h5>
+                  <p id="about-myself" class="editable">{{fullDescription.aboutMyself}}</p>
+                  {{#if isProjectOwner}}
+                    <p id="about-myself-clone" class="hide">{{fullDescription.aboutMyself}}</p>
+                  {{/if}}
                   <hr>
                   <h4>我正在招募以下团队成员</h4>
-                  <h6>产品</h6>
+                  <h6>产品&nbsp;{{#if isProjectOwner}}<i class="fa fa-plus"></i>{{/if}}</h6>
+                  <ul class="list-inline hire-rest">
+
+                  </ul>
                   <ul class="list-inline hire-list">
                     {{#each hire in productHire}}
                       <li>
+                        <i class="fa fa-minus"></i>
                         <span>{{hire.category}}</span>
                         <span title="一个月酬劳">￥{{hire.salary}}</span>
                       </li>
                     {{/each}}
                   </ul>
-                  <h6>技术</h6>
+                  <h6>技术&nbsp;{{#if isProjectOwner}}<i class="fa fa-plus"></i>{{/if}}</h6>
                   <ul class="list-inline hire-list">
                     {{#each hire in techHire}}
                       <li>
+                        <i class="fa fa-minus"></i>
                         <span>{{hire.category}}</span>
                         <span title="一个月酬劳">￥{{hire.salary}}</span>
                       </li>
                     {{/each}}
                   </ul>
-                  <h6>设计</h6>
+                  <h6>设计&nbsp;{{#if isProjectOwner}}<i class="fa fa-plus"></i>{{/if}}</h6>
                   <ul class="list-inline hire-list">
                     {{#each hire in designHire}}
                       <li>
+                        <i class="fa fa-minus"></i>
                         <span>{{hire.category}}</span>
                         <span title="一个月酬劳">￥{{hire.salary}}</span>
                       </li>
@@ -61,25 +83,25 @@
                   </ul>
                   <hr>
                   <h4>我们使用下列服务进行远程协作开发 <a href="#" id="services-help" data-toggle="modal" data-target="#help" title="有问题 ？"><i class="fa fa-question"></i></a></h4>
-                  <h6>远程协作开发工具</h6>
+                  <h6>远程协作开发工具&nbsp;{{#if isProjectOwner}}<i class="fa fa-plus"></i>{{/if}}</h6>
                   <ul class="list-inline services-list">
                     {{#each service in cooperationTools}}
                       <li>{{service}}</li>
                     {{/each}}
                   </ul>
-                  <h6>代码仓库</h6>
+                  <h6>代码仓库&nbsp;{{#if isProjectOwner}}<i class="fa fa-plus"></i>{{/if}}</h6>
                   <ul class="list-inline services-list">
                     {{#each service in codeTools}}
                       <li>{{service}}</li>
                     {{/each}}
                   </ul>
-                  <h6>即时沟通工具</h6>
+                  <h6>即时沟通工具&nbsp;{{#if isProjectOwner}}<i class="fa fa-plus"></i>{{/if}}</h6>
                   <ul class="list-inline services-list">
                     {{#each service in communicationTools}}
                       <li>{{service}}</li>
                     {{/each}}
                   </ul>
-                  <h6>文件存储</h6>
+                  <h6>文件存储&nbsp;{{#if isProjectOwner}}<i class="fa fa-plus"></i>{{/if}}</h6>
                   <ul class="list-inline services-list">
                     {{#each service in fileTools}}
                       <li>{{service}}</li>
@@ -117,16 +139,23 @@
                     <dt><i class="fa fa-code-fork"></i></dt>
                     <dd title="项目分类">{{category}}</dd>
                     <dt><i class="fa fa-link"></i></dt>
-                    <dd title="Demo地址">{{#with demoUrl}}{{else}}暂时没有demo地址{{/with}}</dd>
+                    <dd id="demo-url" class="editable-item" title="Demo地址">{{#if demoUrl}}<a href="{{demoUrl}}" target="_blank">{{demoUrl}}</a>{{else}}暂时没有demo地址{{/if}}</dd>
+                    {{#if isProjectOwner}}
+                      <dd id="demo-url-clone" class="hide">{{#if demoUrl}}<a href="{{demoUrl}}" target="_blank">{{demoUrl}}</a>{{else}}暂时没有demo地址{{/if}}</dd>
+                    {{/if}}
                     <dt><i class="fa fa-calendar"></i></dt>
                     <dd title="发布时间">{{publishDate.fullYear}}-{{publishDate.month}}-{{publishDate.date}}</dd>
                   </dl>
                   <h5>我能做什么</h5>
-                  <p>{{ownResource}}</p>
+                  <p id="own-resource" class="editable">{{ownResource}}</p>
+                  {{#if isProjectOwner}}
+                    <p id="own-resource-clone" class="hide">{{ownResource}}</p>
+                  {{/if}}
                   <hr>
                   {{#if isProjectOwner}}
                     <button id="edit-button" class="btn btn-raised btn-primary btn-block" type="button">编辑</button>
-                    <button id="save-button" class="btn btn-success btn-block hide" type="button">保存</button>
+                    <button id="save-button" class="btn btn-success btn-block" type="button">保存修改</button>
+                    <button id="cancel-button" class="btn btn-default btn-block" type="button">取消</button>
                   {{else}}
                     <button id="join-button" class="btn btn-raised btn-primary btn-block" type="button">我要加入</button>
                   {{/if}}

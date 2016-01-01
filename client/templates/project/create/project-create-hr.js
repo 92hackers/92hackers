@@ -96,7 +96,7 @@ Template.projectCreateHr.events({
       $(".show-salary").fadeOut().removeClass("show-salary");
     }
   },
-  "submit": function ( event, template ) {
+  "submit .project-create-hr-wrap form": function ( event, template ) {
     event.preventDefault();
     getFormValues();
     _.extend(GlobalObject.projectCreate, valuesCollection);

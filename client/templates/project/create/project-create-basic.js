@@ -33,10 +33,14 @@ function getBasicValues() {
 }
 
 Template.projectCreateBasic.events({
-  "submit": function ( event, template ) {
+  "submit .project-create-basic-wrap form": function ( event, template ) {
     event.preventDefault();
-    getBasicValues();
-    FlowRouter.go("projectCreateFullDesc");
+    if ( !!Meteor.user() ) {
+      getBasicValues();
+      FlowRouter.go("projectCreateFullDesc");
+    } else {
+      alert("您还没有登录 !");
+    }
   },
   "keydown form": function ( event, template ) {    // prevent Enter to trigger submit event.
     if (event.which === 13 && $("#tags").closest(".form-group").hasClass("is-focused")) {

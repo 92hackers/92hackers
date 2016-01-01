@@ -16,45 +16,44 @@ Template.projectCreateServices.onRendered(function () {
 });
 
 function getFormValues() {
-  var a, b, c;
   var coopTools = $("[name='coop-tool']:checked");
-  var codeTools = "github";
+  var codeTools = "Github";
   var comTools = $("[name='com-tool']:checked");
-  var archiveTools = $("[name='archive-tool']:checked");
+  var fileTools = $("[name='file-tool']:checked");
 
   var coopChecked = [];
   var codeChecked = [codeTools];
   var comChecked = [];
-  var archiveChecked = [];
+  var fileChecked = [];
 
   if (coopTools.size()) {
-    for (a = 0; a < coopTools.size(); a++) {
-      coopChecked.push(coopTools[a].value);
-    }
+    _.each(coopTools, function ( item, index ) {
+      coopChecked.push(item.value);
+    });
   }
 
   if (comTools.size()) {
-    for (b = 0; b < comTools.size(); b++) {
-      comChecked.push(comTools[b].value);
-    }
+    _.each(comTools, function ( item, index ) {
+      comChecked.push(item.value);
+    });
   }
 
-  if (archiveTools.size()) {
-    for (c = 0; c < archiveTools.size(); c++) {
-      archiveChecked.push(archiveTools[c].value);
-    }
+  if (fileTools.size()) {
+    _.each(fileTools, function ( item, index ) {
+      fileChecked.push(item.value);
+    });
   }
 
   valuesCollection = {
     cooperationTools: coopChecked,
     codeTools: codeChecked,
     communicationTools: comChecked,
-    fileTools: archiveChecked
+    fileTools: fileChecked
   }
 }
 
 Template.projectCreateServices.events({
-  "submit": function ( event, template ) {
+  "submit .project-create-services-wrap form": function ( event, template ) {
     event.preventDefault();
 
     //  ui displays loading button

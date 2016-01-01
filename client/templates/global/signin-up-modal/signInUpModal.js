@@ -53,6 +53,9 @@ Template.signInUpModal.events({
   },
   "hidden.bs.modal #signModal": function () {
     Session.set("loggedIn", logIn.get());
+
+    // bind elements to js plugin.
+    $.material.init();
   }
 });
 

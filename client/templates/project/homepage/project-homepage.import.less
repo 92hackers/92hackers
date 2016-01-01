@@ -59,5 +59,24 @@
     button {
       font-size: 20px;
     }
+    #save-button {
+      display: none;
+    }
+    #cancel-button {
+      display: none;
+    }
+  }
+  .editable {
+    &:focus {
+      border: 1px solid @site-color;
+    }
+  }
+  .editable-item {
+    .editable();
+  }
+  .fa {
+    &:hover {
+      cursor: pointer;
+    }
   }
 }

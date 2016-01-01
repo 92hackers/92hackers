@@ -34,7 +34,7 @@ function getFormValues() {
 }
 
 Template.projectCreateFullDesc.events({
-  "submit": function ( event, template ) {
+  "submit .project-create-fullDesc-wrap form": function ( event, template ) {
     event.preventDefault();
 
     getFormValues();
