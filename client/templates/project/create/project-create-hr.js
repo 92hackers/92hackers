@@ -21,42 +21,43 @@ function getFormValues() {
   var $tech = $("[name=tech]:checked");
   var $design = $("[name=design]:checked");
 
-  var i, j, k;
-
   var productChecked = [];
   var techChecked = [];
   var designChecked = [];
 
 
   if ($product.size()) {
-    for (i = 0; i < $product.size(); i++) {
+    $product.each(function () {
       productChecked.push({
-        category: $product[i].value,
-        salary: $($product[i]).siblings(".show-salary").find("input").val()
+        category: $(this).val(),
+        salary: $payOrNot.val() === "pay" ? $(this).nextAll(".show-salary")
+            .children("input[type=text]").val() : 0
       });
-    }
+    });
   }
 
   if ($tech.size()) {
-    for (j = 0; j < $tech.size(); j++) {
+    $tech.each(function () {
       techChecked.push({
-        category: $tech[j].value,
-        salary: $($tech[j]).siblings(".show-salary").find("input").val()
+        category: $(this).val(),
+        salary: $payOrNot.val() === "pay" ? $(this).nextAll(".show-salary")
+            .children("input[type=text]").val() : 0
       });
-    }
+    });
   }
 
   if ($design.size()) {
-    for (k = 0; k < $design.size(); k++) {
+    $design.each(function () {
       designChecked.push({
-        category: $design[k].value,
-        salary: $($design[k]).siblings(".show-salary").find("input").val()
+        category: $(this).val(),
+        salary: $payOrNot.val() === "pay" ? $(this).nextAll(".show-salary")
+            .children("input[type=text]").val() : 0
       });
-    }
+    });
   }
 
   valuesCollection = {
-    payOrNot: $payOrNot.val(),
+    payOrNot: $payOrNot.val() || "no-pay",      // set no pay default.
     productHire: productChecked,
     techHire: techChecked,
     designHire: designChecked
@@ -79,7 +80,7 @@ Template.projectCreateHr.events({
       }
     }
   },
-  "click input[name='pay-or-not']": function ( event ) {
+  "click input[name='pay-or-not']": function ( event ) {      //  correct show and hide salary box when toggle between pay and no pay.
     var pay = $(event.currentTarget).val();
     var checkboxs = $("[type=checkbox]:checked");
     if (pay === "pay") {
@@ -94,6 +95,15 @@ Template.projectCreateHr.events({
       }
     } else if (pay === "no-pay") {
       $(".show-salary").fadeOut().removeClass("show-salary");
+    }
+  },
+  "change .salary input[type=text]": function ( event, template ) {
+    var currentElem = template.$(event.currentTarget);
+    var value = currentElem.val();
+    var numberPattern = /^[1-9][0-9]+$/;
+    if ( !numberPattern.test(value) ) {
+      alert("请输入数字!");
+      currentElem.focus();
     }
   },
   "submit .project-create-hr-wrap form": function ( event, template ) {

@@ -34,6 +34,32 @@
       color: @site-color;
       text-decoration: none;
     }
+    .fa-check {
+      color: @site-color;
+    }
+    ul.list-inline {
+      li {
+        .fa-minus {
+          visibility: hidden;
+        }
+        &:hover {
+          & > .fa-minus {
+            visibility: visible;
+          }
+        }
+      }
+    }
+    .checkbox {
+      display: none;
+    }
+    h6 {
+      .fa {
+        margin-left: 11px;
+      }
+      .show-on-edit {
+        display: none;
+      }
+    }
   }
   aside {
     .media {
@@ -77,6 +103,25 @@
   .fa {
     &:hover {
       cursor: pointer;
+    }
+  }
+  .salary {
+    display: block;
+  }
+  .panel {
+    .panel-body {
+      h6 {
+        font-weight: bold;
+        margin-top: 0;
+      }
+      p {
+        position: relative;
+        #delete-project {
+          position: absolute;
+          right: 0;
+          top: -15px;
+        }
+      }
     }
   }
 }

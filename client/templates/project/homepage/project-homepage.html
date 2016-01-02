@@ -17,94 +17,178 @@
                   <small>{{introduction}}</small>
                   <hr>
                   <h5>我的初衷</h5>
-                  <p id="initial-mind" class="editable">{{fullDescription.initialMind}}</p>
-                  {{#if isProjectOwner}}
-                    <p id="initial-mind-clone" class="hide">{{fullDescription.initialMind}}</p>
-                  {{/if}}
-                  <h5>要解决的问题</h5>
-                  <p id="problems-to-solve" class="editable">{{fullDescription.problemsToSolve}}</p>
-                  {{#if isProjectOwner}}
-                    <p id="problems-to-solve-clone" class="hide">{{fullDescription.problemsToSolve}}</p>
-                  {{/if}}
-                  <h5>具体的解决方案</h5>
-                  <p id="how-to-solve" class="editable">{{fullDescription.howToSolve}}</p>
-                  {{#if isProjectOwner}}
-                    <p id="how-to-solve-clone" class="hide">{{fullDescription.howToSolve}}</p>
-                  {{/if}}
-                  <h5>产品的应用场景</h5>
-                  <p id="usage-scene" class="editable">{{fullDescription.usageScene}}</p>
-                  {{#if isProjectOwner}}
-                    <p id="usage-scene-clone" class="hide">{{fullDescription.usageScene}}</p>
-                  {{/if}}
-                  <h5>我对于这款产品将来的计划</h5>
-                  <p id="future-vision" class="editable">{{fullDescription.futureVision}}</p>
-                  {{#if isProjectOwner}}
-                    <p id="future-vision-clone" class="hide">{{fullDescription.futureVision}}</p>
-                  {{/if}}
-                  <h5>最后，关于我自己</h5>
-                  <p id="about-myself" class="editable">{{fullDescription.aboutMyself}}</p>
-                  {{#if isProjectOwner}}
-                    <p id="about-myself-clone" class="hide">{{fullDescription.aboutMyself}}</p>
-                  {{/if}}
+                  {{#with fullDescription}}
+                    <p id="initial-mind" class="editable">{{initialMind}}</p>
+                    {{#if isProjectOwner ..}}
+                      <p id="initial-mind-clone" class="hide">{{initialMind}}</p>
+                    {{/if}}
+                    <h5>要解决的问题</h5>
+                    <p id="problems-to-solve" class="editable">{{problemsToSolve}}</p>
+                    {{#if isProjectOwner ..}}
+                      <p id="problems-to-solve-clone" class="hide">{{problemsToSolve}}</p>
+                    {{/if}}
+                    <h5>具体的解决方案</h5>
+                    <p id="how-to-solve" class="editable">{{howToSolve}}</p>
+                    {{#if isProjectOwner ..}}
+                      <p id="how-to-solve-clone" class="hide">{{howToSolve}}</p>
+                    {{/if}}
+                    <h5>产品的应用场景</h5>
+                    <p id="usage-scene" class="editable">{{usageScene}}</p>
+                    {{#if isProjectOwner ..}}
+                      <p id="usage-scene-clone" class="hide">{{usageScene}}</p>
+                    {{/if}}
+                    <h5>我对于这款产品将来的计划</h5>
+                    <p id="future-vision" class="editable">{{futureVision}}</p>
+                    {{#if isProjectOwner ..}}
+                      <p id="future-vision-clone" class="hide">{{futureVision}}</p>
+                    {{/if}}
+                    <h5>最后，关于我自己</h5>
+                    <p id="about-myself" class="editable">{{aboutMyself}}</p>
+                    {{#if isProjectOwner ..}}
+                      <p id="about-myself-clone" class="hide">{{aboutMyself}}</p>
+                    {{/if}}
+                  {{/with}}
                   <hr>
                   <h4>我正在招募以下团队成员</h4>
-                  <h6>产品&nbsp;{{#if isProjectOwner}}<i class="fa fa-plus"></i>{{/if}}</h6>
-                  <ul class="list-inline hire-rest">
-
-                  </ul>
+                  <h6>产品{{#if isProjectOwner}}<i class="fa fa-plus hide-on-edit"></i><i class="fa fa-check show-on-edit"></i>{{/if}}</h6>
+                  {{#if isProjectOwner}}
+                  <div class="checkbox" id="product-positions-rest">
+                    {{#each productPositionsRest}}
+                      <label>
+                        <input type="checkbox" name="product" value="{{this}}">
+                        {{#if isPay ..}}
+                          <span class="salary">月薪： <input type="text" pattern="[0-9]+"></span>
+                        {{/if}}
+                        {{this}}
+                      </label>
+                    {{/each}}
+                  </div>
+                  {{/if}}
                   <ul class="list-inline hire-list">
                     {{#each hire in productHire}}
-                      <li>
+                      <li class="product-position">
                         <i class="fa fa-minus"></i>
-                        <span>{{hire.category}}</span>
-                        <span title="一个月酬劳">￥{{hire.salary}}</span>
+                        <span class="hire-category">{{hire.category}}</span>
+                        {{#if isPay ..}}
+                          <span class="hire-salary" title="一个月酬劳">￥{{hire.salary}}</span>
+                        {{/if}}
                       </li>
                     {{/each}}
                   </ul>
-                  <h6>技术&nbsp;{{#if isProjectOwner}}<i class="fa fa-plus"></i>{{/if}}</h6>
+                  <h6>技术{{#if isProjectOwner}}<i class="fa fa-plus hide-on-edit"></i><i class="fa fa-check show-on-edit"></i>{{/if}}</h6>
+                  {{#if isProjectOwner}}
+                  <div class="checkbox" id="tech-positions-rest">
+                    {{#each techPositionsRest}}
+                      <label>
+                        <input type="checkbox" name="tech" value="{{this}}">
+                        {{#if isPay ..}}
+                          <span class="salary">月薪： <input type="text" pattern="[0-9]+"></span>
+                        {{/if}}
+                        {{this}}
+                      </label>
+                    {{/each}}
+                  </div>
+                  {{/if}}
                   <ul class="list-inline hire-list">
                     {{#each hire in techHire}}
-                      <li>
+                      <li class="tech-position">
                         <i class="fa fa-minus"></i>
-                        <span>{{hire.category}}</span>
-                        <span title="一个月酬劳">￥{{hire.salary}}</span>
+                        <span class="hire-category">{{hire.category}}</span>
+                        {{#if isPay ..}}
+                          <span class="hire-salary" title="一个月酬劳">￥{{hire.salary}}</span>
+                        {{/if}}
                       </li>
                     {{/each}}
                   </ul>
-                  <h6>设计&nbsp;{{#if isProjectOwner}}<i class="fa fa-plus"></i>{{/if}}</h6>
+                  <h6>设计{{#if isProjectOwner}}<i class="fa fa-plus hide-on-edit"></i><i class="fa fa-check show-on-edit"></i>{{/if}}</h6>
+                  {{#if isProjectOwner}}
+                  <div class="checkbox" id="design-positions-rest">
+                    {{#each designPositionsRest}}
+                      <label>
+                        <input type="checkbox" name="design" value="{{this}}">
+                        {{#if isPay ..}}
+                          <span class="salary">月薪： <input type="text" pattern="[0-9]+"></span>
+                        {{/if}}
+                        {{this}}
+                      </label>
+                    {{/each}}
+                  </div>
+                  {{/if}}
                   <ul class="list-inline hire-list">
                     {{#each hire in designHire}}
-                      <li>
+                      <li class="design-position">
                         <i class="fa fa-minus"></i>
-                        <span>{{hire.category}}</span>
-                        <span title="一个月酬劳">￥{{hire.salary}}</span>
+                        <span class="hire-category">{{hire.category}}</span>
+                        {{#if isPay ..}}
+                          <span class="hire-salary" title="一个月酬劳">￥{{hire.salary}}</span>
+                        {{/if}}
                       </li>
                     {{/each}}
                   </ul>
                   <hr>
                   <h4>我们使用下列服务进行远程协作开发 <a href="#" id="services-help" data-toggle="modal" data-target="#help" title="有问题 ？"><i class="fa fa-question"></i></a></h4>
-                  <h6>远程协作开发工具&nbsp;{{#if isProjectOwner}}<i class="fa fa-plus"></i>{{/if}}</h6>
+                  <h6>远程协作开发工具{{#if isProjectOwner}}<i class="fa fa-plus hide-on-edit"></i><i class="fa fa-check show-on-edit"></i>{{/if}}</h6>
+                  {{#if isProjectOwner}}
+                  <div class="checkbox" id="coop-tools-rest">
+                    {{#each coopToolsRest}}
+                      <label>
+                        <input type="checkbox" name="coopTools" value="{{this}}">
+                        {{this}}
+                      </label>
+                    {{/each}}
+                  </div>
+                  {{/if}}
                   <ul class="list-inline services-list">
                     {{#each service in cooperationTools}}
-                      <li>{{service}}</li>
+                      <li class="coop-tool">
+                        <i class="fa fa-minus"></i>
+                        {{service}}
+                      </li>
                     {{/each}}
                   </ul>
-                  <h6>代码仓库&nbsp;{{#if isProjectOwner}}<i class="fa fa-plus"></i>{{/if}}</h6>
+                  <!-- to update if there are other good code services. -->
+                  <h6 title="默认使用Github">代码仓库</h6>
                   <ul class="list-inline services-list">
                     {{#each service in codeTools}}
                       <li>{{service}}</li>
                     {{/each}}
                   </ul>
-                  <h6>即时沟通工具&nbsp;{{#if isProjectOwner}}<i class="fa fa-plus"></i>{{/if}}</h6>
+                  <h6>即时沟通工具{{#if isProjectOwner}}<i class="fa fa-plus hide-on-edit"></i><i class="fa fa-check show-on-edit"></i>{{/if}}</h6>
+                  {{#if isProjectOwner}}
+                  <div class="checkbox" id="com-tools-reset">
+                    {{#each comToolsRest}}
+                      <label>
+                        <input type="checkbox" name="comTools" value="{{this}}">
+                        {{this}}
+                      </label>
+                    {{/each}}
+                  </div>
+                  {{/if}}
                   <ul class="list-inline services-list">
                     {{#each service in communicationTools}}
-                      <li>{{service}}</li>
+                      <li class="com-tool">
+                        <i class="fa fa-minus"></i>
+                        {{service}}
+                      </li>
                     {{/each}}
                   </ul>
-                  <h6>文件存储&nbsp;{{#if isProjectOwner}}<i class="fa fa-plus"></i>{{/if}}</h6>
+                  <h6>文件存储{{#if isProjectOwner}}<i class="fa fa-plus hide-on-edit"></i><i class="fa fa-check show-on-edit"></i>{{/if}}</h6>
+                  {{#if isProjectOwner}}
+                  <div class="checkbox" id="file-tools-rest">
+                    {{#each fileToolsRest}}
+                      <label>
+                        <input type="checkbox" name="fileTools" value="{{this}}">
+                        {{this}}
+                      </label>
+                    {{/each}}
+                  </div>
+                  {{/if}}
                   <ul class="list-inline services-list">
                     {{#each service in fileTools}}
-                      <li>{{service}}</li>
+                      <li class="file-tool">
+                        <i class="fa fa-minus"></i>
+                        {{service}}
+                      </li>
                     {{/each}}
                   </ul>
                 </article>
@@ -115,7 +199,11 @@
                     <h3 class="panel-title text-danger">危险操作</h3>
                   </div>
                   <div class="panel-body">
-                    <button id="delete-project" class="btn btn-raised btn-danger btn-block">删除这个项目</button>
+                    <h6>永久删除</h6>
+                    <p>
+                      <span class="danger-operation-top text-muted small">一旦删除，将从数据库彻底删除项目所有数据，该项目将不可找回</span>
+                      <button id="delete-project" class="btn btn-danger">删除该项目</button>
+                    </p>
                   </div>
                 </div>
               {{/if}}
@@ -172,3 +260,42 @@
     {{> loading}}
   {{/if}}
 </template>
+
+<template name="checkableItem">
+  <label>
+    <input type="checkbox" value="{{position}}">
+    {{#if isPay}}
+      <span class="salary">月薪： <input type="text" pattern="[0-9]+"></span>
+    {{/if}}
+    {{position}}
+  </label>
+</template>
+
+<template name="selectedItem">
+  {{#each positions}}
+    <li class="{{this.positionCategory}}">
+      <i class="fa fa-minus"></i>
+      <span class="hire-category">{{this.position}}</span>
+      {{#if ../isPay }}
+        <span class="hire-salary" title="一个月酬劳">￥{{this.salary}}</span>
+      {{/if}}
+    </li>
+  {{/each}}
+</template>
+
+<template name="serviceCheckable">
+  <label>
+    <input type="checkbox" value="{{service}}">
+    {{service}}
+  </label>
+</template>
+
+<template name="serviceSelected">
+  {{#each services}}
+    <li class="{{this.serviceCategory}}">
+      <i class="fa fa-minus"></i>
+      {{this.service}}
+    </li>
+  {{/each}}
+</template>
+
