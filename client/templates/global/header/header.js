@@ -4,24 +4,7 @@
  */
 
 Template.header.onRendered(function () {
-
   $.material.init();
-
-  // 根据服务器传输的数据进行 js　插件绑定或者是一些操作确实无法保证数据一定传输到，所以很麻烦，这个问题需要咨询别人的做法。
-
-  var timeId = Meteor.setTimeout(function () {
-    "use strict";
-    if ($(".dropdown").size()) {
-      $.material.init();
-    }
-
-    if ( !Meteor.user()) {
-      Session.set("loggedIn", false);
-    }
-
-    Meteor.clearTimeout(timeId);
-  }, 3000);
-
 });
 
 Template.header.events({

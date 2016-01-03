@@ -67,7 +67,7 @@
                   <ul class="list-inline hire-list">
                     {{#each hire in productHire}}
                       <li class="product-position">
-                        <i class="fa fa-minus"></i>
+                        {{#if isProjectOwner}}<i class="fa fa-minus"></i>{{/if}}
                         <span class="hire-category">{{hire.category}}</span>
                         {{#if isPay ..}}
                           <span class="hire-salary" title="一个月酬劳">￥{{hire.salary}}</span>
@@ -92,7 +92,7 @@
                   <ul class="list-inline hire-list">
                     {{#each hire in techHire}}
                       <li class="tech-position">
-                        <i class="fa fa-minus"></i>
+                        {{#if isProjectOwner }}<i class="fa fa-minus"></i>{{/if}}
                         <span class="hire-category">{{hire.category}}</span>
                         {{#if isPay ..}}
                           <span class="hire-salary" title="一个月酬劳">￥{{hire.salary}}</span>
@@ -117,7 +117,7 @@
                   <ul class="list-inline hire-list">
                     {{#each hire in designHire}}
                       <li class="design-position">
-                        <i class="fa fa-minus"></i>
+                        {{#if isProjectOwner}}<i class="fa fa-minus"></i>{{/if}}
                         <span class="hire-category">{{hire.category}}</span>
                         {{#if isPay ..}}
                           <span class="hire-salary" title="一个月酬劳">￥{{hire.salary}}</span>
@@ -141,7 +141,7 @@
                   <ul class="list-inline services-list">
                     {{#each service in cooperationTools}}
                       <li class="coop-tool">
-                        <i class="fa fa-minus"></i>
+                        {{#if isProjectOwner}}<i class="fa fa-minus"></i>{{/if}}
                         {{service}}
                       </li>
                     {{/each}}
@@ -167,7 +167,7 @@
                   <ul class="list-inline services-list">
                     {{#each service in communicationTools}}
                       <li class="com-tool">
-                        <i class="fa fa-minus"></i>
+                        {{#if isProjectOwner}}<i class="fa fa-minus"></i>{{/if}}
                         {{service}}
                       </li>
                     {{/each}}
@@ -186,7 +186,7 @@
                   <ul class="list-inline services-list">
                     {{#each service in fileTools}}
                       <li class="file-tool">
-                        <i class="fa fa-minus"></i>
+                        {{#if isProjectOwner}}<i class="fa fa-minus"></i>{{/if}}
                         {{service}}
                       </li>
                     {{/each}}

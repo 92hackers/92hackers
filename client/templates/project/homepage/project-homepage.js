@@ -105,6 +105,10 @@ Template.projectHomepage.events({
     editableElems.addClass("site-inline-edit-wrap").attr("contenteditable", true);
     editableDemoUrl.addClass("site-inline-edit-item-wrap").attr("contenteditable", true);
 
+    // show plus and minus icon.
+    $(".fa-plus").show();
+    $(".fa-minus").show();
+
     editButton.hide();
     saveButton.show();
     cancelButton.show();
@@ -129,9 +133,18 @@ Template.projectHomepage.events({
         .removeClass("site-inline-edit-item-wrap")
         .attr("contenteditable", false);
 
+    // hide plus and minus icon.
+    $(".fa-plus").hide();
+    $(".fa-minus").hide();
+
     cancelButton.hide();
     saveButton.hide();
     editButton.show();
+  },
+  "click #save-button": function ( event, template ) {
+    // hide plus and minus icon.
+    template.$(".fa-plus").hide();
+    template.$(".fa-minus").hide();
   },
   "click .hide-on-edit": function ( event, template ) {
     var currentElem = template.$(event.currentTarget);
@@ -162,7 +175,6 @@ Template.projectHomepage.events({
       data = {
         services: dataPositions
       };
-      console.log(parentNode);
       Blaze.renderWithData(Template.serviceSelected, data, parentNode);
     } else if (elemToBeInsertedTo.hasClass("hire-list")) {
 
@@ -178,12 +190,10 @@ Template.projectHomepage.events({
           });
         });
       }
-
       data = {
         isPay: isPay,
         positions: dataPositions
       };
-
       console.log(data);
       Blaze.renderWithData(Template.selectedItem, data, parentNode);
     }
