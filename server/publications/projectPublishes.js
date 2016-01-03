@@ -4,16 +4,12 @@
 
 "use strict";
 
-Meteor.publish("singleProject", function ( pid ) {
-  check(pid, String);
-  return Project.find({_id: pid});
-});
-
-Meteor.publishComposite("projectOwnerProfile", function ( pid ) {
+// and then, you only need to subscribe this publication.
+Meteor.publishComposite("singleProject", function ( pid ) {
   check(pid, String);
   return {
     find: function () {
-      return Project.find({_id: pid}, {fields: {owner: 1}});
+      return Project.find({_id: pid});
     },
     children: [
       {

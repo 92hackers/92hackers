@@ -5,30 +5,67 @@
 "use strict";
 
 Template.projectHomepage.onCreated(function () {
-  var self = this;
-  self.ready = new ReactiveVar();
-  self.autorun(function () {
-    var projectId = FlowRouter.getParam("pid");
-    GlobalObject.subscribeCache.subscribe("singleProject", projectId, {onReady: function () {
-          var project = Project.findOne({_id: projectId});
-          SEO.set({
-            title: "92Hackers - " + project.name
-          });
-        }}
-    );
-    GlobalObject.subscribeCache.subscribe("projectOwnerProfile", projectId);
-    self.ready.set(GlobalObject.subscribeCache.ready());
-  });
+  var template = this;
+  template.ready = new ReactiveVar();
 });
 
 Template.projectHomepage.onRendered(function () {
 
-  var timeId = Meteor.setInterval(function () {
-    if ( $("#edit-button").size() && $("#save-button").size() || $("#join-button").size() ) {
-      $.material.init();
-      Meteor.clearInterval(timeId);
+  var projectId = FlowRouter.getParam("pid");
+  var template = this;
+
+/*  template.autorun(function () {
+    GlobalObject.subscribeCache.subscribe("singleProject", projectId, function () {
+      Tracker.afterFlush(function () {
+        console.log("message from after flush");
+        var project = Project.findOne({_id: projectId});
+        SEO.set({ title: "92hackers - " + project.name });
+        console.log( $("#join-button"));
+        $.material.init();
+      });
+    });
+    template.ready.set(GlobalObject.subscribeCache.ready());
+  });*/
+
+  template.autorun(function () {
+    GlobalObject.subscribeCache.subscribe("singleProject", projectId, {
+      onReady: function () {
+        var project = Project.findOne({_id: projectId});
+        SEO.set({ title: "92hackers - " + project.name });
+      }
+    });
+    //TODO: 说明：　这个地方暂时可以工作，　还需要发布到服务器上进行调试，
+    //　我不能理解 subscribition ready 的真正意思，到底是刚开始subscribe还是数据已经都拿到了，
+    //　但是这里本机上没有延时的结果是 ready的时候，数据已经取好了，所以设置一个 1ms 的延时，
+    //　如果不行的话，还是要用 afterflush ，上面的代码，确实，本机上面数据的延时不太好测试。
+
+    template.ready.set(GlobalObject.subscribeCache.ready());
+    if (template.ready.get()) {
+      var timeId = Meteor.setTimeout(function () {
+        $.material.init();
+        Meteor.clearTimeout(timeId);
+      }, 1);
     }
-  }, 500);
+  });
+
+  template.autorun(function () {
+    if (!Meteor.user()) {
+      var editableElems = template.$(".editable");
+      var editableDemoUrl = template.$(".editable-item");
+
+      _.each(editableElems, function ( item, index ) {
+        var elemsId = item.id;
+        console.log($("#" + elemsId + "-clone"));
+        $("#" + elemsId).text($("#" + elemsId + "-clone").text())
+            .removeClass("site-inline-edit-wrap")
+            .attr("contenteditable", false);
+      });
+
+      editableDemoUrl.html($("#demo-url-clone").html())
+          .removeClass("site-inline-edit-item-wrap")
+          .attr("contenteditable", false);
+    }
+  });
 });
 
 Template.projectHomepage.helpers({
@@ -92,6 +129,8 @@ Template.projectHomepage.helpers({
     return Meteor.userId() === projectOwner.owner;
   }
 });
+
+
 
 Template.projectHomepage.events({
   "click #edit-button": function ( event, template ) {
@@ -202,6 +241,8 @@ Template.projectHomepage.events({
     currentElem.prev(".hide-on-edit").show();
     positionsContainer.hide();
 
+    // display the new rendered minus icon.
+    $(".fa-minus").show();
     // remove the checked label from list.
     positions.parent().detach();
   },
@@ -254,4 +295,8 @@ Template.projectHomepage.events({
       }
     }
   }
+});
+
+Template.projectHomepage.onDestroyed(function () {
+// nothing
 });
