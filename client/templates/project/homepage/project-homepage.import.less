@@ -16,11 +16,9 @@
         &:not(:first-child) {
           margin-left: 20px;
         }
-        span {
-          &:last-child {
-            font-weight: bold;
-            font-size: 18px;
-          }
+        .hire-salary {
+          font-weight: bold;
+          font-size: 18px;
         }
       }
     }
@@ -56,8 +54,14 @@
       display: inline-block !important;
       cursor: default !important;
     }
-    .fa {
+    .fa-minus {
       display: none;
+    }
+    .fa-plus {
+      .fa-minus();
+    }
+    .fa-check {
+      .fa-minus();
     }
     h6 {
       .fa {
@@ -67,6 +71,14 @@
         display: none;
       }
     }
+    .fa {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+  #danger-zone {
+    display: none;
   }
   aside {
     .media {
@@ -88,9 +100,20 @@
         margin-left: 40px;
         line-height: 28px;
       }
+      #demo-url-help {
+        display: none;
+        visibility: hidden;
+        font-size: 12px;
+        line-height: 20px;
+      }
     }
     button {
       font-size: 20px;
+    }
+    .loader {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      display: none;
     }
     #save-button {
       display: none;
@@ -106,11 +129,6 @@
   }
   .editable-item {
     .editable();
-  }
-  .fa {
-    &:hover {
-      cursor: pointer;
-    }
   }
   .salary {
     display: block;

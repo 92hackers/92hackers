@@ -26,10 +26,16 @@ function getBasicValues() {
     name: $("#name").val(),
     category: $("[name=category]:checked").val(),
     introduction: $("#introduction").val(),
-    demoUrl: $("#demo-url").val(),
     ownResource: $("#resource").val(),
     tags: tags
+  };
+  var demoUrlText = $("#demo-url").val().trim();
+  var httpSchemaPattern = /^http.+$/;
+  if ( !httpSchemaPattern.test(demoUrlText) ) {
+    demoUrlText = "http://" + demoUrlText;
   }
+
+  _.extend(GlobalObject.projectCreate, {demoUrl: demoUrlText});
 }
 
 Template.projectCreateBasic.events({
@@ -37,6 +43,7 @@ Template.projectCreateBasic.events({
     event.preventDefault();
     if ( !!Meteor.user() ) {
       getBasicValues();
+      console.log(GlobalObject.projectCreate);
       FlowRouter.go("projectCreateFullDesc");
     } else {
       alert("您还没有登录 !");

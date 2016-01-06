@@ -7,6 +7,20 @@
 Template.projectHomepage.onCreated(function () {
   var template = this;
   template.ready = new ReactiveVar();
+  template.isProjectOwner = new ReactiveVar(false);
+  template.isEditState;
+  template.isUpdated;
+
+  template.autorun(function () {
+    var currentProject = Project.findOne();
+    if ( !!Meteor.user() ) {
+      if (currentProject && currentProject.owner === Meteor.userId()) {
+        template.isProjectOwner.set(true);
+        template.isEditState = false;
+      }
+    }
+  });
+
 });
 
 Template.projectHomepage.onRendered(function () {
@@ -48,24 +62,26 @@ Template.projectHomepage.onRendered(function () {
     }
   });
 
+  // when project owner logged out, remove edit trace.
   template.autorun(function () {
-    if (!Meteor.user()) {
-      var editableElems = template.$(".editable");
-      var editableDemoUrl = template.$(".editable-item");
-
-      _.each(editableElems, function ( item, index ) {
-        var elemsId = item.id;
-        console.log($("#" + elemsId + "-clone"));
-        $("#" + elemsId).text($("#" + elemsId + "-clone").text())
-            .removeClass("site-inline-edit-wrap")
-            .attr("contenteditable", false);
-      });
-
-      editableDemoUrl.html($("#demo-url-clone").html())
-          .removeClass("site-inline-edit-item-wrap")
-          .attr("contenteditable", false);
+    if (!Meteor.user() && template.isProjectOwner.get()) {
+      logOutFromEditState(template);
     }
   });
+  // todo:  beyond above, there needs to remove trace of editting services and hire positions.
+  //   but, there exists much more important works to deal, so, remain it to be fixed in the version 2.0
+
+
+/*  template.autorun(function () {
+    var ownResource = $("#own-resource");
+    var clone = $("#own-resource-clone");
+    console.log("autorun in oncreated function");
+    if (template.projectUpdated.get() && template.isProjectOwner) {
+      console.log("from element text replace trigger");
+      ownResource.text(clone.text());
+      template.projectUpdated.set(false);
+    }
+  });*/
 });
 
 Template.projectHomepage.helpers({
@@ -82,7 +98,7 @@ Template.projectHomepage.helpers({
     _.each(positionsInList, function ( item, index ) {
       positionsSelected.push(item.category);
     });
-    return _.difference(GlobalObject.positionsList.product, positionsSelected) || [];
+    return _.difference(GlobalObject.positionsList.product, positionsSelected);
   },
   techPositionsRest: function () {
     var positionsList = this.techHire;
@@ -90,7 +106,7 @@ Template.projectHomepage.helpers({
     _.each(positionsList, function ( item, index ) {
       positionsSelected.push(item.category);
     });
-    return _.difference(GlobalObject.positionsList.tech, positionsSelected) || [];
+    return _.difference(GlobalObject.positionsList.tech, positionsSelected);
   },
   designPositionsRest: function () {
     var positionsList = this.designHire;
@@ -98,25 +114,27 @@ Template.projectHomepage.helpers({
     _.each(positionsList, function ( item, index ) {
       positionsSelected.push(item.category);
     });
-    return _.difference(GlobalObject.positionsList.design, positionsSelected) || [];
+    return _.difference(GlobalObject.positionsList.design, positionsSelected);
   },
   isPay: function (parentContext) {
-    return parentContext.payOrNot === "pay" || {};
+    return parentContext.payOrNot === "pay";
   },
   coopToolsRest: function () {
-    return _.difference(GlobalObject.servicesList.cooperationTools, this.cooperationTools) || [];
+    return _.difference(GlobalObject.servicesList.cooperationTools, this.cooperationTools);
   },
   comToolsRest: function () {
-    return _.difference(GlobalObject.servicesList.communicationTools, this.communicationTools) || [];
+    return _.difference(GlobalObject.servicesList.communicationTools, this.communicationTools);
   },
   fileToolsRest: function () {
-    return _.difference(GlobalObject.servicesList.fileTools, this.fileTools) || [];
+    return _.difference(GlobalObject.servicesList.fileTools, this.fileTools);
   },
   projectOwnerProfile: function () {
     return Meteor.users.findOne({_id: this.owner}, {limit: 1, fields: {username: 1, profile: 1}}) || {};
   },
   publishDate: function () {
-    var createdAt = this.createdAt;
+    if (this) {
+      var createdAt = this.createdAt;
+    }
     var publishDate = {
       fullYear: createdAt.getFullYear(),
       month: createdAt.getMonth() + 1,      // month count from 0.
@@ -130,9 +148,177 @@ Template.projectHomepage.helpers({
   }
 });
 
+function getFormValues() {
 
+  // basic info
+  var demoUrlText = $("#demo-url").text().trim();
+  var httpSchemaPattern = /^http.*$/;
+  if ( !httpSchemaPattern.test(demoUrlText) ) {
+    demoUrlText = "http://" + demoUrlText;
+  }
+
+  var ownResource = $("#own-resource").text().trim();
+
+  // full description
+  var fullDescription = {
+    initialMind: $("#initial-mind").text().trim(),
+    problemsToSolve: $("#problems-to-solve").text().trim(),
+    howToSolve: $("#how-to-solve").text().trim(),
+    usageScene: $("#usage-scene").text().trim(),
+    futureVision: $("#future-vision").text().trim(),
+    aboutMyself: $("#about-myself").text().trim()
+  };
+
+  var productHire = [];
+  var techHire = [];
+  var designHire = [];
+
+  function getCategory(element) {
+    return $(element).children(".hire-category").text();
+  }
+
+  function getSalary(element) {
+    var salaryElem = $(element).children(".hire-salary");
+    return salaryElem.size() ? salaryElem.text().replace("￥", "") : 0;
+  }
+
+  $(".product-position").each(function () {
+    var self = this;
+    productHire.push({
+      category: getCategory(self),
+      salary: getSalary(self)
+    });
+  });
+
+  $(".tech-position").each(function () {
+    var self = this;
+    techHire.push({
+      category: getCategory(self),
+      salary: getSalary(self)
+    });
+  });
+
+  $(".design-position").each(function () {
+    var self = this;
+    designHire.push({
+      category: getCategory(self),
+      salary: getSalary(self)
+    });
+  });
+
+  var cooperationTools = [],
+      communicationTools = [],
+      fileTools = [];
+
+  $(".coop-tool").each(function () {
+    cooperationTools.push($(this).text().trim());
+  });
+  $(".com-tool").each(function () {
+    communicationTools.push($(this).text().trim());
+  });
+  $(".file-tool").each(function () {
+    fileTools.push($(this).text().trim());
+  });
+
+  return {
+    demoUrl: demoUrlText,
+    ownResource: ownResource,
+    fullDescription: fullDescription,
+    productHire: productHire,
+    techHire: techHire,
+    designHire: designHire,
+    cooperationTools: cooperationTools,
+    communicationTools: communicationTools,
+    fileTools: fileTools
+  };
+
+  // do not log update time now, because there is no idea where to use that data.
+}
+
+function replaceContentWithClone(template) {
+  template.$(".editable").each(function () {
+    var elemId = $(this).attr("id");
+    template.$(this).text(template.$("#" + elemId + "-clone").text());
+  });
+
+  template.$("#demo-url").html(template.$("#demo-url-clone").html());
+
+  $.material.init();
+  template.$(".updated-item").remove();
+}
+
+function logOutFromEditState( template, isSave ) {
+
+  var isSave = isSave;
+  var editButton = template.$("#edit-button");
+  var saveButton = template.$("#save-button");
+  var cancelButton = template.$("#cancel-button");
+  var demoUrlHelp = template.$("#demo-url-help");
+
+  var checkboxes = template.$(".checkbox");
+  var checkIcon = template.$(".fa-check");
+
+  var loader = template.$(".loader");
+  var dangerZone = template.$("#danger-zone");
+
+  dangerZone.hide();
+
+  template.isEditState = false;
+
+  if (isSave) {
+    loader.hide();
+  }
+
+  var editableElems = template.$(".editable");
+  var editableDemoUrl = template.$(".editable-item");
+
+  var plusIcon = template.$(".fa-plus");
+  var minusIcon = template.$(".fa-minus");
+
+  var tempArray = [saveButton, cancelButton, demoUrlHelp, plusIcon, minusIcon, checkboxes, checkIcon];
+
+  _.each(editableElems, function ( item, index ) {
+    var elemsId = item.id;
+    var currentElem = $("#" + elemsId);
+    if (!isSave) {
+      currentElem.text($("#" + elemsId + "-clone").text());
+    }
+    currentElem.removeClass("site-inline-edit-wrap").attr("contenteditable", false);
+  });
+
+  if (!isSave) {
+    editableDemoUrl.html($("#demo-url-clone").html());
+  }
+  editableDemoUrl.removeClass("site-inline-edit-item-wrap").attr("contenteditable", false);
+
+  // hide plus and minus icon.
+
+  if (editButton.size()) {editButton.show();}
+
+  _.each(tempArray, function ( item, index ) {
+    if (item.size() && (item.css("display") === "block" || item.css("display") === "inline-block" || item.css("display") === "inline")) { item.hide(); }
+  });
+}
 
 Template.projectHomepage.events({
+  "focus #demo-url": function ( event, template ) {
+    if (template.isEditState) {
+      $("#demo-url-help").css("visibility", "visible");
+    }
+  },
+  "blur #demo-url": function ( event, tempalte ) {
+    if (tempalte.isEditState) {
+      $("#demo-url-help").css("visibility", "hidden");
+    }
+  },
+  "keyup .editable-item, keyup .editable": function ( event, template ) {
+    var currentElem = template.$(event.currentTarget);
+    if (currentElem.text() === "") {
+      currentElem.addClass("site-inline-edit-error-wrap");
+    } else {
+      currentElem.removeClass("site-inline-edit-error-wrap");
+    }
+  },
   "click #edit-button": function ( event, template ) {
     var editableElems = template.$(".editable");
     var editableDemoUrl = template.$(".editable-item");
@@ -140,6 +326,8 @@ Template.projectHomepage.events({
     var editButton = template.$("#edit-button");
     var saveButton = template.$("#save-button");
     var cancelButton = template.$("#cancel-button");
+    var demoHelp = template.$("#demo-url-help");
+    var dangerZone = template.$("#danger-zone");
 
     editableElems.addClass("site-inline-edit-wrap").attr("contenteditable", true);
     editableDemoUrl.addClass("site-inline-edit-item-wrap").attr("contenteditable", true);
@@ -148,42 +336,65 @@ Template.projectHomepage.events({
     $(".fa-plus").show();
     $(".fa-minus").show();
 
+    template.isEditState = true;
+
     editButton.hide();
+    demoHelp.show();
     saveButton.show();
     cancelButton.show();
+    dangerZone.show();
   },
   "click #cancel-button": function ( event, template ) {
-
-    var editButton = template.$("#edit-button");
-    var saveButton = template.$("#save-button");
-    var cancelButton = template.$("#cancel-button");
-
-    var editableElems = template.$(".editable");
-    var editableDemoUrl = template.$(".editable-item");
-
-    _.each(editableElems, function ( item, index ) {
-      var elemsId = item.id;
-      $("#" + elemsId).text($("#" + elemsId + "-clone").text())
-          .removeClass("site-inline-edit-wrap")
-          .attr("contenteditable", false);
-    });
-
-    editableDemoUrl.html($("#demo-url-clone").html())
-        .removeClass("site-inline-edit-item-wrap")
-        .attr("contenteditable", false);
-
-    // hide plus and minus icon.
-    $(".fa-plus").hide();
-    $(".fa-minus").hide();
-
-    cancelButton.hide();
-    saveButton.hide();
-    editButton.show();
+    logOutFromEditState(template);
   },
   "click #save-button": function ( event, template ) {
-    // hide plus and minus icon.
-    template.$(".fa-plus").hide();
-    template.$(".fa-minus").hide();
+    // update current project.
+    var projectId = FlowRouter.getParam("pid");
+    var updatedFields = getFormValues();
+    var saveButton = $("#save-button");
+    var loader = $(".loader");
+    console.log(updatedFields);
+
+    var urlPattern = /^http:\/\/(www\.)?[0-9a-zA-Z]+\.[0-9a-zA-Z]+$/;
+    if (!urlPattern.test(updatedFields.demoUrl)) {
+      alert("请输入正确格式的网址");
+      $("#demo-url").focus();
+      return ;
+    }
+    if ( !updatedFields.ownResource.length ) {
+      alert("请介绍自己能做什么。");
+      $("#own-resource").focus();
+      return ;
+    }
+    _.each(updatedFields.fullDescription, function ( value, key ) {
+      var pattern = /[A-Z]/g;
+      if ( !value.length ) {
+        alert("请完整介绍自己的创意。");
+        $("#" + key.replace(pattern, function ( char ) {
+              return "-" + char.toLowerCase();
+            })).focus();
+        return ;
+      }
+    });
+
+    saveButton.hide();
+    loader.show();
+
+    template.isUpdated = true;
+
+    Project.update({_id: projectId}, {$set: updatedFields}, function ( err, result ) {
+      if (err) {
+        console.log(err);
+        template.isUpdated = false;
+        loader.hide();
+        saveButton.show();
+      } else {
+        replaceContentWithClone(template);
+        template.isUpdated = false;
+        console.log(result);
+        logOutFromEditState(template, true);
+      }
+    });
   },
   "click .hide-on-edit": function ( event, template ) {
     var currentElem = template.$(event.currentTarget);
@@ -219,21 +430,39 @@ Template.projectHomepage.events({
 
       var salaryElem = positionsContainer.find("input[type=text]");
       var isPay = salaryElem.size() ? true : false;
-      if (positions.size()) {
-        _.each(positions, function ( item, index ) {
-          dataPositions.push({
-            positionCategory: positionsContainer.attr("id").split("-")[0] + "-position",
-            position: $(item).val(),
-            salary: salaryElem.size() ? $(item).nextAll(".salary")
-                .children("input[type=text]").val() : 0
+
+      try {
+        if (positions.size()) {
+          _.each(positions, function ( item, index ) {
+            var salary;
+            if (isPay) {
+              salary = $(item).nextAll(".salary").children("input[type=text]").val().trim();
+              if (!salary) {
+                throw Meteor.Error("请输入月薪数额");
+              }
+            } else {
+              salary = 0;
+            }
+            dataPositions.push({
+              positionCategory: positionsContainer.attr("id").split("-")[0] + "-position",
+              position: $(item).val(),
+              salary: salary
+            });
           });
+        }
+      } catch (err)  {
+        alert(err.error);
+        positions.nextAll(".salary").find("input[type=text]").each(function () {
+          if ($(this).val() === "") {
+            $(this).focus();
+          }
         });
+        return ;
       }
       data = {
         isPay: isPay,
         positions: dataPositions
       };
-      console.log(data);
       Blaze.renderWithData(Template.selectedItem, data, parentNode);
     }
 
@@ -243,8 +472,8 @@ Template.projectHomepage.events({
 
     // display the new rendered minus icon.
     $(".fa-minus").show();
-    // remove the checked label from list.
-    positions.parent().detach();
+    // remove the checked label from rest list.
+    positions.parent().remove();
   },
   "click .fa-minus": function ( event, template ) {
     var currentElem = template.$(event.currentTarget);
@@ -294,9 +523,49 @@ Template.projectHomepage.events({
         target.blur();
       }
     }
+  },
+  "shown.bs.modal #delete-project-modal": function ( event, template ) {
+    $("#password").focus();
+  },
+  "hidden.bs.modal #delete-project-modal": function ( event, template ) {
+    var projectId = FlowRouter.getParam("pid");
+    Project.remove({_id: projectId}, function ( err, result ) {
+      if (!err && result) {
+        FlowRouter.go("userHomepage", {uid: Meteor.userId()});
+      } else {
+        console.log(err);
+        alert("删除项目失败，请再次尝试");
+      }
+    });
+  },
+  "submit #delete-project-modal form": function ( event, template ) {
+    event.preventDefault();
+    var target = $("#password");
+    var digest = Package.sha.SHA256(target.val());
+    Meteor.call("checkPassword", digest, function ( err, result ) {
+      if (!err && result) {
+        template.$("#delete-forever").text("删除成功!").css("color", "#4caf50");
+        var timeId = Meteor.setTimeout(function () {
+          $("#delete-project-modal").modal("hide");
+          Meteor.clearTimeout(timeId);
+        }, 2000);
+      } else {
+        alert("密码错误, 请重新输入");
+        target.focus();
+      }
+    });
+  },
+  "click #join-button": function ( event, template ) {
+   if (!Meteor.user()) {
+     alert("请先登陆或者注册 !");
+   } else {
+
+   }
   }
 });
 
 Template.projectHomepage.onDestroyed(function () {
 // nothing
+  console.log("from template project homepage destoryed");
+  console.log("nihao");
 });
