@@ -14,10 +14,11 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
           {{#with currentUser}}
+            <li><a class="notification" href="#"><i class="fa fa-bell"></i><span class="badge text-danger">20</span></a></li>
             <li class="dropdown">
               <a href="#" data-toggle="dropdown" data-target="#"><img src="{{avatarOrDefault}}" alt="header-bar-avatar">{{username}}<b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="#">我的主页</a></li>
+                <li><a href="{{pathFor "userHomepage" uid=_id}}">我的主页</a></li>
                 <li><a href="#">我的关注</a></li>
                 <li><a href="#">帮助</a></li>
                 <hr>

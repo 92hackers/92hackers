@@ -255,7 +255,11 @@
                     </div>
                     <button id="cancel-button" class="btn btn-default btn-block" type="button">取消</button>
                   {{else}}
-                    <button id="join-button" class="btn btn-raised btn-primary btn-block" type="button">我要加入</button>
+                    {{#if hasApplied}}
+                      <p class="text-center text-primary" id="apply-success">申请加入成功！</p>
+                    {{else}}
+                      <button id="join-button" class="btn btn-raised btn-primary btn-block" type="button" data-toggle="modal" data-target="#join-modal">我要加入</button>
+                    {{/if}}
                   {{/if}}
                 </aside>
               </div>
@@ -300,14 +304,48 @@
                     <div class="modal-body">
                       <form class="form-horizontal">
                         <fieldset>
-                          <div class="form-group">
-                            <div class="checkbox">
-
+                          <legend>请选择职位</legend>
+                          {{#if hasProductPositions}}
+                            <h6>产品</h6>
+                            <div class="form-group zero-margin-top">
+                              <div class="col-md-10 col-md-offset-1">
+                                {{#each productHire}}
+                                  <div class="radio radio-primary">
+                                    <label><input type="radio" name="select-position" value="{{this.category}}">{{this.category}}</label>
+                                  </div>
+                                {{/each}}
+                              </div>
                             </div>
-                          </div>
+                          {{/if}}
+                          {{#if hasTechPositions}}
+                            <h6>技术</h6>
+                            <div class="form-group zero-margin-top">
+                              <div class="col-md-10 col-md-offset-1">
+                                {{#each techHire}}
+                                  <div class="radio radio-primary">
+                                    <label><input type="radio" name="select-position" value="{{this.category}}">{{this.category}}</label>
+                                  </div>
+                                {{/each}}
+                              </div>
+                            </div>
+                          {{/if}}
+                          {{#if hasDesignPositions}}
+                            <h6>设计</h6>
+                            <div class="form-group zero-margin-top">
+                              <div class="col-md-10 col-md-offset-1">
+                                {{#each designHire}}
+                                  <div class="radio radio-primary">
+                                    <label><input type="radio" name="select-position" value="{{this.category}}">{{this.category}}</label>
+                                  </div>
+                                {{/each}}
+                              </div>
+                            </div>
+                          {{/if}}
                           <div class="form-group">
-                            <button type="submit" class="btn btn-primary pull-right">提交</button>
-                            <button type="button" class="btn btn-default pull-right">取消</button>
+                            <div class="col-md-11 col-md-offset-1 clearfix">
+                              <button type="submit" class="btn btn-primary pull-right">提交</button>
+                              <button type="button" class="btn btn-default pull-right" data-dismiss="modal">取消</button>
+                            </div>
                           </div>
                         </fieldset>
                       </form>

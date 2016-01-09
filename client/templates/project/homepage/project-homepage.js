@@ -4,6 +4,10 @@
 
 "use strict";
 
+var isApplySuccess = false;
+var projectApplications = new ReactiveVar(null);
+var readyForDelete = false;
+
 Template.projectHomepage.onCreated(function () {
   var template = this;
   template.ready = new ReactiveVar();
@@ -53,6 +57,8 @@ Template.projectHomepage.onRendered(function () {
     //　但是这里本机上没有延时的结果是 ready的时候，数据已经取好了，所以设置一个 1ms 的延时，
     //　如果不行的话，还是要用 afterflush ，上面的代码，确实，本机上面数据的延时不太好测试。
 
+    projectApplications = ProjectApplications.find({projectId: projectId});
+
     template.ready.set(GlobalObject.subscribeCache.ready());
     if (template.ready.get()) {
       var timeId = Meteor.setTimeout(function () {
@@ -91,6 +97,15 @@ Template.projectHomepage.helpers({
   singleProject: function () {
     var projectId = FlowRouter.getParam("pid");
     return Project.findOne({_id: projectId}) || {};
+  },
+  hasProductPositions: function () {
+    return this.productHire.length > 0;
+  },
+  hasTechPositions: function () {
+    return this.techHire.length > 0;
+  },
+  hasDesignPositions: function () {
+    return this.designHire.length > 0;
   },
   productPositionsRest: function () {
     var positionsInList = this.productHire;
@@ -145,6 +160,16 @@ Template.projectHomepage.helpers({
   isProjectOwner: function (parentContext) {
     var projectOwner = parentContext || this;
     return Meteor.userId() === projectOwner.owner;
+  },
+  hasApplied: function () {
+    var hasApplied = false;
+    projectApplications.forEach(function ( project ) {
+      console.log(project.userId);
+      if (project.userId === Meteor.userId()) {
+        hasApplied = true;
+      }
+    });
+    return hasApplied;
   }
 });
 
@@ -528,15 +553,18 @@ Template.projectHomepage.events({
     $("#password").focus();
   },
   "hidden.bs.modal #delete-project-modal": function ( event, template ) {
+    // TODO: 这里除了需要删除项目本身以外，还需要删除跟该项目有关的其他方面内容，比如：申请。
     var projectId = FlowRouter.getParam("pid");
-    Project.remove({_id: projectId}, function ( err, result ) {
-      if (!err && result) {
-        FlowRouter.go("userHomepage", {uid: Meteor.userId()});
-      } else {
-        console.log(err);
-        alert("删除项目失败，请再次尝试");
-      }
-    });
+    if (readyForDelete && Meteor.userId()) {
+      Project.remove({_id: projectId}, function ( err, result ) {
+        if (!err && result) {
+          FlowRouter.go("userHomepage", {uid: Meteor.userId()});
+        } else {
+          console.log(err);
+          alert("删除项目失败，请再次尝试");
+        }
+      });
+    }
   },
   "submit #delete-project-modal form": function ( event, template ) {
     event.preventDefault();
@@ -544,7 +572,8 @@ Template.projectHomepage.events({
     var digest = Package.sha.SHA256(target.val());
     Meteor.call("checkPassword", digest, function ( err, result ) {
       if (!err && result) {
-        template.$("#delete-forever").text("删除成功!").css("color", "#4caf50");
+        readyForDelete = true;
+        template.$("#delete-forever").text("删除成功!").addClass("text-success");
         var timeId = Meteor.setTimeout(function () {
           $("#delete-project-modal").modal("hide");
           Meteor.clearTimeout(timeId);
@@ -558,10 +587,53 @@ Template.projectHomepage.events({
   "click #join-button": function ( event, template ) {
    if (!Meteor.user()) {
      alert("请先登陆或者注册 !");
+     return ;
    } else {
-
+     // TODO: when click join button, some thing to be happen.
    }
+  },
+  "submit #join-modal form": function ( event, template ) {
+    event.preventDefault();
+    var positionApplyFor = template.$("[name='select-position']:checked").val();
+    var projectId = FlowRouter.getParam("pid");
+    if (!positionApplyFor) {
+      alert("请先选择职位！");
+      return ;
+    }
+    if (!Meteor.user()) {
+      alert("请先登陆或者注册!");
+      return ;
+    } else {
+      var data = {
+        projectId: projectId,
+        userId: Meteor.userId(),
+        positionApplyFor: positionApplyFor
+      };
+      //这里需要用Methods, 因为需要根据 projectid userid 判断是否该用户的该申请是重复的。
+      // here need to be changed into Meteor.methods, insert and update is not secure.
+      ProjectApplications.insert(data, function ( err, result ) {
+        if (!err && result) {
+          template.$(event.currentTarget).find("[type=submit]").text("申请成功！").addClass("text-success");
+          isApplySuccess = true;
+          var timeId = Meteor.setTimeout(function () {
+            template.$("#join-modal").modal("hide");
+            Meteor.clearTimeout(timeId);
+          }, 2000);
+        } else {
+          alert("申请加入失败, 请重试!");
+          return ;
+        }
+      });
+    }
   }
+/*  "hidden.bs.modal #join-modal": function ( event, template ) {
+    var target = template.$("#join-button");
+    // TODO: secure issuse: somebody could submit application multi times.
+    // 是否在 join modal 影藏之后再　reactive. ???????
+    if (isApplySuccess) {
+      target.removeClass("btn-raised").text("申请加入成功！").addClass("text-success").attr("readable", "readable");
+    }
+  }*/
 });
 
 Template.projectHomepage.onDestroyed(function () {
