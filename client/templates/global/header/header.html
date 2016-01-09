@@ -9,7 +9,9 @@
           <li><a href="#">项目</a></li>
           <li><a href="#">黑客</a></li>
           <li><a href="#">了解更多</a></li>
-          <li><a href="/project/create/basic">创建项目</a></li>
+          {{#if currentUser}}
+          <li><a href="{{pathFor "projectCreateBasic"}}">创建项目</a></li>
+          {{/if}}
           <li><a href="#" data-toggle="modal" data-target="#header-feed-back-modal">意见反馈</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -19,10 +21,10 @@
               <a href="#" data-toggle="dropdown" data-target="#"><img src="{{avatarOrDefault}}" alt="header-bar-avatar">{{username}}<b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="{{pathFor "userHomepage" uid=_id}}">我的主页</a></li>
-                <li><a href="#">我的关注</a></li>
-                <li><a href="#">帮助</a></li>
+                <li><a href="{{pathFor "userSubscriptions" uid=_id}}">我的关注</a></li>
+                <li><a href="{{pathFor "help"}}">帮助</a></li>
                 <hr>
-                <li><a href="#">设置</a></li>
+                <li><a href="{{pathFor "userSettings" uid=_id}}">设置</a></li>
                 <li><a class="logout" href="#">退出</a></li>
               </ul>
             </li>

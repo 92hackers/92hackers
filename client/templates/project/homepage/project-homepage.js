@@ -12,8 +12,6 @@ Template.projectHomepage.onCreated(function () {
   var template = this;
   template.ready = new ReactiveVar();
   template.isProjectOwner = new ReactiveVar(false);
-  template.isEditState;
-  template.isUpdated;
 
   template.autorun(function () {
     var currentProject = Project.findOne();
@@ -21,6 +19,7 @@ Template.projectHomepage.onCreated(function () {
       if (currentProject && currentProject.owner === Meteor.userId()) {
         template.isProjectOwner.set(true);
         template.isEditState = false;
+        template.isUpdated = false;
       }
     }
   });
@@ -70,7 +69,10 @@ Template.projectHomepage.onRendered(function () {
 
   // when project owner logged out, remove edit trace.
   template.autorun(function () {
-    if (!Meteor.user() && template.isProjectOwner.get()) {
+    if ( !Meteor.user() ) {         // when log out, clean variable settings.
+      template.isProjectOwner.set(false);
+    }
+    if (!Meteor.user() && template.isProjectOwner.get() && template.isEditState) {
       logOutFromEditState(template);
     }
   });
@@ -557,6 +559,7 @@ Template.projectHomepage.events({
     var projectId = FlowRouter.getParam("pid");
     if (readyForDelete && Meteor.userId()) {
       Project.remove({_id: projectId}, function ( err, result ) {
+        readyForDelete = false;
         if (!err && result) {
           FlowRouter.go("userHomepage", {uid: Meteor.userId()});
         } else {
