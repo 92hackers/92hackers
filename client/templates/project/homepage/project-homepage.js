@@ -157,7 +157,7 @@ Template.projectHomepage.helpers({
       month: createdAt.getMonth() + 1,      // month count from 0.
       date: createdAt.getDate()
     };
-    return publishDate || {};
+    return publishDate;
   },
   isProjectOwner: function (parentContext) {
     var projectOwner = parentContext || this;

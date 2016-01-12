@@ -1,3 +1,63 @@
 /**
  * Created by cy on 28/12/15.
  */
+
+.user-homepage-wrap {
+  section {
+    #introduction {
+      margin-top: 16px;
+    }
+    #interested-fields {
+      .label:not(:last-child) {
+        margin-right: 10px;
+      }
+    }
+    h2 {
+      #edit-button {
+        float: right;
+        margin-top: 0;
+      }
+    }
+    dl {
+      .glyphicon-envelope {
+        font-size: 14px;
+      }
+    }
+    .cards-container {
+      position: relative;
+    }
+    .idea-wrap {
+      padding-left: 15px;
+      padding-right: 15px;
+      &:nth-child(odd) {
+        padding-left: 0;
+      }
+      &:nth-child(even) {
+        padding-right: 0;
+      }
+      margin-bottom: 30px;
+      .idea {
+        position: relative;
+        padding: 30px;
+        height: 300px;
+        overflow: hidden;
+      }
+      .fa-thumb-tack {
+        position: absolute;
+        right: 5px;
+        top: 10px;
+        font-size: 20px;
+      }
+    }
+  }
+  #private-info-modal {
+    dt {
+      width: auto !important;
+      font-weight: normal !important;
+      margin-bottom: 10px !important;
+    }
+    dd {
+      margin-left: 80px !important;
+    }
+  }
+}

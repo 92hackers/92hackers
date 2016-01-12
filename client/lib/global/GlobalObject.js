@@ -39,3 +39,39 @@ GlobalObject.servicesList = {
   communicationTools: ["微信", "Skype", "电话"],
   fileTools: ["百度云盘", "Dropbox", "Google Drive"]
 };
+
+GlobalObject.projectCard = function ( elements ) {
+  "use strict";
+  var elements = $(elements);
+  var parentElem = elements.parent();
+  var lastElem = elements.eq(-1);
+  var lastSecond;
+  var result;
+  var temp1, temp2;
+  if (elements.size()) {
+    parentElem.css("position", "relative");
+    elements.each(function ( index ) {
+      if (!index) {
+        $(this).css({ left: 0, top: 0 });
+      } else if (index === 1) {
+        lastSecond = elements.eq(-2);
+        $(this).css({ right: 0, top: 0 });
+      } else if ( !(index % 2) ) {
+        $(this).css({
+          left: 0,
+          top: $(elements[index - 2]).position().top + $(elements[index-2]).height() + 30 + "px"
+        });
+      } else {
+        $(this).css({
+          right: 0,
+          top: $(elements[index - 2]).position().top + $(elements[index-2]).height() + 30 + "px"
+        });
+      }
+    });
+    elements.parent().height(elements.eq(-1).position().top + elements.eq(-1).height());
+    temp1 = lastElem.position().top + lastElem.height();
+    temp2 = lastSecond ?  lastSecond.position().top + lastSecond.height() : 0;
+    result = temp1 > temp2 ? temp1 : temp2;
+    parentElem.height(result);
+  }
+};

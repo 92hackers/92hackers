@@ -1,0 +1,43 @@
+/**
+ * Created by cy on 10/01/16.
+ */
+
+.single-project-card-wrap {
+  position: absolute;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  @media (min-width: @custom-md-width) {
+    width: 425px;
+  }
+  @media (min-width: @custom-large-width) {
+    width: 525px;
+  }
+  .mdl-card {
+    width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    .label {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+    .mdl-card__media {
+      background-color: inherit;
+      padding-left: 16px;
+      padding-right: 16px;
+      header {
+        margin-bottom: 5px;
+        font-size: 18px;
+      }
+      p {
+        margin-bottom: 0;
+      }
+    }
+    .mdl-card__actions {
+      span {
+        line-height: 56px;
+        margin-left: 7px;
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+<template name="singleProjectCard">
+  <li class="single-project-card-wrap">
+    <section class="mdl-card mdl-shadow--2dp">
+      {{{label}}}
+      <div class="mdl-card__title">
+        <h4 class="mdl-card__title-text">{{projectInfo.name}}</h4>
+      </div>
+      <div class="mdl-card__media">
+        <header>我的初衷</header>
+        <p>{{projectInfo.fullDescription.initialMind}}</p>
+      </div>
+      <div class="mdl-card__supporting-text">
+        {{projectInfo.introduction}}
+      </div>
+      <div class="mdl-card__actions mdl-card--border clearfix">
+        <span class="text-muted" title="项目创建者"><i class="fa fa-user"></i> <a class="text-muted" href="{{pathFor "userHomepage" uid=ownerUsername._id}}">{{ownerUsername.username}}</a></span>
+        <a href="{{pathFor "projectHomepage" pid=projectInfo._id}}" class="btn btn-primary pull-right">浏览</a>
+      </div>
+    </section>
+  </li>
+</template>

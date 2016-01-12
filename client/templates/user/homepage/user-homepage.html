@@ -1,12 +1,143 @@
 <template name="userHomepage">
-  <div class="user-homepage-wrap">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
+  {{#if subscriptionReady}}
+    <div class="user-homepage-wrap">
+      <div class="container">
+        {{#with user}}
           <div class="well">
-
+            <div class="row">
+              <section class="col-md-4">
+                <div class="row">
+                  <div class="col-md-9">
+                    <img class="img-responsive" src="{{avatarOrDefault}}" alt="avatar">
+                    <p id="introduction">{{profile.introduction}}</p>
+                    <dl class="dl-horizontal">
+                      <dt><i class="glyphicon glyphicon-envelope"></i></dt>
+                      <dd>{{email}}</dd>
+                      <dt><i class="fa fa-clock-o"></i></dt>
+                      <dd>{{#with joinDate}}{{year}}-{{month}}-{{day}}{{/with}}</dd>
+                      <dt><i class="fa fa-map-marker"></i></dt>
+                      <dd>{{profile.location}}</dd>
+                      {{#if isYourOwnHomepage}}
+                        <dt><i class="fa fa-lock"></i></dt>
+                        <dd><a class="text-muted" href="#" data-toggle="modal" data-target="#private-info-modal">我的隐私信息</a></dd>
+                      {{/if}}
+                    </dl>
+                  </div>
+                </div>
+              </section>
+              <section class="col-md-8">
+                <h2>{{username}}{{#if isYourOwnHomepage}}<button id="edit-button" class="btn btn-primary"><i class="fa fa-edit"></i> 编辑</button>{{/if}}</h2>
+                <h4>自我介绍</h4>
+                {{#if selfIntroduction}}
+                  <p>{{selfIntroduction}}</p>
+                {{else}}
+                  <p class="text-muted">目前还没有填写自我介绍</p>
+                {{/if}}
+                <h4>专业技能</h4>
+                {{#if goodAt}}
+                  <p>{{goodAt}}</p>
+                {{else}}
+                  <p class="text-muted">目前还没有填写专业技能</p>
+                {{/if}}
+                <h4>感兴趣的领域</h4>
+                {{#if interestedFields}}
+                  <div id="interested-fields">
+                    {{#each interestedFields}}
+                      <span class="label label-default">{{this}}</span>
+                    {{/each}}
+                  </div>
+                {{else}}
+                  <p class="text-muted">目前还没有挑选感兴趣的领域</p>
+                {{/if}}
+              </section>
+            </div>
+            <div class="row">
+              <section class="col-md-12">
+                <h3>项目</h3>
+                <hr>
+                <ul class="list-inline cards-container">
+                  {{#if hasNoProjects}}
+                    <p class="text-muted text-center">目前没有参加或者创建任何项目</p>
+                  {{else}}
+                    {{#each createdProjects}}
+                      {{> singleProjectCard}}
+                    {{/each}}
+                    {{#each appliedProjects}}
+                      {{> singleProjectCard}}
+                    {{/each}}
+                    {{#each subscribedProjects}}
+                      {{> singleProjectCard}}
+                    {{/each}}
+                  {{/if}}
+                </ul>
+              </section>
+            </div>
+            <div class="row">
+              <section class="col-md-12">
+                <h3>创意想法</h3>
+                <hr>
+                <ul class="list-inline">
+                  {{#if hasIdeasCreated}}
+                    {{#each ideas}}
+                      {{> idea}}
+                    {{/each}}
+                  {{else}}
+                    {{#if isYourOwnHomepage}}
+                      <p class="text-center text-muted">你可以将自己瞬间的灵感，想法，点子，创意记录下来！</p>
+                      <p class="text-center text-muted">点击导航栏上的 + 号，赶快试试吧 !</p>
+                    {{else}}
+                      <p class="text-muted text-center">他目前还没有创建创意，想法</p>
+                    {{/if}}
+                  {{/if}}
+                </ul>
+              </section>
+            </div>
           </div>
+          {{#if isYourOwnHomepage}}
+            {{> privateInfoModal}}
+          {{/if}}
+        {{/with}}
+      </div>
+    </div>
+    {{>footer}}
+  {{else}}
+    {{> loading}}
+  {{/if}}
+</template>
+
+<template name="idea">
+  <li class="idea-wrap col-md-6">
+    <section class="mdl-shadow--2dp idea">
+      <i class="fa fa-thumb-tack"></i>
+      <p>{{this}}</p>
+    </section>
+  </li>
+</template>
+
+<template name="privateInfoModal">
+  <div id="private-info-modal" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h3>我的隐私信息 <small class="text-muted">仅自己可见.</small></h3>
         </div>
+        <div class="modal-body">
+          <dl class="dl-horizontal">
+            <dt>姓名</dt>
+            <dd>{{profile.name}}</dd>
+            <dt>性别</dt>
+            <dd>{{profile.gender}}</dd>
+          </dl>
+          <h5>详细联系方式</h5>
+          <dl class="dl-horizontal">
+            {{#each profile.contactInformation}}
+              <dt>{{type}}</dt>
+              <dd>{{value}}</dd>
+            {{/each}}
+          </dl>
+        </div>
+        <div class="modal-footer"></div>
       </div>
     </div>
   </div>
