@@ -1,0 +1,84 @@
+<template name="userSettings">
+  {{#if isYourOwnSettings}}
+    {{#if ready}}
+      <div class="user-settings-wrap">
+        <div class="container">
+          <div class="row">
+            {{#with userInfo}}
+              <div class="col-md-4">
+                <div class="panel panel-default">
+                  <div class="panel-heading"><h3>设置</h3></div>
+                  <div class="panel-body">
+                    <ul class="nav nav-stacked nav-tabs" role="tablist">
+                      <li role="presentation" class="active">
+                        <span class="left-border"></span>
+                        <a href="#profile" data-toggle="tab" role="tab">个人资料</a>
+                      </li>
+                      <li role="presentation">
+                        <span class="left-border"></span>
+                        <a href="#account-settings" data-toggle="tab" role="tab">账号设置</a>
+                      </li>
+                      <li role="presentation">
+                        <span class="left-border"></span>
+                        <a href="#privacy" data-toggle="tab" role="tab">隐私信息</a>
+                      </li>
+                      <li role="presentation">
+                        <span class="left-border"></span>
+                        <a href="#service-accounts" data-toggle="tab" role="tab">协作工具账号</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <div class="well">
+                  <div class="tab-content">
+                    <section role="tabpanel" class="tab-pane fade in active" id="profile">
+                      <form class="form-horizontal">
+                        <fieldset>
+                          <div class="form-group">
+                            <dl class="dl-horizontal col-md-12">
+                              <dt><img class="img-responsive" src="{{avatarOrDefault}}" alt="avatar"></dt>
+                              <dd>
+                                <a href="#" class="btn btn-primary">
+                                  <label for="upload-avatar-button">
+                                    上传头像
+                                    <input type="file" class="form-control" id="upload-avatar-button">
+                                  </label>
+                                </a>
+                                <div id="upload-avatar-modal" class="modal fade" role="dialog">
+                                  <div class="modal-dialog">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h3 class="modal-title">头像上传</h3>
+                                      </div>
+                                      <div class="modal-body">
+                                        {{> avatarUploader}}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </dd>
+                            </dl>
+                          </div>
+                        </fieldset>
+                      </form>
+                    </section>
+                    <section role="tabpanel" class="tab-pane fade" id="account-settings">2</section>
+                    <section role="tabpanel" class="tab-pane fade" id="privacy">3</section>
+                    <section role="tabpanel" class="tab-pane fade" id="service-accounts">4</section>
+                  </div>
+                </div>
+              </div>
+            {{/with}}
+          </div>
+        </div>
+      </div>
+    {{else}}
+      {{> loading}}
+    {{/if}}
+  {{else}}
+    <p class="text-muted text-center">你不能访问该页面.</p>
+  {{/if}}
+</template>

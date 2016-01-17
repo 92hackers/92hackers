@@ -1,0 +1,64 @@
+/**
+ * Created by cy on 12/01/16.
+ */
+
+.user-settings-wrap {
+  .panel {
+    .panel-heading {
+      h3 {
+        margin: 0;
+      }
+    }
+    .panel-body {
+      padding: 0;
+      .nav {
+        .active {
+          .left-border {
+            display: block;
+          }
+        }
+        li {
+          background-color: #ffffff !important;
+          margin: 0 !important;
+          .left-border {
+            position: absolute;
+            border-left: 2px solid @site-color;
+            height: 60px;
+            left: 0;
+            display: none;
+          }
+          a {
+            color: #333333 !important;
+            font-size: 20px;
+            padding-top: 16px;
+            padding-bottom: 16px;
+          }
+        }
+      }
+    }
+  }
+  section#profile {
+    dl {
+      dt {
+        width: 70px !important;
+        height: 70px !important;
+      }
+      dd {
+        margin-left: 90px !important;
+        .btn {
+          overflow: hidden;
+          label {
+            margin-bottom: 0;
+            position: static;
+            input {
+              cursor: pointer;
+              width: 124px;
+              height: 38px;
+              margin-bottom: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}

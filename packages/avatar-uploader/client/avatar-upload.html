@@ -1,0 +1,25 @@
+<template name="avatarUploader">
+  <form class="com-md-12">
+    <div id="avatar-upload" class="thumbnail img-upload">
+      <img>
+      <div class="caption img-upload-controls-bar">
+        <div class="btn-group btn-group-lg" role="group" aria-label="图片调整按钮">
+          <a href="#" type="button" class="btn btn-default img-upload-zoomin" title="放大"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a>
+          <a href="#" type="button" class="btn btn-default img-upload-zoomout" title="缩小"><span class="glyphicon glyphicon-zoom-out" aria-hidden="true"></span></a>
+          <a href="#" type="button" class="btn btn-default img-upload-rotate" title="旋转"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span></a>
+        </div>
+      </div>
+      <input type="hidden" name="avatar" class="img-upload-data">
+    </div>
+    <button id="cropBtn" class="btn btn-primary btn-lg center-block" type="button">上传</button>
+    <div class="loader">
+      <div class="loader-inner line-scale-pulse-out-rapid" style="height: 37px; margin-top: 10px; margin-bottom: 10px;">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+  </form>
+</template>
