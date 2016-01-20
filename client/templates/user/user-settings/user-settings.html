@@ -37,37 +37,347 @@
                       <form class="form-horizontal">
                         <fieldset>
                           <div class="form-group">
-                            <dl class="dl-horizontal col-md-12">
-                              <dt><img class="img-responsive" src="{{avatarOrDefault}}" alt="avatar"></dt>
-                              <dd>
-                                <a href="#" class="btn btn-primary">
-                                  <label for="upload-avatar-button">
-                                    上传头像
-                                    <input type="file" class="form-control" id="upload-avatar-button">
-                                  </label>
-                                </a>
-                                <div id="upload-avatar-modal" class="modal fade" role="dialog">
-                                  <div class="modal-dialog">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h3 class="modal-title">头像上传</h3>
-                                      </div>
-                                      <div class="modal-body">
-                                        {{> avatarUploader}}
+                            <dl class="dl-horizontal">
+                              <div class="col-sm-2">
+                                <dt class="pull-right"><img class="img-responsive" src="{{avatarOrDefault}}" alt="avatar"></dt>
+                              </div>
+                              <div class="col-sm-10">
+                                <dd>
+                                  <a href="#" class="btn btn-primary">
+                                    <label for="upload-avatar-button">
+                                      上传头像
+                                      <input type="file" class="form-control" id="upload-avatar-button">
+                                    </label>
+                                  </a>
+                                  <div id="upload-avatar-modal" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                          <h3 class="modal-title">头像上传</h3>
+                                        </div>
+                                        <div class="modal-body">
+                                          {{> avatarUploader}}
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
-                                </div>
-                              </dd>
+                                </dd>
+                              </div>
                             </dl>
+                          </div>
+                          <div class="form-group">
+                            <label for="introduction" class="control-label col-sm-2">个人简介</label>
+                            <div class="col-sm-10">
+                              <input type="text" id="introduction" class="form-control" value="{{profile.introduction}}" maxlength="100" required>
+                              <p class="help-block">一句话介绍一下自己吧!</p>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="self-introduction" class="control-label col-sm-2">自我介绍</label>
+                            <div class="col-sm-10">
+                              <textarea class="form-control" name="self-introduction" id="self-introduction" value="{{profile.selfIntroduction}}" cols="30" rows="5"></textarea>
+                              <p class="help-block">完整的自我介绍</p>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="good-at" class="control-label col-sm-2">专业技能</label>
+                            <div class="col-sm-10">
+                              <textarea class="form-control" name="good-at" id="good-at" value="{{profile.goodAt}}" cols="30" rows="5"></textarea>
+                              <p class="help-block">描述一下你的技能点吧！</p>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="col-sm-2 control-label">感兴趣的领域</label>
+                            <div class="col-sm-10">
+                              <div class="checkbox">
+                                <label>
+                                  <input type="checkbox" name="field" value="电子商务">
+                                  电子商务
+                                </label>
+                                <label>
+                                  <input type="checkbox" name="field" value="社交/新型社交">
+                                  社交/新型社交
+                                </label>
+                                <label>
+                                  <input type="checkbox" name="field" value="旅游户外">
+                                  旅游户外
+                                </label>
+                                <label>
+                                  <input type="checkbox" name="field" value="移动互联网">
+                                  移动互联网
+                                </label>
+                                <label>
+                                  <input type="checkbox" name="field" value="PC互联网">
+                                  PC互联网
+                                </label>
+                                <label>
+                                  <input type="checkbox" name="field" value="文化艺术体育">
+                                  文化艺术体育
+                                </label>
+                                <label>
+                                  <input type="checkbox" name="field" value="智能硬件/机器人">
+                                  智能硬件/机器人
+                                </label>
+                                <label>
+                                  <input type="checkbox" name="field" value="O2O">
+                                  O2O
+                                </label>
+                                <label>
+                                  <input type="checkbox" name="field" value="游戏动漫娱乐">
+                                  游戏动漫娱乐
+                                </label>
+                                <label>
+                                  <input type="checkbox" name="field" value="工具软件">
+                                  工具软件
+                                </label>
+                                <label>
+                                  <input type="checkbox" name="field" value="金融服务/虚拟金融">
+                                  金融服务/虚拟金融
+                                </label>
+                                <label>
+                                  <input type="checkbox" name="field" value="消费生活">
+                                  消费生活
+                                </label>
+                                <label>
+                                  <input type="checkbox" name="field" value="教育培训">
+                                  教育培训
+                                </label>
+                                <label>
+                                  <input type="checkbox" name="field" value="医疗健康">
+                                  医疗健康
+                                </label>
+                                <label>
+                                  <input type="checkbox" name="field" value="生物基因">
+                                  生物基因
+                                </label>
+                                <label>
+                                  <input type="checkbox" name="field" value="3D打印">
+                                  3D打印
+                                </label>
+                                <label>
+                                  <input type="checkbox" name="field" value="其他">
+                                  其他
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="location" class="control-label col-sm-2">所在城市</label>
+                            <div class="col-sm-10">
+                              <input type="text" id="location" class="form-control" value="{{profile.location}}" maxlength="100">
+                              <p class="help-block">填写你所居住的城市,以便于通知参加线下活动</p>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <div class="col-sm-12">
+                              <button type="submit" class="btn btn-primary">保存</button>
+                              <div class="loader">
+                                <div class="loader-inner line-scale-pulse-out-rapid">
+                                  <div></div>
+                                  <div></div>
+                                  <div></div>
+                                  <div></div>
+                                  <div></div>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </fieldset>
                       </form>
                     </section>
-                    <section role="tabpanel" class="tab-pane fade" id="account-settings">2</section>
-                    <section role="tabpanel" class="tab-pane fade" id="privacy">3</section>
-                    <section role="tabpanel" class="tab-pane fade" id="service-accounts">4</section>
+                    <section role="tabpanel" class="tab-pane fade" id="account-settings">
+                      <form class="form-horizontal" id="changeUsername" >
+                        <fieldset>
+                          <h4 class="text-muted">修改用户名</h4>
+                          <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label">用户名</label>
+                            <div class="col-sm-10">
+                              <input type="text" value="{{username}}" id="username" class="form-control" maxlength="30" pattern="^[^\d][\u4E00-\u9FA5\uF900-\uFA2Da-zA-Z0-9]{2,29}$">
+                              <p class="help-block">以字母或中文字符开头的 3 ~ 30 个字符</p>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <div class="col-sm-12">
+                              <button type="submit" class="btn btn-primary">保存</button>
+                              <div class="loader">
+                                <div class="loader-inner line-scale-pulse-out-rapid">
+                                  <div></div>
+                                  <div></div>
+                                  <div></div>
+                                  <div></div>
+                                  <div></div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </fieldset>
+                      </form>
+                      <form class="form-horizontal" id="changePassword">
+                        <fieldset>
+                          <h4 class="text-muted">修改密码</h4>
+                          <div class="form-group">
+                            <label for="current-password" class="col-sm-2 control-label">当前密码</label>
+                            <div class="col-sm-10">
+                              <input type="password" id="current-password" class="form-control" placeholder="当前密码">
+                              <p class="help-block">请输入账号当前密码</p>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="new-password" class="control-label col-sm-2">新密码</label>
+                            <div class="col-sm-10">
+                              <input type="password" id="new-password" class="form-control" placeholder="新密码" maxlength="100" pattern="^[-a-zA-Z0-9@_,.]{6,100}$">
+                              <p class="help-block">请填写一个不少于 6 个字母，数字混合的密码</p>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="repeat-password" class="control-label col-sm-2">重复密码</label>
+                            <div class="col-sm-10">
+                              <input type="password" id="repeat-password" class="form-control" placeholder="重复密码">
+                              <p class="help-block">重新输入一遍上面的密码</p>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <div class="col-sm-12">
+                              <button type="submit" class="btn btn-primary">保存</button>
+                              <div class="loader">
+                                <div class="loader-inner line-scale-pulse-out-rapid">
+                                  <div></div>
+                                  <div></div>
+                                  <div></div>
+                                  <div></div>
+                                  <div></div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </fieldset>
+                      </form>
+                    </section>
+                    <section role="tabpanel" class="tab-pane fade" id="privacy">
+                      <small class="text-muted">* 隐私信息只有自己能看到以及当你加入某个项目的时候，将会发送该信息</small>
+                      <form class="form-horizontal">
+                        <fieldset>
+                          <div class="form-group">
+                            <label for="name" class="control-label col-sm-2">姓名</label>
+                            <div class="col-sm-10">
+                              <input type="text" id="name" class="form-control" value="{{profile.name}}">
+                              <p class="help-block">提供真实姓名更加利于远程工作中的沟通</p>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="control col-sm-2">性别</label>
+                            <div class="col-sm-10">
+                              <div class="radio radio-primary">
+                                <label><input type="radio" name="gender" value="男" checked="{{isChecked '男'}}">男</label>
+                              </div>
+                              <div class="radio radio-primary">
+                                <label><input type="radio" name="gender" value="女" checked="{{isChecked '女'}}">女</label>
+                              </div>
+                            </div>
+                          </div>
+                          <h4 class="text-muted">联系方式</h4>
+                          <div class="form-group">
+                            <label for="phone-number" class="control-label col-sm-2">电话</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control contactInfo" id="phone-number" name="电话" value="{{phoneNumber}}">
+                              <p class="help-block">电话方便你和合作伙伴在项目紧急情况下保持沟通</p>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="wei-xin" class="control-label col-sm-2">微信</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control contactInfo" id="wei-xin" name="微信" value="{{weiXinAccount}}">
+                              <p class="help-block">微信可用于日常的项目跟进沟通</p>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="qq" class="control-label col-sm-2">QQ</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control contactInfo" id="qq" name="QQ" value="{{qqAccount}}">
+                              <p class="help-block">qq可用于日常的项目跟进沟通以及召开语音，视频等团队会议</p>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="weibo" class="control-label col-sm-2">微博</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control contactInfo" id="weibo" name="微博" value="{{weiboAccount}}">
+                              <p class="help-block">互相了解对方最新动态</p>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <div class="col-sm-12">
+                              <button type="submit" class="btn btn-primary">保存</button>
+                              <div class="loader">
+                                <div class="loader-inner line-scale-pulse-out-rapid">
+                                  <div></div>
+                                  <div></div>
+                                  <div></div>
+                                  <div></div>
+                                  <div></div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </fieldset>
+                      </form>
+                    </section>
+                    <section role="tabpanel" class="tab-pane fade" id="service-accounts">
+                      <small class="text-muted">* 经过我们团队试用，92Hackers推荐以下远程协作工具</small>
+                      <form class="form-horizontal">
+                        <fieldset>
+                          <div class="form-group">
+                            <label for="Trello" class="control-label col-sm-2">Trello</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" id="Trello" value="{{trelloAccount}}">
+                              <p class="help-block">官方网站: <a href="https://www.trello.com" target="_blank">www.trello.com</a></p>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="Asana" class="control-label col-sm-2">Asana</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" id="Asana" value="{{asanaAccount}}">
+                              <p class="help-block">官方网站： <a href="https://www.asana.com" target="_blank">www.asana.com</a></p>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="Tower" class="control-label col-sm-2">Tower</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" id="Tower" value="{{towerAccount}}">
+                              <p class="help-block">官方网站: <a href="https://www.tower.im" target="_blank">www.tower.im</a></p>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="Teambition" class="control-label col-sm-2">Teambition</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" id="Teambition" value="{{teambitionAccount}}">
+                              <p class="help-block">官方网站: <a href="https://www.teambition.com" target="_blank">www.teambition.com</a></p>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="Worktile" class="control-label col-sm-2">Worktile</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" id="Worktile" value="{{worktileAccount}}">
+                              <p class="help-block">官方网站: <a href="https://worktile.com" target="_blank">www.worktile.com</a></p>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <div class="col-sm-12">
+                              <button type="submit" class="btn btn-primary">保存</button>
+                              <div class="loader">
+                                <div class="loader-inner line-scale-pulse-out-rapid">
+                                  <div></div>
+                                  <div></div>
+                                  <div></div>
+                                  <div></div>
+                                  <div></div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </fieldset>
+                      </form>
+                    </section>
                   </div>
                 </div>
               </div>
@@ -75,6 +385,7 @@
           </div>
         </div>
       </div>
+      {{> footer}}
     {{else}}
       {{> loading}}
     {{/if}}

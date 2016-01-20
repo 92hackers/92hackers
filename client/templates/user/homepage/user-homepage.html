@@ -28,21 +28,21 @@
               <section class="col-md-8">
                 <h2>{{username}}{{#if isYourOwnHomepage}}<a id="edit-button" class="btn btn-primary" href="{{pathFor "userSettings" uid=_id}}"><i class="fa fa-edit"></i> 编辑</a>{{/if}}</h2>
                 <h4>自我介绍</h4>
-                {{#if selfIntroduction}}
-                  <p>{{selfIntroduction}}</p>
+                {{#if profile.selfIntroduction}}
+                  <p>{{profile.selfIntroduction}}</p>
                 {{else}}
                   <p class="text-muted">目前还没有填写自我介绍</p>
                 {{/if}}
                 <h4>专业技能</h4>
-                {{#if goodAt}}
-                  <p>{{goodAt}}</p>
+                {{#if profile.goodAt}}
+                  <p>{{profile.goodAt}}</p>
                 {{else}}
                   <p class="text-muted">目前还没有填写专业技能</p>
                 {{/if}}
                 <h4>感兴趣的领域</h4>
-                {{#if interestedFields}}
+                {{#if profile.interestedFields}}
                   <div id="interested-fields">
-                    {{#each interestedFields}}
+                    {{#each profile.interestedFields}}
                       <span class="label label-default">{{this}}</span>
                     {{/each}}
                   </div>
@@ -95,6 +95,7 @@
           </div>
           {{#if isYourOwnHomepage}}
             {{> privateInfoModal}}
+            {{> newUserTooltip}}
           {{/if}}
         {{/with}}
       </div>
@@ -112,6 +113,26 @@
       <p>{{this}}</p>
     </section>
   </li>
+</template>
+
+<template name="newUserTooltip">
+  <div id="new-user-tooltip-modal" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h3>补全个人信息</h3>
+        </div>
+        <div class="modal-body">
+          <p>为了更加方便的让你的同伴认识你，以及更方便的协作办公，请补全个人信息!</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-default" type="button" data-dismiss="modal">以后再说</button>
+          <button class="btn btn-primary" id="new-user-edit-button" type="button">去补充</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <template name="privateInfoModal">

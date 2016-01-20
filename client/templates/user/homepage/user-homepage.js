@@ -5,6 +5,7 @@
 "use strict";
 
 var isYourOwnHomepage = new ReactiveVar(false);
+var goToEdit = false;
 
 Template.userHomepage.onCreated(function () {
   var template = this;
@@ -51,6 +52,16 @@ Template.userHomepage.onRendered(function () {
         $(window).on("resize", function ( event ) {
           GlobalObject.projectCard(elements);
         });
+        Meteor.clearTimeout(timeId);
+      }, 100);
+    }
+  });
+  template.autorun(function () {
+    if (isYourOwnHomepage.get() && template.subscriptionReady.get()) {
+      var timeId = Meteor.setTimeout(function () {
+        if (Meteor.user().isNewUser) {
+          template.$("#new-user-tooltip-modal").modal("show");
+        }
         Meteor.clearTimeout(timeId);
       }, 100);
     }
@@ -147,6 +158,19 @@ Template.userHomepage.helpers({
         });
       });
       return projects;
+    }
+  }
+});
+
+Template.userHomepage.events({
+  "click #new-user-edit-button": function ( event, template ) {
+    goToEdit = true;
+    template.$("#new-user-tooltip-modal").modal("hide");
+  },
+  "hidden.bs.modal #new-user-tooltip-modal": function ( event, template ) {
+    if (goToEdit) {
+      goToEdit = false;
+      FlowRouter.go("userSettings", {uid: Meteor.userId()});
     }
   }
 });

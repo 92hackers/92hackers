@@ -158,6 +158,7 @@ Template.signUp.events({
     var userObject = {
       username: username,
       password: password,
+      isNewUser: true,        // set new user tag.
       profile: {
         emails: [
           {
