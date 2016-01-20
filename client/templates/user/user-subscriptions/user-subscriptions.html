@@ -1,0 +1,23 @@
+<template name="userSubscriptions">
+  {{#if ready}}
+    <div class="user-subscriptions-wrap">
+      <div class="container">
+        {{#if hasSubscriptions}}
+          <h2>项目</h2>
+          <section id="projects">
+            <ul class="list-unstyled">
+              {{#each subscribedProjects}}
+                {{> singleProjectCard}}
+              {{/each}}
+            </ul>
+          </section>
+        {{else}}
+          <h5 class="text-center text-muted">目前没有关注任何项目或用户</h5>
+        {{/if}}
+      </div>
+    </div>
+    {{> footer}}
+  {{else}}
+    {{> loading}}
+  {{/if}}
+</template>

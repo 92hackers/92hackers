@@ -7,6 +7,7 @@
 var isApplySuccess = false;
 var projectApplications = new ReactiveVar(null);
 var readyForDelete = false;
+var isSubscribed = new ReactiveVar(false);
 
 Template.projectHomepage.onCreated(function () {
   var template = this;
@@ -16,14 +17,21 @@ Template.projectHomepage.onCreated(function () {
   template.autorun(function () {
     var currentProject = Project.findOne();
     if ( !!Meteor.user() ) {
-      if (currentProject && currentProject.owner === Meteor.userId()) {
-        template.isProjectOwner.set(true);
-        template.isEditState = false;
-        template.isUpdated = false;
+      if (currentProject) {
+        if (currentProject.owner === Meteor.userId()) {
+          template.isProjectOwner.set(true);
+          template.isEditState = false;
+          template.isUpdated = false;
+        }
+        var subscribers = ProjectSubscribe.find({projectId: currentProject._id});
+        subscribers.forEach(function ( subscriber ) {
+          if (subscriber.userId === Meteor.userId()) {
+            isSubscribed.set(true);
+          }
+        });
       }
     }
   });
-
 });
 
 Template.projectHomepage.onRendered(function () {
@@ -71,6 +79,7 @@ Template.projectHomepage.onRendered(function () {
   template.autorun(function () {
     if ( !Meteor.user() ) {         // when log out, clean variable settings.
       template.isProjectOwner.set(false);
+      isSubscribed.set(false);
     }
     if (!Meteor.user() && template.isProjectOwner.get() && template.isEditState) {
       logOutFromEditState(template);
@@ -99,6 +108,9 @@ Template.projectHomepage.helpers({
   singleProject: function () {
     var projectId = FlowRouter.getParam("pid");
     return Project.findOne({_id: projectId}) || {};
+  },
+  isSubscribed: function () {
+    return isSubscribed.get();
   },
   hasProductPositions: function () {
     return this.productHire.length > 0;
@@ -628,6 +640,20 @@ Template.projectHomepage.events({
         }
       });
     }
+  },
+  "click #subscribe": function ( event, template ) {
+    var data = {
+      projectId: FlowRouter.getParam("pid"),
+      userId: Meteor.userId()
+    };
+    ProjectSubscribe.insert(data);
+  },
+  "click #cancel-subscribe": function ( event, template ) {
+    Meteor.call("cancelSubscribe", FlowRouter.getParam("pid"), function ( err ) {
+      if (!err) {
+        isSubscribed.set(false);
+      }
+    });
   }
 /*  "hidden.bs.modal #join-modal": function ( event, template ) {
     var target = template.$("#join-button");

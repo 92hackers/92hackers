@@ -87,3 +87,31 @@ Meteor.publish("userInfo", function () {
     return Meteor.users.find({_id: this.userId}, {fields: {services: 0}});
   }
 });
+
+Meteor.publishComposite("userSubscriptions", function ( uid ) {
+  check(uid, String);
+  return {
+    find: function () {
+      return ProjectSubscribe.find({userId: uid});
+    },
+    children: [
+      {
+        find: function (projectSubscriptions) {
+          return Project.find({_id: projectSubscriptions.projectId}, {fields: {
+            name: 1,
+            owner: 1,
+            introduction: 1,
+            "fullDescription.initialMind": 1
+          }});
+        },
+        children: [
+          {
+            find: function ( project ) {
+              return Meteor.users.find({_id: project.owner}, {fields: {username: 1}});
+            }
+          }
+        ]
+      }
+    ]
+  }
+});

@@ -9,7 +9,6 @@ Meteor.publishComposite("singleProject", function ( pid ) {
   check(pid, String);
   return {
     find: function () {
-      console.log(Project.findOne({_id: pid}));
       return Project.find({_id: pid});
     },
     children: [
@@ -25,6 +24,11 @@ Meteor.publishComposite("singleProject", function ( pid ) {
       {
         find: function ( project ) {
           return ProjectApplications.find({projectId: project._id});
+        }
+      },
+      {
+        find: function ( project ) {
+          return ProjectSubscribe.find({projectId: project._id});
         }
       }
     ]

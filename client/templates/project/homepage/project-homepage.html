@@ -6,6 +6,15 @@
           {{#with singleProject}}
             <div class="col-md-8">
               <div class="well">
+                {{#if currentUser}}
+                  {{#unless isProjectOwner}}
+                    {{#if isSubscribed}}
+                      <button class="btn btn-default text-muted" id="cancel-subscribe"><i class="fa fa-eye"></i> 取消关注</button>
+                    {{else}}
+                      <button class="btn btn-primary" id="subscribe"><i class="fa fa-eye-slash"></i> 关注</button>
+                    {{/if}}
+                  {{/unless}}
+                {{/if}}
                 <article>
                   <h3 class="caption">{{name}}</h3>
                   <ul class="list-inline">
