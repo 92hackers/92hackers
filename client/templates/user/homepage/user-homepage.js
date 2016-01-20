@@ -93,9 +93,7 @@ Template.userHomepage.helpers({
     return isYourOwnHomepage.get();
   },
   hasIdeasCreated: function () {
-    if (this.ideas) {
-      return this.ideas.length > 0;
-    }
+      return this.profile.ideas.length > 0;
   },
   hasNoProjects: function () {
     var uid = FlowRouter.getParam("uid");

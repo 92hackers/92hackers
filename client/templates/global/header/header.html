@@ -16,7 +16,7 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
           {{#with currentUser}}
-            <li title="记录我的创意"><a href="#"><i class="fa fa-plus"></i></a></li>
+            <li title="记录我的创意"><a data-toggle="modal" data-target="#write-ideas-modal" href="#"><i class="fa fa-plus"></i></a></li>
             <li><a class="notification" href="#"><i class="fa fa-bell"></i><span class="badge text-danger">20</span></a></li>
             <li class="dropdown">
               <a href="#" data-toggle="dropdown" data-target="#"><img src="{{avatarOrDefault}}" alt="header-bar-avatar">{{username}}<b class="caret"></b></a>
@@ -64,6 +64,33 @@
       </div>
     </div>
   </div>
+  {{#if currentUser}}
+    <div class="modal fade" id="write-ideas-modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button class="close" type="button" data-dismiss="modal">&times;</button>
+            <h2 class="modal-title">新的创意</h2>
+          </div>
+          <div class="modal-body">
+            <form class="form-horizontal">
+              <fieldset>
+                <div class="form-group">
+                  <div class="col-md-12">
+                    <textarea name="my-ideas" id="my-ideas" cols="30" rows="10" class="form-control" placeholder="我有一个新的点子!"></textarea>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary pull-right">提交</button>
+                  <button type="button" class="btn btn-default pull-right" data-dismiss="modal">取消</button>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  {{/if}}
   {{#unless loggedIn}}
     {{> signInUpModal}}
   {{/unless}}

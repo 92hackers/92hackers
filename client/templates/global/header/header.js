@@ -46,5 +46,36 @@ Template.header.events({
         console.log(err);
       }
     });
+  },
+  "submit #write-ideas-modal form": function ( event, template ) {
+    event.preventDefault();
+    var data = template.$(event.currentTarget).find("textarea").val();
+    var submitButton = template.$(event.currentTarget).find("[type=submit]");
+    if (data.length) {
+      Meteor.users.update({_id: Meteor.userId()}, {$push: {"profile.ideas": data}}, function ( err, result ) {
+        if (!err && result) {
+          submitButton.text("提交成功！").addClass("text-success");
+        } else {
+          console.log(err);
+          submitButton.text("提交失败！").addClass("text-error");
+        }
+        var timeId = Meteor.setTimeout(function () {
+          template.$("#write-ideas-modal").modal("hide");
+          Meteor.clearTimeout(timeId);
+        }, 2000);
+      });
+    } else {
+      alert("你还没有写你的创意呢！");
+      return ;
+    }
+  },
+  "shown.bs.modal #write-ideas-modal": function ( event, template ) {
+    "use strict";
+    template.$(event.currentTarget).find("textarea").focus();
+  },
+  "hidden.bs.modal #write-ideas-modal": function ( event, template ) {
+    "use strict";
+    template.$(event.currentTarget).find("[type=submit]").text("提交").removeClass("text-success").removeClass("text-error");
+    template.$(event.currentTarget).find("textarea").val("");
   }
 });
