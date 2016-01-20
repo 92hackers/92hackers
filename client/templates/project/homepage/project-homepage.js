@@ -640,7 +640,6 @@ Template.projectHomepage.events({
 });
 
 Template.projectHomepage.onDestroyed(function () {
-// nothing
+  GlobalObject.subscribeCache.clear();
   console.log("from template project homepage destoryed");
-  console.log("nihao");
 });

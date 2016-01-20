@@ -174,3 +174,7 @@ Template.userHomepage.events({
     }
   }
 });
+
+Template.userHomepage.onDestroyed(function () {
+  GlobalObject.subscribeCache.clear();
+});

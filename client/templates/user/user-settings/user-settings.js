@@ -304,3 +304,7 @@ Template.userSettings.events({
     saveSettings("service-accounts", event, template);
   }
 });
+
+Template.userSettings.onDestroyed(function () {
+  GlobalObject.subscribeCache.clear();
+});

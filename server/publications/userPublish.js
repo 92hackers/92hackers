@@ -59,7 +59,7 @@ Meteor.publishComposite("singleUser", function ( uid ) {
           {
             find: function ( projectSubscriptions ) {
               "use strict";
-              return project.find({_id: projectSubscriptions.projectId}, {
+              return Project.find({_id: projectSubscriptions.projectId}, {
                 fields: {
                   name: 1,
                   owner: 1,
