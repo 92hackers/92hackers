@@ -109,6 +109,11 @@ Template.projectHomepage.helpers({
     var projectId = FlowRouter.getParam("pid");
     return Project.findOne({_id: projectId}) || {};
   },
+  isDemoUrl: function () {
+    var demoUrl = this.demoUrl;
+    var validUrlPattern = /^http:\/\/\S+$/;
+    return validUrlPattern.test(demoUrl);
+  },
   isSubscribed: function () {
     return isSubscribed.get();
   },
@@ -361,6 +366,7 @@ Template.projectHomepage.events({
   "click #edit-button": function ( event, template ) {
     var editableElems = template.$(".editable");
     var editableDemoUrl = template.$(".editable-item");
+    var demoUrl = template.$("#demo-url");
 
     var editButton = template.$("#edit-button");
     var saveButton = template.$("#save-button");
@@ -382,6 +388,11 @@ Template.projectHomepage.events({
     saveButton.show();
     cancelButton.show();
     dangerZone.show();
+
+    // todo: 这里当内容完全没有了的时候，光标就跑到输入框的最上面去了。
+    if (demoUrl.text() === "暂时没有demo地址") {
+      template.$("#demo-url").text("");       // 去掉里面的文字。
+    }
   },
   "click #cancel-button": function ( event, template ) {
     logOutFromEditState(template);
@@ -395,7 +406,8 @@ Template.projectHomepage.events({
     console.log(updatedFields);
 
     var urlPattern = /^http:\/\/(www\.)?[0-9a-zA-Z]+\.[0-9a-zA-Z]+$/;
-    if (!urlPattern.test(updatedFields.demoUrl)) {
+    var emptyUrlPattern = /^http:\/\/$/;
+    if ( !emptyUrlPattern.test(updatedFields.demoUrl) && !urlPattern.test(updatedFields.demoUrl)) {
       alert("请输入正确格式的网址");
       $("#demo-url").focus();
       return ;

@@ -54,6 +54,9 @@ Template.signInUpModal.events({
   "hidden.bs.modal #signModal": function () {
     Session.set("loggedIn", logIn.get());
 
+    if (logIn.get()) {
+      logIn.set(false);     //  variable life cycle.  which is very important.
+    }
     // bind elements to js plugin.
     $.material.init();
   }
@@ -158,8 +161,8 @@ Template.signUp.events({
     var userObject = {
       username: username,
       password: password,
-      isNewUser: true,        // set new user tag.
       profile: {
+        isNewUser: true,        // set new user tag.
         emails: [
           {
             address: email,
@@ -172,6 +175,7 @@ Template.signUp.events({
     };
 
 
+    console.log(userObject);
     Accounts.createUser(userObject, function (err) {
       if (!err) {
         logIn.set(true);

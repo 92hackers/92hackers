@@ -56,9 +56,11 @@ Template.projectCreateServices.events({
   "submit .project-create-services-wrap form": function ( event, template ) {
     event.preventDefault();
 
+    var submitButton = template.$(event.currentTarget).find("[type=submit]");
+    var loader = template.$(event.currentTarget).find(".loader");
     //  ui displays loading button
-    $("[type=submit]").hide();
-    $(".loader").fadeIn();
+    submitButton.hide();
+    loader.fadeIn();
 
     getFormValues();
     _.extend(GlobalObject.projectCreate, valuesCollection);
@@ -73,8 +75,8 @@ Template.projectCreateServices.events({
           // go to project homepage.
           FlowRouter.go("projectHomepage", {pid: result});
         } else {
-          $(".loader").fadeOut();
-          $("[type=submit]").show();
+          loader.fadeOut();
+          submitButton.show();
           console.log(error);
           alert("信息填写不完整，请重新填写");
           FlowRouter.go("projectCreateBasic");

@@ -43,6 +43,10 @@ Template.projectCreateBasic.events({
     event.preventDefault();
     if ( !!Meteor.user() ) {
       getBasicValues();
+      if ( !GlobalObject.projectCreate.category ) {
+        alert("请填写项目所属分类!");
+        return ;
+      }
       console.log(GlobalObject.projectCreate);
       FlowRouter.go("projectCreateFullDesc");
     } else {

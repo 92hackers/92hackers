@@ -59,7 +59,7 @@ Template.userHomepage.onRendered(function () {
   template.autorun(function () {
     if (isYourOwnHomepage.get() && template.subscriptionReady.get()) {
       var timeId = Meteor.setTimeout(function () {
-        if (Meteor.user().isNewUser) {
+        if (Meteor.user().profile.isNewUser) {
           template.$("#new-user-tooltip-modal").modal("show");
         }
         Meteor.clearTimeout(timeId);
@@ -91,9 +91,6 @@ Template.userHomepage.helpers({
   },
   isYourOwnHomepage: function () {
     return isYourOwnHomepage.get();
-  },
-  hasIdeasCreated: function () {
-      return this.profile.ideas.length > 0;
   },
   hasNoProjects: function () {
     var uid = FlowRouter.getParam("uid");

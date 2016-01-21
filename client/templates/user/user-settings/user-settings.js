@@ -21,7 +21,7 @@ Template.userSettings.onCreated(function () {
   });
   template.autorun(function () {
     if (isYourOwnSettings.get()) {
-      isNewUser = Meteor.user().isNewUser;
+      isNewUser = Meteor.user().profile.isNewUser;
     }
   });
 });
@@ -150,8 +150,9 @@ function saveSettings(section, event, template) {
         "profile.location": template.$("#location").val()
       };
       if (isNewUser) {
-        data.isNewUser = false;
+        _.extend(data, {"profile.isNewUser": false});
       }
+      console.log(data);
       Meteor.users.update({ _id: uid }, { $set: data }, function ( err, result ) {
         loader.hide();
         var timeId = Meteor.setTimeout(function () {
@@ -234,7 +235,7 @@ function saveSettings(section, event, template) {
         "profile.contactInformation": contactInfo
       };
       if (isNewUser) {
-        data.isNewUser = isNewUser;
+        _.extend(data, {"profile.isNewUser": false});
       }
       console.log(data);
       Meteor.users.update({_id: uid}, {$set: data}, function ( err, result ) {
@@ -262,7 +263,7 @@ function saveSettings(section, event, template) {
           });
         }
       });
-      Meteor.users.update({_id: uid}, {$set: {"profile.serviceAccounts": serviceAccounts, isNewUser: isNewUser}}, function ( err, result ) {
+      Meteor.users.update({_id: uid}, {$set: {"profile.serviceAccounts": serviceAccounts, "profile.isNewUser": false}}, function ( err, result ) {
         loader.hide();
         var timeId = Meteor.setTimeout(function () {
           submitButton.text("保存").removeClass("text-success").removeClass("text-danger");

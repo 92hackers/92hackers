@@ -1,8 +1,29 @@
 <template name="login">
-    {{#if Template.subscriptionsReady}}
-        <h1>sajdfj</h1>
-        {{> footer}}
-    {{else}}
-        {{> loading}}
-    {{/if}}
+  {{#if Template.subscriptionsReady}}
+    <div class="login-wrap">
+      <div class="container">
+        <h2>最新项目</h2>
+        <section id="new-projects">
+          <ul class="list-unstyled">
+          </ul>
+          <div class="clearfix more"><a class="pull-right" href="#">查看更多</a></div>
+        </section>
+        <h2>最新黑客</h2>
+        <section id="new-users">
+          <ul class="list-unstyled clearfix">
+            {{> singleUserCard}}
+            {{> singleUserCard}}
+            {{> singleUserCard}}
+            {{> singleUserCard}}
+            {{> singleUserCard}}
+            {{> singleUserCard}}
+          </ul>
+          <div class="clearfix more"><a class="pull-right" href="#">查看更多</a></div>
+        </section>
+      </div>
+    </div>
+    {{> footer}}
+  {{else}}
+    {{> loading}}
+  {{/if}}
 </template>

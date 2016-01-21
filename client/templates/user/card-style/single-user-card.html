@@ -1,5 +1,19 @@
 <template name="singleUserCard">
-  <li class="single-user-card-wrap mdl-card mdl-shadow--2dp">
-
+  <li class="single-user-card-wrap">
+    <section class="mdl-card mdl-shadow--2dp">
+      <div class="mdl-card__title">
+        <h4 class="mdl-card__title-text"><img  src="{{avatarOrDefault}}" alt="avatar"> cy476571</h4>
+      </div>
+      <div class="mdl-card__media">
+        <header>自我介绍</header>
+        <p>我叫陈元，是一个废物，目前很差劲，正在努力改善世界。</p>
+      </div>
+      <div class="mdl-card__supporting-text">
+        你信不信，我立马飞出太阳系？哈啊哈，逗你玩。
+      </div>
+      <div class="mdl-card__actions mdl-card--border clearfix">
+        <a href="{{pathFor "userHomepage" uid=userId}}" class="btn btn-primary pull-right">浏览</a>
+      </div>
+    </section>
   </li>
 </template>

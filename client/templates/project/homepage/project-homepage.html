@@ -236,10 +236,10 @@
                     <dt><i class="fa fa-code-fork"></i></dt>
                     <dd title="项目分类">{{category}}</dd>
                     <dt><i class="fa fa-link"></i></dt>
-                    <dd id="demo-url" class="editable-item" title="Demo地址">{{#if demoUrl}}<a href="{{demoUrl}}" target="_blank">{{demoUrl}}</a>{{else}}<span>暂时没有demo地址</span>{{/if}}</dd>
+                    <dd id="demo-url" class="editable-item" title="Demo地址">{{#if isDemoUrl}}<a href="{{demoUrl}}" target="_blank">{{demoUrl}}</a>{{else}}<span>暂时没有demo地址</span>{{/if}}</dd>
                     {{#if isProjectOwner}}<dd id="demo-url-help" class="text-muted">例如：www.google.com</dd>{{/if}}
                     {{#if isProjectOwner}}
-                      <dd id="demo-url-clone" class="hide">{{#if demoUrl}}<a href="{{demoUrl}}" target="_blank">{{demoUrl}}</a>{{else}}暂时没有demo地址{{/if}}</dd>
+                      <dd id="demo-url-clone" class="hide">{{#if isDemoUrl}}<a href="{{demoUrl}}" target="_blank">{{demoUrl}}</a>{{else}}暂时没有demo地址{{/if}}</dd>
                     {{/if}}
                     <dt><i class="fa fa-calendar"></i></dt>
                     <dd title="发布时间">{{publishDate.fullYear}}-{{publishDate.month}}-{{publishDate.date}}</dd>

@@ -4,5 +4,14 @@
  */
 
 Template.login.onCreated(function () {
-    console.log(Meteor.user());
+  var template = this;
+  template.autorun(function () {
+    "use strict";
+
+  });
+});
+
+
+Template.login.onRendered(function () {
+  "use strict";
 });
