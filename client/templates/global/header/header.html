@@ -6,9 +6,9 @@
       </div>
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-          <li><a href="#">项目</a></li>
-          <li><a href="#">黑客</a></li>
-          <li><a href="#">了解更多</a></li>
+          <li><a href="{{pathFor 'allProjects'}}">项目</a></li>
+          <li><a href="{{pathFor 'allUsers'}}">成员</a></li>
+          <li><a href="{{pathFor 'help'}}">了解更多</a></li>
           {{#if currentUser}}
             <li><a href="{{pathFor "projectCreateBasic"}}">创建项目</a></li>
           {{/if}}

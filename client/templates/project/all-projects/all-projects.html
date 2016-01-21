@@ -1,0 +1,16 @@
+<template name="allProjects">
+  {{#if ready}}
+    <div class="all-projects-wrap">
+      <div class="container">
+        <ul class="list-unstyled" style="margin-left: 30px; margin-right: 30px;">
+          {{#each allProjects}}
+            {{> singleProjectCard}}
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+    {{> footer}}
+  {{else}}
+    {{> loading}}
+  {{/if}}
+</template>

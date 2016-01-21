@@ -104,8 +104,8 @@ Template.userHomepage.helpers({
     var projects = Project.find({owner: FlowRouter.getParam("uid")});
     var results = [];
     if (projects.count()) {
-      projects.forEach(function ( project ) {
-        var project = project;
+      projects.forEach(function ( singleProject ) {
+        var project = singleProject;
         var username = Meteor.users.findOne({ _id: project.owner }, { fields: { username: 1 } });
         results.push({
           projectInfo: project,

@@ -1,26 +1,24 @@
 /**
- *  this is the real home page if you login.
- * Created by cy on 07/12/15.
+ * Created by cy on 21/01/16.
  */
 
-Template.login.onCreated(function () {
+"use strict";
+
+var limit = 10;
+
+Template.allProjects.onCreated(function () {
   var template = this;
-  var projectLimit = 4;
-  var userLimit = 6;
   template.ready = new ReactiveVar();
+  SEO.set({ title: "92Hackers - 所有项目"});
   template.autorun(function () {
-    "use strict";
-    SEO.set({ title: "92Hackers - 最新创建的项目和最新加入的黑客"});
-    GlobalObject.subscribeCache.subscribe("newestProjects", projectLimit);
-    GlobalObject.subscribeCache.subscribe("newestUsers", userLimit);
+    GlobalObject.subscribeCache.subscribe("newestProjects", limit);
     template.ready.set(GlobalObject.subscribeCache.ready());
   });
 });
 
-Template.login.onRendered(function () {
+Template.allProjects.onRendered(function () {
   var template = this;
   template.autorun(function () {
-    "use strict";
     if (template.ready.get()) {
       var timeId = Meteor.setTimeout(function () {
         $.material.init();
@@ -40,15 +38,12 @@ Template.login.onRendered(function () {
   });
 });
 
-Template.login.helpers({
+Template.allProjects.helpers({
   ready: function () {
     return Template.instance().ready.get();
   },
-  newestUsers: function () {
-    return Meteor.users.find({}, {sort: {createdAt: -1}, limit: 6});
-  },
-  newestProjects: function () {
-    var projects =  Project.find({}, {sort: {createdAt: -1}, limit: 4});
+  allProjects: function () {
+    var projects =  Project.find({}, {sort: {createdAt: -1}, limit: limit});
     var results = [];
     if (projects.count()) {
       projects.forEach(function ( singleProject ) {
@@ -64,8 +59,6 @@ Template.login.helpers({
   }
 });
 
-
-Template.login.onDestroyed(function () {
-  "use strict";
+Template.allUsers.onDestroyed(function () {
   GlobalObject.subscribeCache.clear();
 });

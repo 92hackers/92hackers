@@ -1,0 +1,16 @@
+<template name="allUsers">
+  {{#if ready}}
+    <div class="all-users-wrap">
+      <div class="container">
+        <ul class="list-unstyled clearfix" style="margin-left: 30px; margin-right: 30px;">
+          {{#each allUsers}}
+            {{> singleUserCard}}
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+    {{> footer}}
+  {{else}}
+    {{> loading}}
+  {{/if}}
+</template>

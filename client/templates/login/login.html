@@ -1,24 +1,24 @@
 <template name="login">
-  {{#if Template.subscriptionsReady}}
+  {{#if ready}}
     <div class="login-wrap">
       <div class="container">
         <h2>最新项目</h2>
         <section id="new-projects">
           <ul class="list-unstyled">
+            {{#each newestProjects}}
+              {{> singleProjectCard}}
+            {{/each}}
           </ul>
-          <div class="clearfix more"><a class="pull-right" href="#">查看更多</a></div>
+          <div class="clearfix more"><a class="pull-right" href="{{pathFor 'allProjects'}}">查看更多</a></div>
         </section>
-        <h2>最新黑客</h2>
+        <h2>最新成员</h2>
         <section id="new-users">
           <ul class="list-unstyled clearfix">
-            {{> singleUserCard}}
-            {{> singleUserCard}}
-            {{> singleUserCard}}
-            {{> singleUserCard}}
-            {{> singleUserCard}}
-            {{> singleUserCard}}
+            {{#each newestUsers}}
+              {{> singleUserCard}}
+            {{/each}}
           </ul>
-          <div class="clearfix more"><a class="pull-right" href="#">查看更多</a></div>
+          <div class="clearfix more"><a class="pull-right" href="{{pathFor 'allUsers'}}">查看更多</a></div>
         </section>
       </div>
     </div>
