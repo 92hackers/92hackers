@@ -59,3 +59,6 @@ var numberPattern = /^[1-9][0-9]+$/;
 
 联系方式：
 电话，微信，qq，微博
+
+项目申请时候的四种状态：
+applied, agreed, denied, fired. 对于每种状态，都有相应的逻辑，并且要更新这些状态。

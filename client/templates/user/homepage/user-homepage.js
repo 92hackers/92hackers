@@ -5,7 +5,6 @@
 "use strict";
 
 var isYourOwnHomepage = new ReactiveVar(false);
-var goToEdit = false;
 
 Template.userHomepage.onCreated(function () {
   var template = this;
@@ -157,14 +156,19 @@ Template.userHomepage.helpers({
   }
 });
 
-Template.userHomepage.events({
+Template.newUserTooltip.onCreated(function () {
+  var template = this;
+  template.goToEdit = false;
+});
+
+Template.newUserTooltip.events({
   "click #new-user-edit-button": function ( event, template ) {
-    goToEdit = true;
+    template.goToEdit = true;
     template.$("#new-user-tooltip-modal").modal("hide");
   },
   "hidden.bs.modal #new-user-tooltip-modal": function ( event, template ) {
-    if (goToEdit) {
-      goToEdit = false;
+    if (template.goToEdit) {
+      template.goToEdit = false;
       FlowRouter.go("userSettings", {uid: Meteor.userId()});
     }
   }

@@ -1,13 +1,30 @@
 <template name="footer">
-    <div class="container">
-        <footer id="site-footer">
-            <ul class="list-inline">
-                <li><a href="#" class="glyphicon glyphicon-home" title="首页"></a></li>
-                <li>&copy; 2015 92Hackers.com</li>
-                <li><a href="#">关于</a></li>
-                <li><a href="#">隐私保护</a></li>
-                <li><a href="#">加入我们</a></li>
-            </ul>
-        </footer>
+  <div class="container">
+    <footer id="site-footer">
+      <ul class="list-inline">
+        <li><a href="{{pathFor "index"}}" class="glyphicon glyphicon-home" title="首页"></a></li>
+        <li>&copy; 2015 92Hackers.com</li>
+        <li><a href="{{pathFor "help"}}">关于</a></li>
+        <li><a href="#" data-toggle="modal" data-target="#protectYourPrivacy">隐私保护</a></li>
+        <li><a href="#">加入我们</a></li>
+      </ul>
+    </footer>
+    <div class="modal fade" id="protectYourPrivacy">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h3>隐私保护</h3>
+          </div>
+          <div class="modal-body">
+            <p>我们承诺:</p>
+            <p>绝对不泄露用户个人信息，绝对不跟踪用户数据，绝对不做本职工作以外的任何违规勾当！</p>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary" type="button" data-dismiss="modal">关闭</button>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </template>

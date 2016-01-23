@@ -8,6 +8,7 @@ var isApplySuccess = false;
 var projectApplications = new ReactiveVar(null);
 var readyForDelete = false;
 var isSubscribed = new ReactiveVar(false);
+var isANewUser = new ReactiveVar(false);
 
 Template.projectHomepage.onCreated(function () {
   var template = this;
@@ -17,6 +18,7 @@ Template.projectHomepage.onCreated(function () {
   template.autorun(function () {
     var currentProject = Project.findOne();
     if ( !!Meteor.user() ) {
+      isANewUser.set(Meteor.user().profile.isNewUser);
       if (currentProject) {
         if (currentProject.owner === Meteor.userId()) {
           template.isProjectOwner.set(true);
@@ -64,7 +66,13 @@ Template.projectHomepage.onRendered(function () {
     //　但是这里本机上没有延时的结果是 ready的时候，数据已经取好了，所以设置一个 1ms 的延时，
     //　如果不行的话，还是要用 afterflush ，上面的代码，确实，本机上面数据的延时不太好测试。
 
-    projectApplications = ProjectApplications.find({projectId: projectId});
+    if (!!Meteor.user()) {
+      if (template.isProjectOwner.get()) {
+        projectApplications.set(ProjectApplications.find({projectId: projectId}));
+      } else {
+        projectApplications.set(ProjectApplications.findOne({userId: Meteor.userId()}));
+      }
+    }
 
     template.ready.set(GlobalObject.subscribeCache.ready());
     if (template.ready.get()) {
@@ -113,6 +121,9 @@ Template.projectHomepage.helpers({
     var demoUrl = this.demoUrl;
     var validUrlPattern = /^http:\/\/\S+$/;
     return validUrlPattern.test(demoUrl);
+  },
+  isANewUser: function () {
+    return isANewUser.get();
   },
   isSubscribed: function () {
     return isSubscribed.get();
@@ -180,17 +191,44 @@ Template.projectHomepage.helpers({
     var projectOwner = parentContext || this;
     return Meteor.userId() === projectOwner.owner;
   },
-  hasApplied: function () {
-    var hasApplied = false;
-    projectApplications.forEach(function ( project ) {
-      console.log(project.userId);
-      if (project.userId === Meteor.userId()) {
-        hasApplied = true;
+  hasNewApplications: function () {
+    var count = 0;
+    projectApplications.get().forEach(function ( singleApplication ) {
+      var applicationStatus = singleApplication.status;
+      if (applicationStatus === "applied") {
+        count++;
       }
     });
-    return hasApplied;
+    return count;
+  },
+  isApplySuccessfully: function () {
+    console.log(projectApplications.get());
+    if (!Meteor.user()) {
+      return false;
+    }
+    return projectApplications.get() && projectApplications.get().status !== "fired";
+  },
+  applicationStatus: function () {
+    var result = "";
+    console.log(projectApplications.get());
+    if (projectApplications.get()) {
+      var applicationStatus = projectApplications.get().status;
+      if (applicationStatus === "applied") {
+        result = "申请加入成功！";
+      } else if (applicationStatus === "agreed") {
+        result = "正在参与！";
+      } else if (applicationStatus === "denied") {
+        result = "被拒绝了！";       // so sad :(
+      }
+      return result;
+    }
   }
 });
+
+function getSalary(element) {
+  var salaryElem = $(element).children(".hire-salary");
+  return salaryElem.size() ? salaryElem.text().replace("￥", "") : 0;
+}
 
 function getFormValues() {
 
@@ -219,11 +257,6 @@ function getFormValues() {
 
   function getCategory(element) {
     return $(element).children(".hire-category").text();
-  }
-
-  function getSalary(element) {
-    var salaryElem = $(element).children(".hire-salary");
-    return salaryElem.size() ? salaryElem.text().replace("￥", "") : 0;
   }
 
   $(".product-position").each(function () {
@@ -295,6 +328,7 @@ function logOutFromEditState( template, isSave ) {
 
   var isSave = isSave;
   var editButton = template.$("#edit-button");
+  var displayApplications = template.$("#display-applications");
   var saveButton = template.$("#save-button");
   var cancelButton = template.$("#cancel-button");
   var demoUrlHelp = template.$("#demo-url-help");
@@ -338,6 +372,7 @@ function logOutFromEditState( template, isSave ) {
   // hide plus and minus icon.
 
   if (editButton.size()) {editButton.show();}
+  if (displayApplications.size()) { displayApplications.show(); }
 
   _.each(tempArray, function ( item, index ) {
     if (item.size() && (item.css("display") === "block" || item.css("display") === "inline-block" || item.css("display") === "inline")) { item.hide(); }
@@ -368,6 +403,7 @@ Template.projectHomepage.events({
     var editableDemoUrl = template.$(".editable-item");
     var demoUrl = template.$("#demo-url");
 
+    var displayApplications = template.$("#display-applications");
     var editButton = template.$("#edit-button");
     var saveButton = template.$("#save-button");
     var cancelButton = template.$("#cancel-button");
@@ -384,6 +420,7 @@ Template.projectHomepage.events({
     template.isEditState = true;
 
     editButton.hide();
+    displayApplications.hide();
     demoHelp.show();
     saveButton.show();
     cancelButton.show();
@@ -403,7 +440,6 @@ Template.projectHomepage.events({
     var updatedFields = getFormValues();
     var saveButton = $("#save-button");
     var loader = $(".loader");
-    console.log(updatedFields);
 
     var urlPattern = /^http:\/\/(www\.)?[0-9a-zA-Z]+\.[0-9a-zA-Z]+$/;
     var emptyUrlPattern = /^http:\/\/$/;
@@ -435,14 +471,12 @@ Template.projectHomepage.events({
 
     Project.update({_id: projectId}, {$set: updatedFields}, function ( err, result ) {
       if (err) {
-        console.log(err);
         template.isUpdated = false;
         loader.hide();
         saveButton.show();
       } else {
         replaceContentWithClone(template);
         template.isUpdated = false;
-        console.log(result);
         logOutFromEditState(template, true);
       }
     });
@@ -587,7 +621,6 @@ Template.projectHomepage.events({
         if (!err && result) {
           FlowRouter.go("userHomepage", {uid: Meteor.userId()});
         } else {
-          console.log(err);
           alert("删除项目失败，请再次尝试");
         }
       });
@@ -615,15 +648,21 @@ Template.projectHomepage.events({
    if (!Meteor.user()) {
      alert("请先登陆或者注册 !");
      return ;
+   } else if (isANewUser.get()) {
+     template.$("#new-user-tooltip-modal").modal("show");
    } else {
-     // TODO: when click join button, some thing to be happen.
+     template.$("#join-modal").modal("show");
    }
   },
   "submit #join-modal form": function ( event, template ) {
     event.preventDefault();
-    var positionApplyFor = template.$("[name='select-position']:checked").val();
+    var checkedPosition = template.$("[name='select-position']:checked");
+    var positionName = checkedPosition.val();
+    var positionType = checkedPosition.parents(".form-group").prev("h6").text();
+    var parentElem = checkedPosition.parents(".radio");
+    var positionSalary = getSalary(parentElem);
     var projectId = FlowRouter.getParam("pid");
-    if (!positionApplyFor) {
+    if (!positionName) {
       alert("请先选择职位！");
       return ;
     }
@@ -634,7 +673,8 @@ Template.projectHomepage.events({
       var data = {
         projectId: projectId,
         userId: Meteor.userId(),
-        positionApplyFor: positionApplyFor
+        positionApplyFor: {type: positionType, position: positionName, salary: positionSalary},
+        status: "applied"           // here, initial status .
       };
       //这里需要用Methods, 因为需要根据 projectid userid 判断是否该用户的该申请是重复的。
       // here need to be changed into Meteor.methods, insert and update is not secure.
@@ -666,6 +706,9 @@ Template.projectHomepage.events({
         isSubscribed.set(false);
       }
     });
+  },
+  "click #display-applications": function ( event, template ) {
+    FlowRouter.go("projectApplicationsList", {pid: FlowRouter.getParam("pid")});
   }
 /*  "hidden.bs.modal #join-modal": function ( event, template ) {
     var target = template.$("#join-button");
@@ -679,5 +722,4 @@ Template.projectHomepage.events({
 
 Template.projectHomepage.onDestroyed(function () {
   GlobalObject.subscribeCache.clear();
-  console.log("from template project homepage destoryed");
 });

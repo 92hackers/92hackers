@@ -251,6 +251,7 @@
                   {{/if}}
                   <hr>
                   {{#if isProjectOwner}}
+                    <button id="display-applications" class="btn btn-raised btn-primary btn-block" type="button">查看申请情况&nbsp;{{#if hasNewApplications}}<span class="badge badge-danger text-danger">{{hasNewApplications}}</span>{{/if}}</button>
                     <button id="edit-button" class="btn btn-raised btn-primary btn-block" type="button">编辑</button>
                     <button id="save-button" class="btn btn-success btn-block" type="button">保存修改</button>
                     <div class="loader">
@@ -264,10 +265,10 @@
                     </div>
                     <button id="cancel-button" class="btn btn-default btn-block" type="button">取消</button>
                   {{else}}
-                    {{#if hasApplied}}
-                      <p class="text-center text-primary" id="apply-success">申请加入成功！</p>
+                    {{#if isApplySuccessfully}}
+                      <p class="text-center text-primary" id="apply-success">{{applicationStatus}}</p>
                     {{else}}
-                      <button id="join-button" class="btn btn-raised btn-primary btn-block" type="button" data-toggle="modal" data-target="#join-modal">我要加入</button>
+                      <button id="join-button" class="btn btn-raised btn-primary btn-block" type="button">我要加入</button>
                     {{/if}}
                   {{/if}}
                 </aside>
@@ -321,6 +322,9 @@
                                 {{#each productHire}}
                                   <div class="radio radio-primary">
                                     <label><input type="radio" name="select-position" value="{{this.category}}">{{this.category}}</label>
+                                    {{#if isPay ..}}
+                                      <span class="hire-salary" title="一个月酬劳">￥{{this.salary}}</span>
+                                    {{/if}}
                                   </div>
                                 {{/each}}
                               </div>
@@ -333,6 +337,9 @@
                                 {{#each techHire}}
                                   <div class="radio radio-primary">
                                     <label><input type="radio" name="select-position" value="{{this.category}}">{{this.category}}</label>
+                                    {{#if isPay ..}}
+                                      <span class="hire-salary" title="一个月酬劳">￥{{this.salary}}</span>
+                                    {{/if}}
                                   </div>
                                 {{/each}}
                               </div>
@@ -345,11 +352,15 @@
                                 {{#each designHire}}
                                   <div class="radio radio-primary">
                                     <label><input type="radio" name="select-position" value="{{this.category}}">{{this.category}}</label>
+                                    {{#if isPay ..}}
+                                      <span class="hire-salary" title="一个月酬劳">￥{{this.salary}}</span>
+                                    {{/if}}
                                   </div>
                                 {{/each}}
                               </div>
                             </div>
                           {{/if}}
+                          <p class="text-muted">* 我们将会把你的协作工具账号( 如果还没有，可去个人设置页面进行填写 )以及个人联系方式发送给该项目创建者，他会在第一时间与你取得联系！</p>
                           <div class="form-group">
                             <div class="col-md-11 col-md-offset-1 clearfix">
                               <button type="submit" class="btn btn-primary pull-right">提交</button>
@@ -367,6 +378,9 @@
         </div>
       </div>
       {{> servicesHelpModal}}
+      {{#if isANewUser}}
+        {{> newUserTooltip}}
+      {{/if}}
     </div>
     {{> footer}}
   {{else}}

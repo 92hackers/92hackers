@@ -1,0 +1,70 @@
+<template name="projectApplicationsList">
+  {{#if ready}}
+    {{#if isProjectOwner}}
+      <div class="project-applications-list-wrap">
+        <div class="container">
+          <header><button class="go-back btn btn-primary" title="返回项目主页"><i class="fa fa-reply"></i></button></header>
+          <main>
+            <div class="panel-group" id="panel-parent" role="tablist">
+              {{#each applications}}
+                {{#with userInfo}}
+                  <div class="panel panel-default">
+                    <div class="panel-heading" id="heading{{@index}}" role="tab" data-toggle="collapse" data-target="#collapse{{@index}}" data-parent="#panel-parent">
+                      <h4 class="panel-title clearfix">
+                      <span class="avatar pull-left">
+                        <img src="{{avatarOrDefault}}" alt="avatar">
+                      </span>
+                        <a class="pull-left user-homepage-link" href="{{pathFor "userHomepage" uid=_id}}" title="去看他的主页">{{username}}</a>
+                        <span class="pull-left position">申请岗位：&nbsp;{{../positionApplyFor.type}}&nbsp;-&nbsp;{{../positionApplyFor.position}}</span>
+                      <span class="btn-group pull-right">
+                        {{#if isApplied ..}}
+                          <button class="btn btn-danger application-deny" type="button" data-uid="{{_id}}">拒绝</button>
+                          <button class="btn btn-success application-agree" type="button" data-uid="{{_id}}">同意</button>
+                        {{/if}}
+                        {{#if isAgreed ..}}
+                          <button class="btn btn-default text-muted application-fire" type="button" data-uid="{{_id}}">开除</button>
+                          <span class="agreed text-success">已同意！</span>
+                        {{/if}}
+                        {{#if isDenied ..}}
+                          <span class="denied text-muted">已拒绝！</span>
+                        {{/if}}
+                        {{#if isFired ..}}
+                          <span class="fired text-muted">已开除！</span>
+                        {{/if}}
+                      </span>
+                      </h4>
+                    </div>
+                    <div class="panel-collapse collapse" id="collapse{{@index}}" role="tabpanel">
+                      <div class="panel-body">
+                        {{#with profile}}
+                          <ul class="list-unstyled">
+                            <li><span class="item">姓名</span><span class="value">{{name}}</span></li>
+                            <li><span class="item">性别</span><span class="value">{{gender}}</span></li>
+                            <h5>联系方式</h5>
+                            {{#each contactInformation}}
+                              <li><span class="item">{{type}}</span><span class="value">{{value}}</span></li>
+                            {{/each}}
+                            <h5>协作工具账号</h5>
+                            {{#each serviceAccounts}}
+                              <li><span class="item">{{service}}</span><span class="value">{{account}}</span></li>
+                            {{/each}}
+                          </ul>
+                        {{/with}}
+                        <div><a href="{{pathFor "userHomepage" uid=_id}}" class="pull-right">查看他的主页，了解更多!</a></div>
+                      </div>
+                    </div>
+                  </div>
+                {{/with}}
+              {{/each}}
+            </div>
+          </main>
+        </div>
+      </div>
+      {{> footer}}
+    {{else}}
+      <h2 class="text-muted text-center">您没有权限浏览该页面！</h2>
+    {{/if}}
+  {{else}}
+    {{> loading}}
+  {{/if}}
+</template>
