@@ -62,3 +62,8 @@ var numberPattern = /^[1-9][0-9]+$/;
 
 项目申请时候的四种状态：
 applied, agreed, denied, fired. 对于每种状态，都有相应的逻辑，并且要更新这些状态。
+
+在判断是否有访问权限的时候：
+先判断数据的加载，否则loading, 然后根据数据判断是否有权限，否则显示　没有权限浏览页面。
+
+变量可以考虑加在template本身上面，因为从浏览器 console 是没法进行操作的对已经有了的tempalte. 所以上面的属性对console是隔绝的。

@@ -1,6 +1,6 @@
 <template name="userSettings">
-  {{#if isYourOwnSettings}}
-    {{#if ready}}
+  {{#if ready}}
+    {{#if isYourOwnSettings}}
       <div class="user-settings-wrap">
         <div class="container">
           <div class="row">
@@ -387,9 +387,9 @@
       </div>
       {{> footer}}
     {{else}}
-      {{> loading}}
+      <p class="text-muted text-center">你不能访问该页面.</p>
     {{/if}}
   {{else}}
-    <p class="text-muted text-center">你不能访问该页面.</p>
+    {{> loading}}
   {{/if}}
 </template>

@@ -49,13 +49,17 @@ Template.projectApplicationsList.helpers({
   applications: function () {
     var pid = FlowRouter.getParam("pid");
     var applications = ProjectApplications.find({projectId: pid});
-    return applications.map(function ( singleApplication ) {
-      return {
-        userInfo: Meteor.users.findOne({_id: singleApplication.userId}),
-        positionApplyFor: singleApplication.positionApplyFor,
-        status: singleApplication.status
-      }
-    });
+    if ( !applications.count()) {
+      return false;
+    } else {
+      return applications.map(function ( singleApplication ) {
+        return {
+          userInfo: Meteor.users.findOne({_id: singleApplication.userId}),
+          positionApplyFor: singleApplication.positionApplyFor,
+          status: singleApplication.status
+        }
+      });
+    }
   },
   isApplied: function (parentContext) {
     return parentContext.status === "applied";

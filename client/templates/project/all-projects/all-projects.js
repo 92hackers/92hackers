@@ -59,6 +59,6 @@ Template.allProjects.helpers({
   }
 });
 
-Template.allUsers.onDestroyed(function () {
+Template.allProjects.onDestroyed(function () {
   GlobalObject.subscribeCache.clear();
 });

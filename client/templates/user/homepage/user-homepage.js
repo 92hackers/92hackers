@@ -4,18 +4,19 @@
 
 "use strict";
 
-var isYourOwnHomepage = new ReactiveVar(false);
+var isYourOwnHomepage = new ReactiveVar();
 
 Template.userHomepage.onCreated(function () {
   var template = this;
   template.subscriptionReady = new ReactiveVar();
   template.autorun(function () {
     var uid = FlowRouter.getParam("uid");
-    var routeUser = Meteor.users.findOne({_id: uid});
-    console.log("route user: " + routeUser);
-    if (Meteor.userId() && routeUser && routeUser._id === Meteor.userId()) {
+    FlowRouter.watchPathChange();
+    console.log("hi, path changed.");
+    if (Meteor.userId() &&  uid === Meteor.userId()) {
       isYourOwnHomepage.set(true);
-      console.log(isYourOwnHomepage.get());
+    } else {
+      isYourOwnHomepage.set(false);
     }
     if (!Meteor.user()) {       // user logout.
       isYourOwnHomepage.set(false);
@@ -38,6 +39,9 @@ Template.userHomepage.onRendered(function () {
       }
     });
     template.subscriptionReady.set(GlobalObject.subscribeCache.ready());
+  });
+  template.autorun(function () {
+    FlowRouter.watchPathChange();
     if (template.subscriptionReady.get()) {
       var timeId = Meteor.setTimeout(function () {
 
@@ -46,6 +50,8 @@ Template.userHomepage.onRendered(function () {
         var elements = template.$(".single-project-card-wrap");
         if (elements.size()) {
           GlobalObject.projectCard(elements);
+        } else {
+          template.$(".cards-container").height("auto");
         }
 
         $(window).on("resize", function ( event ) {
@@ -73,7 +79,6 @@ Template.userHomepage.helpers({
   },
   user: function () {
     var uid = FlowRouter.getParam("uid");
-    console.log("nice to meet you");
     return Meteor.users.findOne({_id: uid}) || {};
   },
   email: function () {

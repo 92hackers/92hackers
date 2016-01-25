@@ -50,17 +50,17 @@ Meteor.publishComposite("projectApplications", function ( pid ) {
   check(pid, String);
   return {
     find: function () {
-      return ProjectApplications.find({projectId: pid});
+      return Project.find({_id: pid}, {fields: {owner: 1}});
     },
     children: [
       {
-        find: function ( projectApplications ) {
-          return Project.find({_id: projectApplications.projectId}, {fields: {owner: 1}});
+        find: function ( project ) {
+          return ProjectApplications.find({projectId: project._id});
         }
       },
       {
-        find: function ( projectApplications ) {
-          return Meteor.users.find({_id: projectApplications.userId}, {fields: {
+        find: function ( project ) {
+          return Meteor.users.find({_id: project._id}, {fields: {
             username: 1,
             "profile.avatar": 1,
             "profile.emails": 1,

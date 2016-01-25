@@ -30,42 +30,42 @@ function uploadAvatarBuf(avatarBuf) {
 
 
 Meteor.methods({
-	// 接收头像信息，base64 格式
-	'sendAvatarInBase64': function(avatarBuf, userId) {
-		if (!this.userId) {
-			return {
-				code: -1,
-	msg: '非登录用户，无法上传头像'
-			}
-		}
+  // 接收头像信息，base64 格式
+  'sendAvatarInBase64': function(avatarBuf, userId) {
+    if (!this.userId) {
+      return {
+        code: -1,
+        msg: '非登录用户，无法上传头像'
+      }
+    }
 
-		var res = uploadAvatarBuf(new Buffer(avatarBuf.replace(/^data:image\/\w+;base64,/, ""), 'base64'));
-		if (res.key) {
-			Meteor.defer(function () {
-				// 当前线上头像
+    var res = uploadAvatarBuf(new Buffer(avatarBuf.replace(/^data:image\/\w+;base64,/, ""), 'base64'));
+    if (res.key) {
+      Meteor.defer(function () {
+        // 当前线上头像
         var currentKey;
         var user = Meteor.users.findOne({_id: userId});
         if (user) {
           currentKey = user.profile.avatar
         }
-				// 更新头像
-				var updateRes = Meteor.users.update({'_id': userId}, {'$set': {'profile.avatar': res.key}});
-				if (updateRes === 1) {
-					if (currentKey) {
-						// 更新成功，删除当前的头像
-						wrappedQiniuClient.remove(bucketname, currentKey);
-					}
-				}
-			});
-			return {
-				code: 0, 
-					msg: "图片上传成功"
-			}
-		} else {
-			return {
-				code: -1,
-					msg: '图片上传失败，请重试'
-			}
-		}
-	}
+        // 更新头像
+        var updateRes = Meteor.users.update({'_id': userId}, {'$set': {'profile.avatar': res.key}});
+        if (updateRes === 1) {
+          if (currentKey) {
+            // 更新成功，删除当前的头像
+            wrappedQiniuClient.remove(bucketname, currentKey);
+          }
+        }
+      });
+      return {
+        code: 0,
+        msg: "图片上传成功"
+      }
+    } else {
+      return {
+        code: -1,
+        msg: '图片上传失败，请重试'
+      }
+    }
+  }
 });

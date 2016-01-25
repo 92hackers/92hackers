@@ -17,6 +17,7 @@ Template.projectHomepage.onCreated(function () {
 
   template.autorun(function () {
     var currentProject = Project.findOne();
+    FlowRouter.watchPathChange();
     if ( !!Meteor.user() ) {
       isANewUser.set(Meteor.user().profile.isNewUser);
       if (currentProject) {
@@ -24,11 +25,15 @@ Template.projectHomepage.onCreated(function () {
           template.isProjectOwner.set(true);
           template.isEditState = false;
           template.isUpdated = false;
+        } else {
+          template.isProjectOwner.set(false);
         }
         var subscribers = ProjectSubscribe.find({projectId: currentProject._id});
         subscribers.forEach(function ( subscriber ) {
           if (subscriber.userId === Meteor.userId()) {
             isSubscribed.set(true);
+          } else {
+            isSubscribed.set(false);
           }
         });
       }
@@ -68,6 +73,7 @@ Template.projectHomepage.onRendered(function () {
 
     if (!!Meteor.user()) {
       if (template.isProjectOwner.get()) {
+        console.log(template.isProjectOwner.get());
         projectApplications.set(ProjectApplications.find({projectId: projectId}));
       } else {
         projectApplications.set(ProjectApplications.findOne({userId: Meteor.userId()}));
