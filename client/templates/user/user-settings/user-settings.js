@@ -52,7 +52,6 @@ Template.userSettings.onRendered(function () {
               $(this).attr("checked", "checked");
             }
           });
-          console.log(selectedFields);
         }
 
         Meteor.clearTimeout(timeId);
@@ -152,7 +151,6 @@ function saveSettings(section, event, template) {
       if (isNewUser) {
         _.extend(data, {"profile.isNewUser": false});
       }
-      console.log(data);
       Meteor.users.update({ _id: uid }, { $set: data }, function ( err, result ) {
         loader.hide();
         var timeId = Meteor.setTimeout(function () {
@@ -219,7 +217,6 @@ function saveSettings(section, event, template) {
       data = {};
       break;
     case "privacy":
-      console.log("privacy");
       var contactInfo = [];
       template.$("#privacy").find(".contactInfo").each(function () {
         if ($(this).val()) {
@@ -237,7 +234,6 @@ function saveSettings(section, event, template) {
       if (isNewUser) {
         _.extend(data, {"profile.isNewUser": false});
       }
-      console.log(data);
       Meteor.users.update({_id: uid}, {$set: data}, function ( err, result ) {
         loader.hide();
         var timeId = Meteor.setTimeout(function () {

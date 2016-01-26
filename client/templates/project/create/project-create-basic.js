@@ -47,7 +47,6 @@ Template.projectCreateBasic.events({
         alert("请填写项目所属分类!");
         return ;
       }
-      console.log(GlobalObject.projectCreate);
       FlowRouter.go("projectCreateFullDesc");
     } else {
       alert("您还没有登录 !");
@@ -72,8 +71,11 @@ Template.projectCreateBasic.events({
       }
       var tag = '<span class="label label-primary">' + value + ' &times;</span>';
 
-      $("#tags-collection").append(tag);
-      tags.push(value);
+      if ( _.indexOf(tags, value) === -1) {
+        template.$("#tags-collection").append(tag);
+        tags.push(value);
+      }       // you can not input two same tag.
+
       target.value = "";
     }
   },

@@ -73,7 +73,6 @@ Template.projectHomepage.onRendered(function () {
 
     if (!!Meteor.user()) {
       if (template.isProjectOwner.get()) {
-        console.log(template.isProjectOwner.get());
         projectApplications.set(ProjectApplications.find({projectId: projectId}));
       } else {
         projectApplications.set(ProjectApplications.findOne({userId: Meteor.userId()}));
@@ -208,7 +207,6 @@ Template.projectHomepage.helpers({
     return count;
   },
   isApplySuccessfully: function () {
-    console.log(projectApplications.get());
     if (!Meteor.user()) {
       return false;
     }
@@ -216,7 +214,6 @@ Template.projectHomepage.helpers({
   },
   applicationStatus: function () {
     var result = "";
-    console.log(projectApplications.get());
     if (projectApplications.get()) {
       var applicationStatus = projectApplications.get().status;
       if (applicationStatus === "applied") {

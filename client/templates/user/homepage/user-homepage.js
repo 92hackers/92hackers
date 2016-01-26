@@ -12,7 +12,6 @@ Template.userHomepage.onCreated(function () {
   template.autorun(function () {
     var uid = FlowRouter.getParam("uid");
     FlowRouter.watchPathChange();
-    console.log("hi, path changed.");
     if (Meteor.userId() &&  uid === Meteor.userId()) {
       isYourOwnHomepage.set(true);
     } else {

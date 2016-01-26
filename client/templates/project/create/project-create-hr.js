@@ -110,7 +110,6 @@ Template.projectCreateHr.events({
     event.preventDefault();
     getFormValues();
     _.extend(GlobalObject.projectCreate, valuesCollection);
-    console.log(valuesCollection);
     FlowRouter.go("projectCreateServices");
   }
 });

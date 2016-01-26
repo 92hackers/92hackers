@@ -18,7 +18,6 @@ Template.index.onRendered(function () {
 
   // material design plugin initialisation.
 
-  console.log("from index render function");
 
   $.material.init();
 

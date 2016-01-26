@@ -4,7 +4,7 @@
  */
 
 // below is simpleschema debug mode, must be removed in production environment.
-SimpleSchema.debug = true;
+//SimpleSchema.debug = true;
 
 Meteor.startup(function () {
   if (Meteor.users.find().count() === 0 && Project.find().count() === 0 ) {

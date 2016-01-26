@@ -115,10 +115,8 @@ var usernameHandler = _.debounce(function () {
           Meteor.clearTimeout(timeId);
         }, 2000);
       } else {
-        console.log("this new username can be use !");
       }
     } else {
-      console.log("call usernameExistDetect error");
     }
   });
 
@@ -175,13 +173,11 @@ Template.signUp.events({
     };
 
 
-    console.log(userObject);
     Accounts.createUser(userObject, function (err) {
       if (!err) {
         logIn.set(true);
         Session.set("reloadAble", true);
         $("#signModal").modal("hide");
-        console.log("new user created.");
       } else {
         console.log(err);
         if (err.error === 403) {

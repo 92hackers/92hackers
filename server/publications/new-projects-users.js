@@ -30,6 +30,7 @@ Meteor.publish("newestUsers", function ( userLimit ) {
     username: 1,
     "profile.introduction": 1,
     "profile.selfIntroduction": 1,
+    "profile.avatar": 1,
     createdAt: 1
   }, sort: {createdAt: -1}, limit: userLimit});
 });

@@ -85,7 +85,6 @@ Template.projectCreateServices.events({
     } else {
       console.log("permission denied, please log in firstly");
     }
-    console.log(GlobalObject.projectCreate);
   }
 });
 

@@ -47,7 +47,6 @@ Template.userSubscriptions.onRendered(function () {
 
 Template.userSubscriptions.helpers({
   ready: function () {
-    console.log(Template.instance().ready.get());
     return Template.instance().ready.get();
   },
   hasSubscriptions: function () {
